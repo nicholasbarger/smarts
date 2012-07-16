@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace Smarts.Api.Models
 {
     public class Asset
     {
+        [Key]
         public int Id { get; set; }
         public int AssetTypeId { get; set; }
         public Guid ContributorGuid { get; set; }
@@ -16,13 +18,14 @@ namespace Smarts.Api.Models
         public AssetImportance Importance { get; set; }
         public bool IsScoreable { get; set; }
         public bool IsTestRequired { get; set; }
-        public int PassingScore { get; set; }
+        public int? PassingScore { get; set; }
         public string Title { get; set; }
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
     }
 
     public enum AssetDifficulty
     {
+        Unspecified = 0,
         EntryLevel = 1,
         Easy = 2,
         Medium = 3,
@@ -32,6 +35,7 @@ namespace Smarts.Api.Models
 
     public enum AssetImportance
     {
+        Unspecified = 0,
         Irrelevant = 1,
         Low = 2,
         Medium = 3,

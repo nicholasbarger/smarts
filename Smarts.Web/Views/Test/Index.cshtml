@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<button onclick="test();">Go</button>
+
+@section Scripts {
+<script type="text/javascript">
+    function test() {
+        $.ajax({
+            url: 'http://localhost:11866/asset',
+            data: { AssetTypeId: 1, Uri: 'http://www.nicholasbarger.com', Title: 'Test' },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (response) {
+
+                alert("success");
+
+            },
+            error: function (response) {
+                alert("error from response");
+            }
+        });
+    }
+</script>
+}
