@@ -15,6 +15,11 @@ namespace Smarts.Api.Db
             this.context = context;
         }
 
+        public Asset GetAsset(int id)
+        {
+            return context.Assets.Single(a => a.Id == id);
+        }
+
         public IQueryable<Asset> GetAssetsQuery()
         {
             return context.Assets;

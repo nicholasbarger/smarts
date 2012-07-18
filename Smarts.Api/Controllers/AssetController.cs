@@ -33,13 +33,116 @@ namespace Smarts.Api.Controllers
         // GET api/asset
         public HttpResponseMessage Get()
         {
-            throw new NotImplementedException();
+            var payload = new HttpResponsePayload<List<Asset>>();
+
+            try
+            {
+                // Get assets, using queries to ensure consistency of includes
+                List<Asset> assets = null;
+                using (var queries = new AssetQueries(db))
+                {
+                    assets = queries.GetAssetsQuery().ToList();
+                }
+
+                // If not null, add to payload
+                if (assets != null)
+                {
+                    payload.Data = assets;
+                }
+                else
+                {
+                    payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
+                }
+                
+            }
+            catch (DbEntityValidationException dbex)
+            {
+                foreach (var validationErrors in dbex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+
+                payload.Errors.Add("00000", ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+            }
+
+            // Return proper response message
+            if (payload.IsSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, payload);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
+            }
         }
 
         // GET api/asset/5
         public HttpResponseMessage Get(int id)
         {
-            throw new NotImplementedException();
+            var payload = new HttpResponsePayload<Asset>();
+
+            try
+            {
+                // Validate
+                if (id > 0)
+                {
+                    // Get asset, using queries to ensure consistency of includes
+                    Asset asset = null;
+                    using (var queries = new AssetQueries(db))
+                    {
+                        asset = queries.GetAsset(id);
+                    }
+                    
+                    // If not null, add to payload
+                    if (asset != null)
+                    {
+                        payload.Data = asset;
+                    }
+                    else
+                    {
+                        payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
+                    }
+                }
+                else
+                {
+                    payload.Errors.Add("00003", Resources.Errors.ERR00003);
+                }
+            }
+            catch (DbEntityValidationException dbex)
+            {
+                foreach (var validationErrors in dbex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+
+                payload.Errors.Add("00000", ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+            }
+
+            // Return proper response message
+            if (payload.IsSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, payload);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
+            }
         }
 
         // POST api/asset
@@ -56,7 +159,7 @@ namespace Smarts.Api.Controllers
                 {
                     // Prep asset data
                     obj.Created = DateTime.Now;
-                    //obj.ContributorGuid = contributor; - // todo: remove - this is just temporary
+                    obj.ContributorGuid = contributor;
 
                     SaveAsset(obj, payload);
                 }
@@ -76,15 +179,15 @@ namespace Smarts.Api.Controllers
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        payload.Errors.Add("000", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
                     }
                 }
             }
             catch (Exception ex)
             {
-                // todo: add exception logging here
+                ExceptionHandler.Log(ex);
 
-                payload.Errors.Add("-001", ex.Message);
+                payload.Errors.Add("00000", ex.Message);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
             }
 
@@ -100,15 +203,128 @@ namespace Smarts.Api.Controllers
         }
 
         // PUT api/asset/5
-        public HttpResponseMessage Put(int id, AssetQueries obj)
+        public HttpResponseMessage Put(int id, Asset obj)
         {
-            throw new NotImplementedException();
+            var payload = new HttpResponsePayload<Asset>();
+
+            try
+            {
+                // Validate
+                var rules = new ValidationRules();
+                rules.Validate(obj);
+                if (rules.IsValid)
+                {
+                    // Prep asset data
+                    obj.Created = DateTime.Now;
+                    obj.ContributorGuid = contributor;
+
+                    SaveAsset(obj, payload);
+                }
+                else
+                {
+                    // I've tried concat, union, and a few other methods and none are adding to error list properly
+                    // going back to brute force looping for now
+                    foreach (var error in rules.Errors)
+                    {
+                        payload.Errors.Add(error.Key, error.Value);
+                    }
+                }
+            }
+            catch (DbEntityValidationException dbex)
+            {
+                foreach (var validationErrors in dbex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+
+                payload.Errors.Add("00000", ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+            }
+
+            // Return proper response message
+            if (payload.IsSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, payload);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
+            }
         }
 
         // DELETE api/asset/5
         public HttpResponseMessage Delete(int id)
         {
-            throw new NotImplementedException();
+            var payload = new HttpResponsePayload<Asset>();
+
+            try
+            {
+                // Validate
+                if (id > 0)
+                {
+                    // Get asset, using queries to ensure consistency of includes
+                    Asset asset = null;
+                    using (var queries = new AssetQueries(db))
+                    {
+                        asset = queries.GetAsset(id);
+                    }
+
+                    // If not null, set inactive and save
+                    if (asset != null)
+                    {
+                        // Set asset to inactive
+                        asset.IsActive = false;
+
+                        // Update (archived delete)
+                        db.SaveChanges();
+
+                        // Update payload with modified asset
+                        payload.Data = asset;
+                    }
+                    else
+                    {
+                        payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
+                    }
+                }
+                else
+                {
+                    payload.Errors.Add("00003", Resources.Errors.ERR00003);
+                }
+            }
+            catch (DbEntityValidationException dbex)
+            {
+                foreach (var validationErrors in dbex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+
+                payload.Errors.Add("00000", ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+            }
+
+            // Return proper response message
+            if (payload.IsSuccess)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, payload);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
+            }
         }
 
         private void SaveAsset(Asset obj, HttpResponsePayload<Asset> payload)
@@ -136,7 +352,7 @@ namespace Smarts.Api.Controllers
             }
             else
             {
-                payload.Errors.Add("000", "Error saving to the database.");
+                payload.Errors.Add("00001", "Error saving to the database.");
             }
         }
     }

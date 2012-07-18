@@ -16,6 +16,7 @@ namespace Smarts.Api.Models
         public string Description { get; set; }
         public AssetDifficulty Difficulty { get; set; }
         public AssetImportance Importance { get; set; }
+        public bool IsActive { get; set; }
         public bool IsScoreable { get; set; }
         public bool IsTestRequired { get; set; }
         public int? PassingScore { get; set; }

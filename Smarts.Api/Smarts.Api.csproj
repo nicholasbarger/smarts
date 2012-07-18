@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="Logic\ValidationRules.cs" />
     <Compile Include="Models\Asset.cs" />
+    <Compile Include="Models\ExceptionHandler.cs" />
     <Compile Include="Models\HttpResponsePayload.cs" />
     <Compile Include="Models\Payload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

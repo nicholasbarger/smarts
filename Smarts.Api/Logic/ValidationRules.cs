@@ -33,47 +33,47 @@ namespace Smarts.Api.Logic
         {
             if (obj == null)
             {
-                this.Errors.Add("001", "The asset is null.");
+                this.Errors.Add("00004", string.Format(Resources.Errors.ERR00004, "asset"));
                 return;
             }
 
             if (obj.AssetTypeId <= 0)
             {
-                this.Errors.Add("002", "The asset type must be specified.");
+                this.Errors.Add("00005", Resources.Errors.ERR00005);
             }
 
             if (obj.ContributorGuid == null || string.IsNullOrWhiteSpace(obj.ContributorGuid.ToString()))
             {
-                this.Errors.Add("003", "The contributor must be specified.");
+                this.Errors.Add("00006", Resources.Errors.ERR00006);
             }
 
             if (obj.Difficulty != AssetDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
             {
-                this.Errors.Add("004", "Difficulty rating must be between 1 and 5 if specified.");
+                this.Errors.Add("00007", Resources.Errors.ERR00007);
             }
 
             if (obj.Importance != AssetImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
             {
-                this.Errors.Add("005", "Importance rating must be between 1 and 5 if specified.");
+                this.Errors.Add("00008", Resources.Errors.ERR00008);
             }
 
             if (obj.PassingScore.HasValue && (obj.PassingScore <= 0 || obj.PassingScore > 100))
             {
-                this.Errors.Add("006", "Passing score must be between 1 and 100 if specified.");
+                this.Errors.Add("00009", Resources.Errors.ERR00009);
             }
 
             if (string.IsNullOrWhiteSpace(obj.Title) || obj.Title.Length > 100)
             {
-                this.Errors.Add("007", "Asset title must be specified and can not exceed 100 characters.");
+                this.Errors.Add("00010", Resources.Errors.ERR00010);
             }
 
             if(obj.Uri == null || string.IsNullOrWhiteSpace(obj.Uri.ToString()))
             {
-                this.Errors.Add("008", "Asset uri is required.");
+                this.Errors.Add("00011", Resources.Errors.ERR00011);
             }
             else if(obj.Uri.Length > 50)
             {
-                this.Errors.Add("009", "The specified uri is too long, please use a url shortening tool such as http://www.bit.ly");
+                this.Errors.Add("00012", Resources.Errors.ERR00012);
             }
         }
     }

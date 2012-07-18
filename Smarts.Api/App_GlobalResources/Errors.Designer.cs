@@ -59,5 +59,122 @@ namespace Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ERR00000 {
+            get {
+                return ResourceManager.GetString("ERR00000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ERR00001 {
+            get {
+                return ResourceManager.GetString("ERR00001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} specified was not found..
+        /// </summary>
+        internal static string ERR00002 {
+            get {
+                return ResourceManager.GetString("ERR00002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The required Id was not specified..
+        /// </summary>
+        internal static string ERR00003 {
+            get {
+                return ResourceManager.GetString("ERR00003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} is null..
+        /// </summary>
+        internal static string ERR00004 {
+            get {
+                return ResourceManager.GetString("ERR00004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The asset type must be specified..
+        /// </summary>
+        internal static string ERR00005 {
+            get {
+                return ResourceManager.GetString("ERR00005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The contributor must be specified..
+        /// </summary>
+        internal static string ERR00006 {
+            get {
+                return ResourceManager.GetString("ERR00006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difficulty rating must be between 1 and 5 if specified..
+        /// </summary>
+        internal static string ERR00007 {
+            get {
+                return ResourceManager.GetString("ERR00007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importance rating must be between 1 and 5 if specified..
+        /// </summary>
+        internal static string ERR00008 {
+            get {
+                return ResourceManager.GetString("ERR00008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passing score must be between 1 and 100 if specified..
+        /// </summary>
+        internal static string ERR00009 {
+            get {
+                return ResourceManager.GetString("ERR00009", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asset title must be specified and can not exceed 100 characters..
+        /// </summary>
+        internal static string ERR00010 {
+            get {
+                return ResourceManager.GetString("ERR00010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asset uri is required..
+        /// </summary>
+        internal static string ERR00011 {
+            get {
+                return ResourceManager.GetString("ERR00011", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified uri is too long, please use a url shortening tool such as http://www.bit.ly.
+        /// </summary>
+        internal static string ERR00012 {
+            get {
+                return ResourceManager.GetString("ERR00012", resourceCulture);
+            }
+        }
     }
 }
