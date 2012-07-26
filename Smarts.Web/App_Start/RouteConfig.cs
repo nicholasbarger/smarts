@@ -12,14 +12,7 @@ namespace Smarts.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            // This route is for executing api calls
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
+            
             // This route is for displaying information about the API
             routes.MapRoute(
                 name: "Default",
