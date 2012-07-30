@@ -1,0 +1,40 @@
+﻿body {
+    background: url("images/tree-transparent-small.png") bottom right no-repeat fixed;        
+}
+
+.featured {
+    background-color: #F4F4F4;
+    padding-bottom: 15px;
+}
+.featured h4 {
+    background-color: #009AE3;
+    color: #fff;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.hero-unit {
+    background-color: #fff;
+    padding-left: 30px;
+}
+.hero-unit strong {
+    color: #ff6a00;
+}
+
+.resourceUrl {
+    font-size: x-large;
+    line-height: 125%;
+}
+
+.video {
+    padding: 10px;
+    border: 3px solid #ccc;
+}
+
+.video-list {
+    list-style-image: url("images/video-icon.png");
+}

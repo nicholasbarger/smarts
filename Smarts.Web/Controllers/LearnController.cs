@@ -6,15 +6,16 @@ using System.Web.Mvc;
 
 namespace Smarts.Web.Controllers
 {
-    public class TestController : Controller
+    public class LearnController : Controller
     {
-        //
-        // GET: /Test/
+        public ActionResult Detail()
+        {
+            return View();
+        }
 
         public ActionResult Index()
         {
             return View();
         }
-
     }
 }

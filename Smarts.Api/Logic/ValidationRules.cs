@@ -8,7 +8,14 @@ namespace Smarts.Api.Logic
 {
     public class ValidationRules
     {
+        /// <summary>
+        /// Contains the list of errors during validation.
+        /// </summary>
         public Dictionary<string, string> Errors { get; set; }
+        
+        /// <summary>
+        /// Specifies whether the object is valid.
+        /// </summary>
         public bool IsValid
         {
             get
@@ -24,10 +31,16 @@ namespace Smarts.Api.Logic
             }
         }
 
+        /// <summary>
+        /// Constructor to create new instance of validation rules.
+        /// </summary>
         public ValidationRules()
         {
             this.Errors = new Dictionary<string, string>();
         }
+
+        //NOTE: All validation logic is nestled in here across all objects, we may want to refactor this depending on how big it becomes and if it is a maintenance issue
+        #region Model Validations
 
         public void Validate(Asset obj)
         {
@@ -76,5 +89,7 @@ namespace Smarts.Api.Logic
                 this.Errors.Add("00012", Resources.Errors.ERR00012);
             }
         }
+
+        #endregion
     }
 }

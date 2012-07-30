@@ -152,15 +152,16 @@ namespace Smarts.Api.Controllers
 
             try
             {
+                // Prep
+                obj.Created = DateTime.Now;
+                obj.ContributorGuid = contributor;
+
                 // Validate
                 var rules = new ValidationRules();
                 rules.Validate(obj);
                 if (rules.IsValid)
                 {
-                    // Prep asset data
-                    obj.Created = DateTime.Now;
-                    obj.ContributorGuid = contributor;
-
+                    // Save
                     SaveAsset(obj, payload);
                 }
                 else
@@ -209,15 +210,16 @@ namespace Smarts.Api.Controllers
 
             try
             {
+                // Prep
+                obj.Created = DateTime.Now;
+                obj.ContributorGuid = contributor;
+
                 // Validate
                 var rules = new ValidationRules();
                 rules.Validate(obj);
                 if (rules.IsValid)
                 {
-                    // Prep asset data
-                    obj.Created = DateTime.Now;
-                    obj.ContributorGuid = contributor;
-
+                    // Save
                     SaveAsset(obj, payload);
                 }
                 else

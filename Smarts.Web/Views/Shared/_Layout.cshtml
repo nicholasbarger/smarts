@@ -5,12 +5,31 @@
         <title>Smarts</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
+
+        <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../Content/smarts.css" />
         
         <script type="text/javascript" src="../../Scripts/jquery-1.7.2.js"></script>
         <script type="text/javascript" src="../../Scripts/jquery.validate.js"></script>
         <script type="text/javascript" src="../../Scripts/knockout-2.1.0.js"></script>
+        <script type="text/javascript" src="../../Scripts/bootstrap.js"></script>
     </head>
     <body>
-        @RenderBody()
+        <header>
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <button class="btn btn-primary pull-right"><i class="icon-user icon-white"></i></button>
+                        <button class="btn btn-primary pull-right"><i class="icon-plus icon-white"></i></button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+
+        <footer></footer>
     </body>
 </html>
