@@ -149,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\AssetLogic.cs" />
     <Compile Include="Logic\ValidationRules.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\ExceptionHandler.cs" />

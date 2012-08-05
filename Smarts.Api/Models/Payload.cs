@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -78,6 +79,31 @@ namespace Smarts.Api.Models
             : this(statusCode, data)
         {
             this.Messages.Add(message);
+        }
+
+        #endregion
+
+        #region Helper methods for assigning properties
+
+        public void AssignValidationErrors(Dictionary<string, string> valErrors)
+        {
+            // I've tried concat, union, and a few other methods and none are adding to error list properly
+            // going back to brute force looping for now
+            foreach (var error in valErrors)
+            {
+                this.Errors.Add(error.Key, error.Value);
+            }
+        }
+
+        public void AssignDbErrors(DbEntityValidationException dbex)
+        {
+            foreach (var validationErrors in dbex.EntityValidationErrors)
+            {
+                foreach (var validationError in validationErrors.ValidationErrors)
+                {
+                    this.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
+                }
+            }
         }
 
         #endregion

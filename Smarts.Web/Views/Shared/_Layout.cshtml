@@ -19,8 +19,8 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <div class="container">
-                        <button class="btn btn-primary pull-right"><i class="icon-user icon-white"></i></button>
-                        <button class="btn btn-primary pull-right"><i class="icon-plus icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#account"><i class="icon-user icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add"><i class="icon-plus icon-white"></i></button>
                     </div>
                 </div>
             </div>
@@ -28,6 +28,117 @@
 
         <div class="container-fluid">
             @RenderBody()
+        </div>
+
+        <div class="modal hide fade" id="add">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Add New Resource</h3>
+            </div>
+            <div class="modal-body">
+                <form id="addForm" name="addForm" class="well form-vertical">
+                    <fieldset>
+                        <legend>Please enter the basics</legend>
+
+                        <div class="control-group">
+                            <label class="control-label required" for="title">Title</label>
+                            <div class="controls">
+                                <input type="text" id="title" name="title" class="required" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label required" for="url">Url</label>
+                            <div class="controls">
+                                <input type="text" id="url" name="url" class="required url" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="description">Description</label>
+                            <div class="controls">
+                                <textarea id="description" name="description"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <a href="#">Advanced</a>
+
+                    <div id="advancedAdd" style="display: none;">
+                        <fieldset>
+                            <legend>Tag this resource with subject(s)</legend>
+
+                            <div class="control-group">
+                                <label class="control-label" for="subject">Subject</label>
+                                <div class="controls">
+                                    <input type="text" id="subject" name="subject">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>You can also add specific information</legend>
+
+                            <div class="control-group">
+                                <label class="control-label" for="isTestRequired">Is a test required to complete this resource?</label>
+                                <div class="controls">
+                                    <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" /> Yes, a test is required.</label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="control-group">
+                                <label class="control-label" for="isScoreable">Can you receive a score for this resource?</label>
+                                <div class="controls">
+                                    <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" /> Yes, you can receive a score for this resource.</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="passingScore">Minimum Passing Score</label>
+                                <div class="controls">
+                                    <input type="text" id="passingScore" name="passingScore" class="input-small">
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="control-group">
+                                <label class="control-label" for="isCost">Does this resource cost money?</label>
+                                <div class="controls">
+                                    <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" /> Yes, this resource costs money.</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="cost">Cost in USD</label>
+                                <div class="controls">
+                                    <input type="text" id="cost" name="cost" class="input-small">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+
+        <div class="modal hide fade" id="account">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Your Account</h3>
+            </div>
+            <div class="modal-body">
+                <p>Information about the user can go here.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
         </div>
 
         <footer></footer>

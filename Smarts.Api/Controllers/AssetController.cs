@@ -52,18 +52,12 @@ namespace Smarts.Api.Controllers
                 else
                 {
                     payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
-                }
-                
+                }                
             }
             catch (DbEntityValidationException dbex)
             {
-                foreach (var validationErrors in dbex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
-                    }
-                }
+                // Assign errors from db
+                payload.AssignDbErrors(dbex);
             }
             catch (Exception ex)
             {
@@ -91,40 +85,27 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Validate
-                if (id > 0)
+                // Get asset, using queries to ensure consistency of includes
+                Asset asset = null;
+                using (var queries = new AssetQueries(db))
                 {
-                    // Get asset, using queries to ensure consistency of includes
-                    Asset asset = null;
-                    using (var queries = new AssetQueries(db))
-                    {
-                        asset = queries.GetAsset(id);
-                    }
-                    
-                    // If not null, add to payload
-                    if (asset != null)
-                    {
-                        payload.Data = asset;
-                    }
-                    else
-                    {
-                        payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
-                    }
+                    asset = queries.GetAsset(id);
+                }
+
+                // If not null, add to payload
+                if (asset != null)
+                {
+                    payload.Data = asset;
                 }
                 else
                 {
-                    payload.Errors.Add("00003", Resources.Errors.ERR00003);
+                    payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
                 }
             }
             catch (DbEntityValidationException dbex)
             {
-                foreach (var validationErrors in dbex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
-                    }
-                }
+                // Assign errors from db
+                payload.AssignDbErrors(dbex);
             }
             catch (Exception ex)
             {
@@ -153,36 +134,36 @@ namespace Smarts.Api.Controllers
             try
             {
                 // Prep
-                obj.Created = DateTime.Now;
+                var logic = new AssetLogic();
+                logic.SetDefaults(ref obj);
                 obj.ContributorGuid = contributor;
 
                 // Validate
                 var rules = new ValidationRules();
                 rules.Validate(obj);
+
+                // Check if valid
                 if (rules.IsValid)
                 {
                     // Save
-                    SaveAsset(obj, payload);
+                    using (var queries = new AssetQueries(db))
+                    {
+                        queries.SaveAsset(ref obj);
+                    }
+
+                    // Update payload
+                    payload.Data = obj;
                 }
                 else
                 {
-                    // I've tried concat, union, and a few other methods and none are adding to error list properly
-                    // going back to brute force looping for now
-                    foreach (var error in rules.Errors)
-                    {
-                        payload.Errors.Add(error.Key, error.Value);
-                    }
+                    // Assign errors from validation
+                    payload.AssignValidationErrors(rules.Errors);
                 }
             }
             catch(DbEntityValidationException dbex)
             {
-                foreach (var validationErrors in dbex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
-                    }
-                }
+                // Assign errors from db
+                payload.AssignDbErrors(dbex);
             }
             catch (Exception ex)
             {
@@ -210,37 +191,32 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Prep
-                obj.Created = DateTime.Now;
-                obj.ContributorGuid = contributor;
-
                 // Validate
                 var rules = new ValidationRules();
                 rules.Validate(obj);
+
+                // Check if valid
                 if (rules.IsValid)
                 {
                     // Save
-                    SaveAsset(obj, payload);
+                    using (var queries = new AssetQueries(db))
+                    {
+                        queries.SaveAsset(ref obj);
+                    }
+
+                    // Update payload
+                    payload.Data = obj;
                 }
                 else
                 {
-                    // I've tried concat, union, and a few other methods and none are adding to error list properly
-                    // going back to brute force looping for now
-                    foreach (var error in rules.Errors)
-                    {
-                        payload.Errors.Add(error.Key, error.Value);
-                    }
+                    // Assign errors from validation
+                    payload.AssignValidationErrors(rules.Errors);
                 }
             }
             catch (DbEntityValidationException dbex)
             {
-                foreach (var validationErrors in dbex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
-                    }
-                }
+                // Assign errors from db
+                payload.AssignDbErrors(dbex);
             }
             catch (Exception ex)
             {
@@ -264,51 +240,19 @@ namespace Smarts.Api.Controllers
         // DELETE api/asset/5
         public HttpResponseMessage Delete(int id)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<bool>();
 
             try
             {
-                // Validate
-                if (id > 0)
+                using (var queries = new AssetQueries(db))
                 {
-                    // Get asset, using queries to ensure consistency of includes
-                    Asset asset = null;
-                    using (var queries = new AssetQueries(db))
-                    {
-                        asset = queries.GetAsset(id);
-                    }
-
-                    // If not null, set inactive and save
-                    if (asset != null)
-                    {
-                        // Set asset to inactive
-                        asset.IsActive = false;
-
-                        // Update (archived delete)
-                        db.SaveChanges();
-
-                        // Update payload with modified asset
-                        payload.Data = asset;
-                    }
-                    else
-                    {
-                        payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
-                    }
-                }
-                else
-                {
-                    payload.Errors.Add("00003", Resources.Errors.ERR00003);
+                    payload.Data = queries.Delete(id);
                 }
             }
             catch (DbEntityValidationException dbex)
             {
-                foreach (var validationErrors in dbex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        payload.Errors.Add("00001", string.Format("Property: {0} Error: {1}" + Environment.NewLine, validationError.PropertyName, validationError.ErrorMessage));
-                    }
-                }
+                // Assign errors from db
+                payload.AssignDbErrors(dbex);
             }
             catch (Exception ex)
             {
@@ -326,35 +270,6 @@ namespace Smarts.Api.Controllers
             else
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
-        }
-
-        private void SaveAsset(Asset obj, HttpResponsePayload<Asset> payload)
-        {
-            if (obj.Id == 0)
-            {
-                // Add to collection
-                obj.Created = DateTime.Now;
-                db.Assets.Add(obj);
-            }
-            else
-            {
-                // Attach to collection
-                db.Assets.Attach(obj);
-                db.Entry(obj).State = System.Data.EntityState.Modified;
-            }            
-
-            // Commit changes
-            var result = db.SaveChanges();
-
-            // Check result
-            if (result > 0)
-            {
-                payload.IsSuccess = true;
-            }
-            else
-            {
-                payload.Errors.Add("00001", "Error saving to the database.");
             }
         }
     }

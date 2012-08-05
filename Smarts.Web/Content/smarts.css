@@ -1,4 +1,14 @@
-﻿body {
+﻿#addForm input[type='text'], textarea {
+    width: 100%;
+}
+#addForm textarea {
+    height: 75px;
+}
+#addForm input[type='text'].input-small {
+    width: 60px;
+}
+
+body {
     background: url("images/tree-transparent-small.png") bottom right no-repeat fixed;        
 }
 
@@ -23,6 +33,15 @@
 }
 .hero-unit strong {
     color: #ff6a00;
+}
+
+label.required:after {
+    content: ' *';
+    color: red;
+}
+
+legend {
+    margin-bottom: 0px;
 }
 
 .resourceUrl {
