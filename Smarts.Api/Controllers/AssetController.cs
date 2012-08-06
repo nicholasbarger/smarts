@@ -51,7 +51,7 @@ namespace Smarts.Api.Controllers
                 }
                 else
                 {
-                    payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
+                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }                
             }
             catch (DbEntityValidationException dbex)
@@ -99,7 +99,7 @@ namespace Smarts.Api.Controllers
                 }
                 else
                 {
-                    payload.Errors.Add("00002", string.Format(Resources.Errors.ERR00002, "asset"));
+                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
             }
             catch (DbEntityValidationException dbex)

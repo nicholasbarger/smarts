@@ -19,6 +19,10 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     <div class="container">
+                        <img src="../../Content/images/logo-small-white.png" /> 
+                        <a href="/" class="company">Smarts</a>
+
+                        <a href="/Home/Enroll" class="btn btn-success pull-right"><i class="icon-star icon-white"></i></a>
                         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#account"><i class="icon-user icon-white"></i></button>
                         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add"><i class="icon-plus icon-white"></i></button>
                     </div>
@@ -130,14 +134,62 @@
         <div class="modal hide fade" id="account">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Your Account</h3>
+                <h3>Nicholas Barger</h3>
             </div>
             <div class="modal-body">
-                <p>Information about the user can go here.</p>
+                <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" alt="Nicholas Barger" class="pull-right" />
+                
+                <div class="account-stats">
+                    <label>Member Since</label><span>8/1/2012 (4 days)</span>
+                    <label>Smarts Score</label><span class="score-small">10,240</span>
+                    <label>Contributed</label>
+                    <span>
+                        <span class="stat-number">419</span> educational resources added<br /> 
+                        <span class="stat-number">1,289</span> votes cast<br />
+                        <span class="stat-number">3,200</span> votes by other people</span>
+                </div>
+
+                <div>
+                    <label>Subjects you're recently active on</label>
+                    <a href="#">Computer Science</a> |
+                    <a href="#">Entrpreneurship</a> |
+                    <a href="#">C#</a> |
+                    <a href="#">Programming</a> |
+                    <a href="#">Teaching</a>
+                </div>
+
+                <div class="links">
+                    <a href="#">Edit profile</a><br />
+                    <a href="#">Change password</a><br />
+                    <a href="#">Manage notifications</a><br />
+                    <a href="#">Logout</a>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn" data-dismiss="modal">Close</a>
                 <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+
+        <div class="modal hide fade" id="enroll">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Enroll for Free</h3>
+            </div>
+            <div class="modal-body">
+                <h4>You haven't enrolled yet!</h4>
+                <p>We make sure you are free to use the site as much as you like even without enrolling, however, enrollment provides the following great features and is also <strong>completely free</strong>!</p>
+                <ul class="benefits">
+                    <li>Track progress through your <a href="#">Smarts Score</a> and show your expertise in subjects</li>
+                    <li>Automatically save your history and see which educational resources you've already visited and completed</li>
+                    <li>Contribute to the community by adding great educational resources you've discovered</li>
+                    <li><span class="important">Optionally</span>, allow companies to interview and potentially hire you</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="/Home/Enroll" class="btn btn-primary">Enroll</a><br />
+                <label for="stopNaggingToEnroll" class="pull-left"><input type="checkbox" id="stopNaggingToEnroll" name="stopNaggingToEnroll" /> Stop nagging me to enroll, I will when I feel like it</label>
             </div>
         </div>
 

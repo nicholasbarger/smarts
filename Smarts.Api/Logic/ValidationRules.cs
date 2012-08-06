@@ -46,47 +46,47 @@ namespace Smarts.Api.Logic
         {
             if (obj == null)
             {
-                this.Errors.Add("00004", string.Format(Resources.Errors.ERR00004, "asset"));
+                this.Errors.Add("00004", Resources.Errors.ERR00004);
                 return;
             }
 
             if (obj.AssetTypeId <= 0)
             {
-                this.Errors.Add("00005", Resources.Errors.ERR00005);
+                this.Errors.Add("00105", Resources.Errors.ERR00105);
             }
 
             if (obj.ContributorGuid == null || string.IsNullOrWhiteSpace(obj.ContributorGuid.ToString()))
             {
-                this.Errors.Add("00006", Resources.Errors.ERR00006);
+                this.Errors.Add("00106", Resources.Errors.ERR00106);
             }
 
             if (obj.Difficulty != AssetDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
             {
-                this.Errors.Add("00007", Resources.Errors.ERR00007);
+                this.Errors.Add("00107", Resources.Errors.ERR00107);
             }
 
             if (obj.Importance != AssetImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
             {
-                this.Errors.Add("00008", Resources.Errors.ERR00008);
+                this.Errors.Add("00108", Resources.Errors.ERR00108);
             }
 
             if (obj.PassingScore.HasValue && (obj.PassingScore <= 0 || obj.PassingScore > 100))
             {
-                this.Errors.Add("00009", Resources.Errors.ERR00009);
+                this.Errors.Add("00109", Resources.Errors.ERR00109);
             }
 
             if (string.IsNullOrWhiteSpace(obj.Title) || obj.Title.Length > 100)
             {
-                this.Errors.Add("00010", Resources.Errors.ERR00010);
+                this.Errors.Add("00110", Resources.Errors.ERR00110);
             }
 
             if(obj.Uri == null || string.IsNullOrWhiteSpace(obj.Uri.ToString()))
             {
-                this.Errors.Add("00011", Resources.Errors.ERR00011);
+                this.Errors.Add("00111", Resources.Errors.ERR00111);
             }
             else if(obj.Uri.Length > 50)
             {
-                this.Errors.Add("00012", Resources.Errors.ERR00012);
+                this.Errors.Add("00112", Resources.Errors.ERR00112);
             }
         }
 

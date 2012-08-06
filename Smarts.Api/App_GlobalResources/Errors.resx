@@ -126,7 +126,7 @@
     <comment>This is a placeholder, it dynamically generates errors based on db errors.</comment>
   </data>
   <data name="ERR00002" xml:space="preserve">
-    <value>The {0} specified was not found.</value>
+    <value>The item specified was not found.</value>
     <comment>For when an object that is expected to be found does not exist.</comment>
   </data>
   <data name="ERR00003" xml:space="preserve">
@@ -134,38 +134,42 @@
     <comment>For when a required id in a parameter or object is not specified.</comment>
   </data>
   <data name="ERR00004" xml:space="preserve">
-    <value>The {0} is null.</value>
+    <value>The item is null.</value>
     <comment>For when an object is null.</comment>
   </data>
   <data name="ERR00005" xml:space="preserve">
+    <value>You are not authorized to access the resource or action specified.</value>
+    <comment>General authentication error.</comment>
+  </data>
+  <data name="ERR00105" xml:space="preserve">
     <value>The asset type must be specified.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00006" xml:space="preserve">
+  <data name="ERR00106" xml:space="preserve">
     <value>The contributor must be specified.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00007" xml:space="preserve">
+  <data name="ERR00107" xml:space="preserve">
     <value>Difficulty rating must be between 1 and 5 if specified.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00008" xml:space="preserve">
+  <data name="ERR00108" xml:space="preserve">
     <value>Importance rating must be between 1 and 5 if specified.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00009" xml:space="preserve">
+  <data name="ERR00109" xml:space="preserve">
     <value>Passing score must be between 1 and 100 if specified.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00010" xml:space="preserve">
+  <data name="ERR00110" xml:space="preserve">
     <value>Asset title must be specified and can not exceed 100 characters.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00011" xml:space="preserve">
+  <data name="ERR00111" xml:space="preserve">
     <value>Asset uri is required.</value>
     <comment>Asset validation.</comment>
   </data>
-  <data name="ERR00012" xml:space="preserve">
+  <data name="ERR00112" xml:space="preserve">
     <value>The specified uri is too long, please use a url shortening tool such as http://www.bit.ly</value>
     <comment>Asset validation.</comment>
   </data>

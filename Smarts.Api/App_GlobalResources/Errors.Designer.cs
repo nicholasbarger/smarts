@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} specified was not found..
+        ///   Looks up a localized string similar to The item specified was not found..
         /// </summary>
         internal static string ERR00002 {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} is null..
+        ///   Looks up a localized string similar to The item is null..
         /// </summary>
         internal static string ERR00004 {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The asset type must be specified..
+        ///   Looks up a localized string similar to You are not authorized to access the resource or action specified..
         /// </summary>
         internal static string ERR00005 {
             get {
@@ -115,65 +115,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The asset type must be specified..
+        /// </summary>
+        internal static string ERR00105 {
+            get {
+                return ResourceManager.GetString("ERR00105", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The contributor must be specified..
         /// </summary>
-        internal static string ERR00006 {
+        internal static string ERR00106 {
             get {
-                return ResourceManager.GetString("ERR00006", resourceCulture);
+                return ResourceManager.GetString("ERR00106", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Difficulty rating must be between 1 and 5 if specified..
         /// </summary>
-        internal static string ERR00007 {
+        internal static string ERR00107 {
             get {
-                return ResourceManager.GetString("ERR00007", resourceCulture);
+                return ResourceManager.GetString("ERR00107", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Importance rating must be between 1 and 5 if specified..
         /// </summary>
-        internal static string ERR00008 {
+        internal static string ERR00108 {
             get {
-                return ResourceManager.GetString("ERR00008", resourceCulture);
+                return ResourceManager.GetString("ERR00108", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Passing score must be between 1 and 100 if specified..
         /// </summary>
-        internal static string ERR00009 {
+        internal static string ERR00109 {
             get {
-                return ResourceManager.GetString("ERR00009", resourceCulture);
+                return ResourceManager.GetString("ERR00109", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Asset title must be specified and can not exceed 100 characters..
         /// </summary>
-        internal static string ERR00010 {
+        internal static string ERR00110 {
             get {
-                return ResourceManager.GetString("ERR00010", resourceCulture);
+                return ResourceManager.GetString("ERR00110", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Asset uri is required..
         /// </summary>
-        internal static string ERR00011 {
+        internal static string ERR00111 {
             get {
-                return ResourceManager.GetString("ERR00011", resourceCulture);
+                return ResourceManager.GetString("ERR00111", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The specified uri is too long, please use a url shortening tool such as http://www.bit.ly.
         /// </summary>
-        internal static string ERR00012 {
+        internal static string ERR00112 {
             get {
-                return ResourceManager.GetString("ERR00012", resourceCulture);
+                return ResourceManager.GetString("ERR00112", resourceCulture);
             }
         }
     }

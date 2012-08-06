@@ -13,6 +13,11 @@ namespace Smarts.Web.Controllers
             return View();
         }
 
+        public ActionResult Enroll()
+        {
+            return View();
+        }
+
         public ActionResult HowItWorks()
         {
             return View();
