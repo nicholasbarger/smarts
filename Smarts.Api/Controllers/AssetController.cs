@@ -41,41 +41,25 @@ namespace Smarts.Api.Controllers
                 List<Asset> assets = null;
                 using (var queries = new AssetQueries(db))
                 {
-                    assets = queries.GetAssetsQuery().ToList();
+                    assets = queries.GetQuery().ToList();
                 }
 
-                // If not null, add to payload
-                if (assets != null)
-                {
-                    payload.Data = assets;
-                }
-                else
+                // Check if null to add error
+                if (assets == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }                
-            }
-            catch (DbEntityValidationException dbex)
-            {
-                // Assign errors from db
-                payload.AssignDbErrors(dbex);
+                }
+
+                payload.Data = assets;
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Log(ex);
-
-                payload.Errors.Add("00000", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+                payload.AssignExceptionErrors(ex);
             }
 
             // Return proper response message
-            if (payload.IsSuccess)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
         // GET api/asset/5
@@ -89,41 +73,25 @@ namespace Smarts.Api.Controllers
                 Asset asset = null;
                 using (var queries = new AssetQueries(db))
                 {
-                    asset = queries.GetAsset(id);
+                    asset = queries.Get(id);
                 }
 
-                // If not null, add to payload
-                if (asset != null)
-                {
-                    payload.Data = asset;
-                }
-                else
+                // Check if null to add error
+                if (asset == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
-            }
-            catch (DbEntityValidationException dbex)
-            {
-                // Assign errors from db
-                payload.AssignDbErrors(dbex);
+
+                payload.Data = asset;
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Log(ex);
-
-                payload.Errors.Add("00000", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+                payload.AssignExceptionErrors(ex);
             }
 
             // Return proper response message
-            if (payload.IsSuccess)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
         // POST api/asset
@@ -148,7 +116,7 @@ namespace Smarts.Api.Controllers
                     // Save
                     using (var queries = new AssetQueries(db))
                     {
-                        queries.SaveAsset(ref obj);
+                        queries.Save(ref obj);
                     }
 
                     // Update payload
@@ -160,28 +128,14 @@ namespace Smarts.Api.Controllers
                     payload.AssignValidationErrors(rules.Errors);
                 }
             }
-            catch(DbEntityValidationException dbex)
-            {
-                // Assign errors from db
-                payload.AssignDbErrors(dbex);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.Log(ex);
-
-                payload.Errors.Add("00000", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+                payload.AssignExceptionErrors(ex);
             }
 
             // Return proper response message
-            if (payload.IsSuccess)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
         // PUT api/asset/5
@@ -201,7 +155,7 @@ namespace Smarts.Api.Controllers
                     // Save
                     using (var queries = new AssetQueries(db))
                     {
-                        queries.SaveAsset(ref obj);
+                        queries.Save(ref obj);
                     }
 
                     // Update payload
@@ -213,28 +167,14 @@ namespace Smarts.Api.Controllers
                     payload.AssignValidationErrors(rules.Errors);
                 }
             }
-            catch (DbEntityValidationException dbex)
-            {
-                // Assign errors from db
-                payload.AssignDbErrors(dbex);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.Log(ex);
-
-                payload.Errors.Add("00000", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+                payload.AssignExceptionErrors(ex);
             }
 
             // Return proper response message
-            if (payload.IsSuccess)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
         // DELETE api/asset/5
@@ -249,28 +189,14 @@ namespace Smarts.Api.Controllers
                     payload.Data = queries.Delete(id);
                 }
             }
-            catch (DbEntityValidationException dbex)
-            {
-                // Assign errors from db
-                payload.AssignDbErrors(dbex);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.Log(ex);
-
-                payload.Errors.Add("00000", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, payload);
+                payload.AssignExceptionErrors(ex);
             }
 
             // Return proper response message
-            if (payload.IsSuccess)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, payload);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, payload);
-            }
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
     }
 }

@@ -6,7 +6,11 @@ using Smarts.Api.Models;
 
 namespace Smarts.Api.Db
 {
-    public class AssetQueries : IDisposable
+    /// <summary>
+    /// Database queries and interaction goes here.
+    /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
+    /// </summary>
+    internal class AssetQueries : IDbCrud<Asset>, IDisposable
     {
         private SmartsDbContext context;
 
@@ -21,7 +25,7 @@ namespace Smarts.Api.Db
             if (id > 0)
             {
                 // Get asset
-                var asset = GetAsset(id);
+                var asset = Get(id);
 
                 // If not null, set inactive and save
                 if (asset != null)
@@ -30,30 +34,30 @@ namespace Smarts.Api.Db
                     asset.IsActive = false;
 
                     // Save asset
-                    result = SaveAsset(ref asset);
+                    result = Save(ref asset);
                 }
             }
 
             return result;
         }
 
-        public Asset GetAsset(int id)
+        public Asset Get(int id)
         {
             Asset asset = null;
             if (id > 0)
             {
-                asset = context.Assets.Single(a => a.Id == id);
+                asset = context.Assets.SingleOrDefault(a => a.Id == id);
             }
 
             return asset;
         }
 
-        public IQueryable<Asset> GetAssetsQuery()
+        public IQueryable<Asset> GetQuery()
         {
             return context.Assets.Where(a => a.IsActive == true);
         }
 
-        public bool SaveAsset(ref Asset obj)
+        public bool Save(ref Asset obj)
         {
             bool result = false;
             if (obj != null)

@@ -6,7 +6,11 @@ using Smarts.Api.Models;
 
 namespace Smarts.Api.Logic
 {
-    public class ValidationRules
+    /// <summary>
+    /// Put all validation rules across all objects here.
+    /// A new overloaded method should be created accepting each type of model.
+    /// </summary>
+    internal class ValidationRules
     {
         /// <summary>
         /// Contains the list of errors during validation.

@@ -33,3 +33,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// Allow internal methods to be testable using unit tests from http://stackoverflow.com/questions/358196/c-sharp-internal-access-modifier-when-doing-unit-testing
+[assembly: InternalsVisibleTo("Smarts.Api.Tests")]

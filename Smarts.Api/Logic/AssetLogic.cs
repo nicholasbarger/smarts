@@ -6,8 +6,15 @@ using Smarts.Api.Models;
 
 namespace Smarts.Api.Logic
 {
-    public class AssetLogic
+    /// <summary>
+    /// Place all business logic methods in here.
+    /// </summary>
+    internal class AssetLogic
     {
+        /// <summary>
+        /// Set the default values when creating a new educational asset.
+        /// </summary>
+        /// <param name="asset"></param>
         public void SetDefaults(ref Asset asset)
         {
             asset.Created = DateTime.Now;

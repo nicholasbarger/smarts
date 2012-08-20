@@ -7,7 +7,10 @@ using Smarts.Api.Models;
 
 namespace Smarts.Api.Db
 {
-    public class SmartsDbContext : DbContext
+    /// <summary>
+    /// The EF db context for the smarts database.
+    /// </summary>
+    internal class SmartsDbContext : DbContext
     {
         public SmartsDbContext() : base("SmartsDbContext") { }
 

@@ -145,6 +145,7 @@
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Db\AssetQueries.cs" />
+    <Compile Include="Db\IDbCrud.cs" />
     <Compile Include="Db\SmartsDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

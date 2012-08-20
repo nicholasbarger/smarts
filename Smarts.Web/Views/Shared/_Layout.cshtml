@@ -6,20 +6,31 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
 
-        <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../Content/smarts.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/smarts.css" />
         
-        <script type="text/javascript" src="../../Scripts/jquery-1.7.2.js"></script>
-        <script type="text/javascript" src="../../Scripts/jquery.validate.js"></script>
-        <script type="text/javascript" src="../../Scripts/knockout-2.1.0.js"></script>
-        <script type="text/javascript" src="../../Scripts/bootstrap.js"></script>
+        <script type="text/javascript" src="/Scripts/jquery-1.7.2.js"></script>
+        <script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
+        <script type="text/javascript" src="/Scripts/knockout-2.1.0.js"></script>
+        <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+        <script type="text/javascript" src="/Scripts/smarts.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                // create viewmodel
+                var layoutVM = new LayoutViewModel();
+
+                // apply knockout bindings
+                ko.applyBindings(layoutVM);
+            });            
+        </script>
     </head>
     <body>
         <header>
             <div class="navbar">
                 <div class="navbar-inner">
                     <div class="container">
-                        <img src="../../Content/images/logo-small-white.png" /> 
+                        <img src="/Content/images/logo-small-white.png" /> 
                         <a href="/" class="company">Smarts</a>
 
                         <a href="/Home/Enroll" class="btn btn-success pull-right"><i class="icon-star icon-white"></i></a>
@@ -45,23 +56,32 @@
                         <legend>Please enter the basics</legend>
 
                         <div class="control-group">
-                            <label class="control-label required" for="title">Title</label>
                             <div class="controls">
-                                <input type="text" id="title" name="title" class="required" />
+                                <select id="assetType" name="assetType" class="required" 
+                                    data-bind="options: assetTypes, 
+                                        optionsCaption: 'Asset Type', 
+                                        optionsText: 'Name', 
+                                        optionsValue: 'Id', 
+                                        value: assetType">
+                                </select>
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label required" for="url">Url</label>
                             <div class="controls">
-                                <input type="text" id="url" name="url" class="required url" />
+                                <input type="text" id="title" name="title" class="required" data-bind="value: title" placeholder="Title" />
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="description">Description</label>
                             <div class="controls">
-                                <textarea id="description" name="description"></textarea>
+                                <input type="text" id="url" name="url" class="required url" data-bind="value: url" placeholder="Url" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <textarea id="description" name="description" data-bind="value: description" placeholder="Description"></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -127,7 +147,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary">Save changes</a>
+                <a href="#" class="btn btn-primary" data-bind="click: addResource">Save changes</a>
             </div>
         </div>
 

@@ -6,8 +6,13 @@ using System.Web;
 
 namespace Smarts.Api.Models
 {
+    /// <summary>
+    /// An educational asset.
+    /// </summary>
     public class Asset
     {
+        #region Properties
+
         /// <summary>
         /// The unique id for the database record.
         /// </summary>
@@ -78,6 +83,51 @@ namespace Smarts.Api.Models
         /// The web location of the asset.
         /// </summary>
         public string Uri { get; set; }
+
+        #endregion
+
+        #region Virtual Properties
+
+        // todo
+
+        #endregion
+
+        #region Methods
+
+        public override bool Equals(object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to Asset return false.
+            Asset other = obj as Asset;
+            if ((System.Object)other == null)
+            {
+                return false;
+            }
+
+            // Check properties
+            return (
+                this.AssetTypeId.Equals(other.AssetTypeId) &&
+                this.ContributorGuid.Equals(other.ContributorGuid) &&
+                this.Cost.Equals(other.Cost) &&
+                this.Description.Equals(other.Description) &&
+                this.Difficulty.Equals(other.Difficulty) &&
+                this.Id.Equals(other.Id) &&
+                this.Importance.Equals(other.Importance) &&
+                this.IsActive.Equals(other.IsActive) &&
+                this.IsScoreable.Equals(other.IsScoreable) &&
+                this.IsTestRequired.Equals(other.IsTestRequired) &&
+                this.PassingScore.Equals(other.PassingScore) &&
+                this.Title.Equals(other.Title) &&
+                this.Uri.Equals(other.Uri)
+            );
+        }
+
+        #endregion
     }
 
     public enum AssetDifficulty

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Smarts.Api.Models
 {
+    /// <summary>
+    /// A structured format for payloads to be returned from REST calls in web api.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Payload<T>
     {
         private bool isSuccess = false;
@@ -45,9 +52,7 @@ namespace Smarts.Api.Models
         /// </summary>
         public List<string> Messages { get; set; }
 
-        /// <summary>
-        /// Several constructors exist for creating a payload.
-        /// </summary>
+        // Several constructors exist for creating a payload.
         #region Constructors
 
         public Payload()
@@ -83,7 +88,38 @@ namespace Smarts.Api.Models
 
         #endregion
 
-        #region Helper methods for assigning properties
+        // Methods (hopefully not too heavy logic in here)
+        #region Helper Methods for Assigning Properties
+
+        public void AssignExceptionErrors(Exception ex)
+        {
+            if (ex is DbEntityValidationException)
+            {
+                var sb = new StringBuilder();
+                sb.Append(Resources.Errors.ERR00001 + Environment.NewLine + Environment.NewLine);
+                foreach (var validationErrors in (ex as DbEntityValidationException).EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        sb.Append(validationError.ErrorMessage + Environment.NewLine);
+                    }
+                }
+
+                this.Errors.Add("00001", sb.ToString());
+            }
+            else if (ex is DbUpdateException || ex is SqlException)
+            {
+                this.Errors.Add("00001", ex.Message);
+            }
+            else if (ex is UnauthorizedAccessException)
+            {
+                this.Errors.Add("00005", Resources.Errors.ERR00005);
+            }
+            else
+            {
+                this.Errors.Add("00000", Resources.Errors.ERR00000);
+            }
+        }
 
         public void AssignValidationErrors(Dictionary<string, string> valErrors)
         {
