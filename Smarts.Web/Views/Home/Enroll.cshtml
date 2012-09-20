@@ -79,3 +79,15 @@
         <p>If you like what we're doing or having suggestions for improving, let us know by <a href="#">signing the wall</a>. Also, if you would like to see what we're working on view our <a href="#" target="_blank">Trello board</a> and vote or recommend new features.</p>
     </div>
 </div>
+
+@section PageScript {
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var vm = new HomeEnrollViewModel();
+
+        // apply knockout bindings
+        ko.applyBindings(vm);
+    });
+</script>
+}

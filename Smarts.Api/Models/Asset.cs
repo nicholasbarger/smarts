@@ -54,6 +54,8 @@ namespace Smarts.Api.Models
         /// </summary>
         public AssetImportance Importance { get; set; }
 
+        public string PictureUri { get; set; }
+
         /// <summary>
         /// Whether the asset is active (not deleted) or not.
         /// </summary>
@@ -88,7 +90,20 @@ namespace Smarts.Api.Models
 
         #region Virtual Properties
 
-        // todo
+        /// <summary>
+        /// The type of asset.
+        /// </summary>
+        public virtual AssetType AssetType { get; set; }
+
+        /// <summary>
+        /// User comments associated with this educational asset.
+        /// </summary>
+        public virtual List<Comment> Comments { get; set; }
+
+        /// <summary>
+        /// The user who contributed this educational asset.
+        /// </summary>
+        public virtual WebUser Contributor { get; set; }
 
         #endregion
 

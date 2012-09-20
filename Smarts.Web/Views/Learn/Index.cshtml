@@ -12,7 +12,7 @@
         <form id="subjectSearchForm" class="well form-search">
             <div class="controls">
                 <div class="input-append" style="width: 100%;">
-                    <input type="text" placeholder="search subjects" style="width: 75%;"><button class="btn" type="button"><i class="icon-wrench"></i></button>
+                    <input type="text" placeholder="search subjects" style="width: 75%;" data-bind="value: subjectSearchTerm"><button class="btn" type="button" data-bind="click: searchSubjects"><i class="icon-wrench"></i></button>
                 </div>
             </div>
         </form>
@@ -54,31 +54,31 @@
             Best check yo self, you're not done yet...
         </div>
 
-        <!-- search resources -->
-        <form id="resourceSearchForm" class="well form-search">
+        <!-- search assets -->
+        <form id="assetSearchForm" class="well form-search">
             <div class="controls">
                 <div class="input-append" style="width: 100%;">
-                    <input type="text" placeholder="search resources" style="width: 90%;"><button class="btn" type="button"><i class="icon-wrench"></i></button>
+                    <input type="text" placeholder="search assets" style="width: 90%;" data-bind="value: assetSearchTerm"><button class="btn" type="button" data-bind="click: searchAssets"><i class="icon-wrench"></i></button>
                 </div>
             </div>
         </form>
 
-        <!-- resource results -->
+        <!-- asset results -->
         <div id="resourceResults">
-            <div class="container-fluid">
-                <!-- begin sample 1 -->
+            <div class="container-fluid" data-bind="foreach: assets">
+                <!-- begin asset -->
                 <div class="row-fluid">
                     <!-- image -->
                     <div class="span2">
-                        <a href="/Learn/Detail/1"><img src="../../Content/images/sample-asset.gif" width="125" /></a>
+                        <a data-bind="attr: { href: '/Learn/Detail/' + Id }"><img width="125" data-bind="attr: { src: PictureUri, alt: Title }" /></a>
                     </div>
 
                     <!-- description -->
                     <div class="span6">
                         <i class="icon-book"></i>
-                        <strong><a href="/Learn/Detail/1">Algorithms: Design and Analysis, Part 1</a></strong><br />
-                        <small>Tim Roughgarden, Associate Professor</small><br /><br />
-                        <p>In this course you will learn several fundamental principles of algorithm design: divide-and-conquer methods, graph algorithms, practical data structures, randomized algorithms, and more.</p>
+                        <strong><a data-bind="attr: { href: '/Learn/Detail/' + Id }, text: Title">[Title]</a></strong><br />
+                        <small data-bind="text: Contributor.FullName + ', ' + Contributor.Title">[Contributor.FullName, Contributor.Title]</small><br /><br />
+                        <div data-bind="text: Description"></div>
                     </div>
 
                     <!-- stats -->
@@ -96,75 +96,23 @@
                         <p>1,024 students have completed this resource (<a href="#">34 comments</a>)</p>
                     </div>
                 </div>
-                <!-- end sample 1 -->
 
                 <hr />
+                <!-- end asset -->
 
-                <!-- begin sample 2 -->
-                <div class="row-fluid">
-                    <!-- image -->
-                    <div class="span2">
-                        <img src="../../Content/images/sample-asset2.jpg" width="125" />
-                    </div>
-
-                    <!-- description -->
-                    <div class="span6">
-                        <i class="icon-leaf"></i>
-                        <strong><a href="#">Diagramming What Happens with a Function Call: Variable scope and function calls</a></strong><br />
-                        <small>Khan Academy</small><br /><br />
-                    </div>
-
-                    <!-- stats -->
-                    <div class="span3">
-                        <span style="width: 100px;">Importance</span>
-                        <div class="progress progress-striped">
-                            <div class="bar" style="width: 65%;"></div>
-                        </div>
-
-                        <span>Difficulty</span>
-                        <div class="progress progress-striped">
-                            <div class="bar" style="width: 10%;"></div>
-                        </div>
-
-                        <p>3,014 students have completed this resource (<a href="#">99 comments</a>)</p>
-                    </div>
-                </div>
-                <!-- end sample 2 -->
-
-                <hr />
-
-                <!-- begin sample 3 -->
-                <div class="row-fluid">
-                    <!-- image -->
-                    <div class="span2">
-                        <img src="../../Content/images/sample-asset3.gif" width="125" />
-                    </div>
-
-                    <!-- description -->
-                    <div class="span6">
-                        <i class="icon-facetime-video"></i>
-                        <strong><a href="#">Software Engineering for SaaS</a></strong><br />
-                        <small>Armando Fox, David Patterson</small><br /><br />
-                        <p>This course teaches the engineering fundamentals for long-lived software using the highly-productive Agile development method for Software as a Service (SaaS) using Ruby on Rails.</p>
-                    </div>
-
-                    <!-- stats -->
-                    <div class="span3">
-                        <span style="width: 100px;">Importance</span>
-                        <div class="progress progress-striped">
-                            <div class="bar" style="width: 50%;"></div>
-                        </div>
-
-                        <span>Difficulty</span>
-                        <div class="progress progress-striped">
-                            <div class="bar" style="width: 50%;"></div>
-                        </div>
-
-                        <p>123 students have completed this resource (<a href="#">4 comments</a>)</p>
-                    </div>
-                </div>
-                <!-- end sample 3 -->
             </div>
         </div>
     </div>
 </div>
+
+@section PageScript {
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var vm = new LearnIndexViewModel();
+
+        // apply knockout bindings
+        ko.applyBindings(vm);
+    });
+</script>
+}

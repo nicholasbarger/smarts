@@ -64,3 +64,15 @@
         </fieldset>
     </div>
 </div>
+
+@section PageScript {
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var vm = new HomeHowItWorksViewModel();
+
+        // apply knockout bindings
+        ko.applyBindings(vm);
+    });
+</script>
+}

@@ -1,0 +1,67 @@
+﻿@<h2>Smarts Guide</h2>
+<p>This page helps explain the guidelines for adding to the Smarts project.  These are not meant to be constraining in the work produced, simply to help maintain consistency for all developers.</p>
+<ul>
+    <li><a href="#technologies">Technologies used in this project</a></li>
+    <li><a href="#template">A basic html page template</a></li>
+    <li><a href="#errors">Error handling</a></li>
+    <li><a href="#messages">Messages and notifications</a></li>
+    <li><a href="#payload">An explanation of the Payload model</a></li>
+    <li><a href="#rest">Available REST queries</a></li>
+    <li><a href="#snippets">Common code snippets</a></li>
+</ul>
+
+<!-- Technologies -->
+<a id="technologies"></a>
+<h3>Technologies used in this project</h3>
+<ul>
+    <li>Microsoft .NET 4.5 (C#)</li>
+    <li>REST (Microsoft WebApi)</li>
+    <li>HTML5/CSS3</li>
+    <li>jQuery 1.7.2</li>
+    <li>Bootstrap by Twitter</li>
+</ul>
+
+<a id="snippets"></a>
+<h3>Common code snippets</h3>
+<h4>jQuery $.ajax()</h4>
+<p>The following is a code snippet for jquery ajax calls.  Please replace the url and data values with ones that pertain to your use.</p>
+
+<code>
+$.ajax({
+    url: '/api/do/quote/AddLineItem',
+    data: JSON.stringify({ QuoteID: item.QuoteID(), PartNumber: item.PartNumber() }),
+    type: 'POST',
+	contentType: "application/json; charset=utf-8",
+    dataType: 'JSON',
+    success: function (response) {
+
+        // do some logic here
+
+    },
+    error: function (response) {
+        updateMessageFromResponse(response);
+    }
+});
+</code>
+
+<h4>jQuery $.json()</h4>
+<p>The following is a code snippet for getting data with jquery using the shorthand getJSON.  Replace the url and data between the brackets for your use case.</p>
+
+<code>
+$.getJSON('/api/quote', { customerCode: customerCode, startDate: self.startDate(), endDate: self.endDate(), limit: 0 }, function (response) {
+
+    // do some logic here
+});
+</code>
+
+@section PageScript {
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var vm = new InfoIndexViewModel();
+
+        // apply knockout bindings
+        ko.applyBindings(vm);
+    });
+</script>
+}

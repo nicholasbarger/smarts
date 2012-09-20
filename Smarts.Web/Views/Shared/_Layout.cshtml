@@ -6,24 +6,9 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
 
+        <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/Content/smarts.css" />
-        
-        <script type="text/javascript" src="/Scripts/jquery-1.7.2.js"></script>
-        <script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
-        <script type="text/javascript" src="/Scripts/knockout-2.1.0.js"></script>
-        <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
-        <script type="text/javascript" src="/Scripts/smarts.js"></script>
-
-        <script type="text/javascript">
-            $(function () {
-                // create viewmodel
-                var layoutVM = new LayoutViewModel();
-
-                // apply knockout bindings
-                ko.applyBindings(layoutVM);
-            });            
-        </script>
     </head>
     <body>
         <header>
@@ -41,178 +26,208 @@
             </div>
         </header>
 
+        <!-- Container content -->
         <div class="container-fluid">
             @RenderBody()
         </div>
 
-        <div class="modal hide fade" id="add">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Add New Resource</h3>
-            </div>
-            <div class="modal-body">
-                <form id="addForm" name="addForm" class="well form-vertical">
-                    <fieldset>
-                        <legend>Please enter the basics</legend>
+        <!-- In-view popup content -->
+        <div class="layoutBindings">
 
-                        <div class="control-group">
-                            <div class="controls">
-                                <select id="assetType" name="assetType" class="required" 
-                                    data-bind="options: assetTypes, 
-                                        optionsCaption: 'Asset Type', 
-                                        optionsText: 'Name', 
-                                        optionsValue: 'Id', 
-                                        value: assetType">
-                                </select>
-                            </div>
-                        </div>
+            <!-- Add a new resource -->
+            <div class="modal hide fade" id="add">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Add New Resource</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" name="addForm" class="well form-vertical">
+                        <fieldset>
+                            <legend>Please enter the basics</legend>
 
-                        <div class="control-group">
-                            <div class="controls">
-                                <input type="text" id="title" name="title" class="required" data-bind="value: title" placeholder="Title" />
+                            <div class="control-group">
+                                <div class="controls">
+                                    <select id="assetType" name="assetType" class="required" 
+                                        data-bind="options: assetTypes, 
+                                            optionsCaption: 'Asset Type', 
+                                            optionsText: 'Name', 
+                                            optionsValue: 'Id', 
+                                            value: assetType">
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="control-group">
-                            <div class="controls">
-                                <input type="text" id="url" name="url" class="required url" data-bind="value: url" placeholder="Url" />
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" id="title" name="title" class="required" data-bind="value: title" placeholder="Title" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="control-group">
-                            <div class="controls">
-                                <textarea id="description" name="description" data-bind="value: description" placeholder="Description"></textarea>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" id="url" name="url" class="required url" data-bind="value: url" placeholder="Url" />
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <textarea id="description" name="description" data-bind="value: description" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
                     
-                    <a href="#">Advanced</a>
+                        <a href="#">Advanced</a>
 
-                    <div id="advancedAdd" style="display: none;">
-                        <fieldset>
-                            <legend>Tag this resource with subject(s)</legend>
+                        <div id="advancedAdd" style="display: none;">
+                            <fieldset>
+                                <legend>Tag this resource with subject(s)</legend>
 
-                            <div class="control-group">
-                                <label class="control-label" for="subject">Subject</label>
-                                <div class="controls">
-                                    <input type="text" id="subject" name="subject">
+                                <div class="control-group">
+                                    <label class="control-label" for="subject">Subject</label>
+                                    <div class="controls">
+                                        <input type="text" id="subject" name="subject">
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
 
-                        <fieldset>
-                            <legend>You can also add specific information</legend>
+                            <fieldset>
+                                <legend>You can also add specific information</legend>
 
-                            <div class="control-group">
-                                <label class="control-label" for="isTestRequired">Is a test required to complete this resource?</label>
-                                <div class="controls">
-                                    <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" /> Yes, a test is required.</label>
+                                <div class="control-group">
+                                    <label class="control-label" for="isTestRequired">Is a test required to complete this resource?</label>
+                                    <div class="controls">
+                                        <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" /> Yes, a test is required.</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <hr />
+                                <hr />
 
-                            <div class="control-group">
-                                <label class="control-label" for="isScoreable">Can you receive a score for this resource?</label>
-                                <div class="controls">
-                                    <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" /> Yes, you can receive a score for this resource.</label>
+                                <div class="control-group">
+                                    <label class="control-label" for="isScoreable">Can you receive a score for this resource?</label>
+                                    <div class="controls">
+                                        <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" /> Yes, you can receive a score for this resource.</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="control-group">
-                                <label class="control-label" for="passingScore">Minimum Passing Score</label>
-                                <div class="controls">
-                                    <input type="text" id="passingScore" name="passingScore" class="input-small">
+                                <div class="control-group">
+                                    <label class="control-label" for="passingScore">Minimum Passing Score</label>
+                                    <div class="controls">
+                                        <input type="text" id="passingScore" name="passingScore" class="input-small">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <hr />
+                                <hr />
 
-                            <div class="control-group">
-                                <label class="control-label" for="isCost">Does this resource cost money?</label>
-                                <div class="controls">
-                                    <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" /> Yes, this resource costs money.</label>
+                                <div class="control-group">
+                                    <label class="control-label" for="isCost">Does this resource cost money?</label>
+                                    <div class="controls">
+                                        <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" /> Yes, this resource costs money.</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="control-group">
-                                <label class="control-label" for="cost">Cost in USD</label>
-                                <div class="controls">
-                                    <input type="text" id="cost" name="cost" class="input-small">
+                                <div class="control-group">
+                                    <label class="control-label" for="cost">Cost in USD</label>
+                                    <div class="controls">
+                                        <input type="text" id="cost" name="cost" class="input-small">
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                </form>
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn btn-primary" data-bind="click: addResource">Save changes</a>
+                </div>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary" data-bind="click: addResource">Save changes</a>
-            </div>
-        </div>
 
-        <div class="modal hide fade" id="account">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Nicholas Barger</h3>
-            </div>
-            <div class="modal-body">
-                <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" alt="Nicholas Barger" class="pull-right" />
+            <!-- My account -->
+            <div class="modal hide fade" id="account">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Nicholas Barger</h3>
+                </div>
+                <div class="modal-body">
+                    <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" alt="Nicholas Barger" class="pull-right" />
                 
-                <div class="account-stats">
-                    <label>Member Since</label><span>8/1/2012 (4 days)</span>
-                    <label>Smarts Score</label><span class="score-small">10,240</span>
-                    <label>Contributed</label>
-                    <span>
-                        <span class="stat-number">419</span> educational resources added<br /> 
-                        <span class="stat-number">1,289</span> votes cast<br />
-                        <span class="stat-number">3,200</span> votes by other people</span>
-                </div>
+                    <div class="account-stats">
+                        <label>Member Since</label><span>8/1/2012 (4 days)</span>
+                        <label>Smarts Score</label><span class="score-small">10,240</span>
+                        <label>Contributed</label>
+                        <span>
+                            <span class="stat-number">419</span> educational resources added<br /> 
+                            <span class="stat-number">1,289</span> votes cast<br />
+                            <span class="stat-number">3,200</span> votes by other people</span>
+                    </div>
 
-                <div>
-                    <label>Subjects you're recently active on</label>
-                    <a href="#">Computer Science</a> |
-                    <a href="#">Entrpreneurship</a> |
-                    <a href="#">C#</a> |
-                    <a href="#">Programming</a> |
-                    <a href="#">Teaching</a>
-                </div>
+                    <div>
+                        <label>Subjects you're recently active on</label>
+                        <a href="#">Computer Science</a> |
+                        <a href="#">Entrpreneurship</a> |
+                        <a href="#">C#</a> |
+                        <a href="#">Programming</a> |
+                        <a href="#">Teaching</a>
+                    </div>
 
-                <div class="links">
-                    <a href="#">Edit profile</a><br />
-                    <a href="#">Change password</a><br />
-                    <a href="#">Manage notifications</a><br />
-                    <a href="#">Logout</a>
+                    <div class="links">
+                        <a href="#">Edit profile</a><br />
+                        <a href="#">Change password</a><br />
+                        <a href="#">Manage notifications</a><br />
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn btn-primary">Save changes</a>
                 </div>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary">Save changes</a>
+
+            <!-- Enroll for free -->
+            <div class="modal hide fade" id="enroll">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Enroll for Free</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>You haven't enrolled yet!</h4>
+                    <p>We make sure you are free to use the site as much as you like even without enrolling, however, enrollment provides the following great features and is also <strong>completely free</strong>!</p>
+                    <ul class="benefits">
+                        <li>Track progress through your <a href="#">Smarts Score</a> and show your expertise in subjects</li>
+                        <li>Automatically save your history and see which educational resources you've already visited and completed</li>
+                        <li>Contribute to the community by adding great educational resources you've discovered</li>
+                        <li><span class="important">Optionally</span>, allow companies to interview and potentially hire you</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                    <a href="/Home/Enroll" class="btn btn-primary">Enroll</a><br />
+                    <label for="stopNaggingToEnroll" class="pull-left"><input type="checkbox" id="stopNaggingToEnroll" name="stopNaggingToEnroll" /> Stop nagging me to enroll, I will when I feel like it</label>
+                </div>
             </div>
         </div>
 
-        <div class="modal hide fade" id="enroll">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Enroll for Free</h3>
-            </div>
-            <div class="modal-body">
-                <h4>You haven't enrolled yet!</h4>
-                <p>We make sure you are free to use the site as much as you like even without enrolling, however, enrollment provides the following great features and is also <strong>completely free</strong>!</p>
-                <ul class="benefits">
-                    <li>Track progress through your <a href="#">Smarts Score</a> and show your expertise in subjects</li>
-                    <li>Automatically save your history and see which educational resources you've already visited and completed</li>
-                    <li>Contribute to the community by adding great educational resources you've discovered</li>
-                    <li><span class="important">Optionally</span>, allow companies to interview and potentially hire you</li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="/Home/Enroll" class="btn btn-primary">Enroll</a><br />
-                <label for="stopNaggingToEnroll" class="pull-left"><input type="checkbox" id="stopNaggingToEnroll" name="stopNaggingToEnroll" /> Stop nagging me to enroll, I will when I feel like it</label>
-            </div>
-        </div>
-
-        <footer></footer>
+        <footer></footer>        
     </body>
+
+<!-- Scripts -->
+<script type="text/javascript" src="/Scripts/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/Scripts/knockout-2.1.0.js"></script>
+<script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+<script type="text/javascript" src="/Scripts/smarts.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var layoutVM = new LayoutViewModel();
+
+        // apply knockout bindings specifically to the first instance of layout bindings
+        // if we add additional areas for knockout binding in the layout we will need to iterate through the array
+        // this is to support multi-viewmodels from child pages.
+        ko.applyBindings(layoutVM, $('.layoutBindings')[0]);
+    });
+</script>
+
+@RenderSection("PageScript")
+
 </html>

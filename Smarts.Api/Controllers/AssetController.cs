@@ -31,9 +31,14 @@ namespace Smarts.Api.Controllers
         }
 
         // GET api/asset
+        // Examples: 
+        //      api/asset/      Retrieve list of assets (unfiltered)
+        //      api/asset/chem  Retrieve a list of assets matching a search term
         public HttpResponseMessage Get()
         {
             var payload = new HttpResponsePayload<List<Asset>>();
+
+            // todo: Match signature to operation
 
             try
             {

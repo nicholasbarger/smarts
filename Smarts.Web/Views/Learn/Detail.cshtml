@@ -6,69 +6,38 @@
     <li>
         <a href="/Learn">Learn</a> <span class="divider">/</span>
     </li>
-    <li class="active">Algorithms: Design and Analysis, Part 1</li>
+    <li class="active" data-bind="text: Title">[Title]</li>
 </ul>
 
 <div class="row-fluid">
     <div class="span9">
-        <h1><a href="http://bit.ly/2V6CFi">Algorithms: Design and Analysis, Part 1</a></h1>
-        <small>Tim Roughgarden, Associate Professor</small><br /><br />
-        <p>In this course you will learn several fundamental principles of algorithm design: divide-and-conquer methods, graph algorithms, practical data structures, randomized algorithms, and more.</p>
-
-        <h2>About the Course</h2>
-        <p>In this course you will learn several fundamental principles of algorithm design. You'll learn the divide-and-conquer design paradigm, with applications to fast sorting, searching, and multiplication. You'll learn several blazingly fast primitives for computing on graphs, such as how to compute connectivity information and shortest paths. Finally, we'll study how allowing the computer to "flip coins" can lead to elegant and practical algorithms and data structures. Learn the answers to questions such as: How do data structures like heaps, hash tables, bloom filters, and balanced search trees actually work, anyway? How come QuickSort runs so fast? What can graph algorithms tell us about the structure of the Web and social networks? Did my 3rd-grade teacher explain only a suboptimal algorithm for multiplying two numbers?</p>
-
-        <h2>About the Instructor</h2>
-        <p>Tim Roughgarden is an Associate Professor of Computer Science and (by courtesy) Management Science and Engineering at Stanford University, where he holds the Chambers Faculty Scholar development chair. At Stanford, he has taught the Design and Analysis of Algorithms course for the past eight years. His research concerns the theory and applications of algorithms, especially for networks, auctions and other game-theoretic applications, and data privacy. For his research, he has been awarded the ACM Grace Murray Hopper Award, the Presidential Early Career Award for Scientists and Engineers (PECASE), the Shapley Lecturership of the Game Theory Society, a Sloan Fellowship, INFORM's Optimization Prize for Young Researchers, and the Mathematical Programming Society's Tucker Prize.</p>
+        <!-- Asset detail -->
+        <h1><a data-bind="text: Title">Title</a></h1>
+        <small data-bind="text: Contributor.FullName + ', ' + Contributor.Title">[Contributor Name], [Contributor Title]</small><br /><br />
+        <div data-bind="text: Description">[Description]</div>
 
         <hr />
 
-        <h3>34 Comments</h3>
-        <div class="row-fluid">
-            <div class="span1">
-                <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" />
-            </div>
-            <div class="span11">
-                <p>Here's another comment.</p>
-            </div>
-        </div>
-        <hr />
+        <!-- Asset comments -->
+        <h3><span data-bind="text: comments().length">[Number of comments]</span> Comments</h3>
 
-        <div class="row-fluid">
-            <div class="span1">
-                <img src="https://trello-avatars.s3.amazonaws.com/a6d630a0dc2484c8a2245b9312cd4346/original.png" />
+        <div data-bind="foreach: comments">
+            <div class="row-fluid">
+                <div class="span1">
+                    <img data-bind="attr: { src: Contributor.PictureUri, alt: Contributor.FullName }" />
+                </div>
+                <div class="span11">
+                    <p data-bind="text: Text">[Comment Text]</p>
+                </div>
             </div>
-            <div class="span11">
-                <p>I like comments.</p>
-            </div>
+            <hr />
         </div>
-        <hr />
-
-        <div class="row-fluid">
-            <div class="span1">
-                <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" />
-            </div>
-            <div class="span11">
-                <p>I think this is a good project and very worthwhile for everyone.  Imagine the impact of bringing all of this education into the lives of millions of people who for whatever reason were unable to have the opportunity of formal education.</p>
-            </div>
-        </div>
-        <hr />
-
-        <div class="row-fluid">
-            <div class="span1">
-                <img src="https://trello-avatars.s3.amazonaws.com/608e93b643ed88f7cbfa248e1f24e239/original.png" />
-            </div>
-            <div class="span11">
-                <p>This course was great and I was able to finish it in under a month.</p>
-            </div>
-        </div>
-
     </div>
     <div class="span3" style="text-align: center;">
-        <img src="../../Content/images/sample-asset.gif" /><br /><br />
+        <a data-bind="attr: { href: Uri }"><img data-bind="attr: { src: PictureUri, alt: Title }" /></a><br /><br />
         <p class="resourceUrl">
             Access this resource here:
-            <a href="http://bit.ly/2V6CFi">http://bit.ly/2V6CFi</a>
+            <a data-bind="attr: { href: Uri, text: Uri }">[Uri of Asset]</a>
         </p>
 
         <div style="text-align: left;">
@@ -86,3 +55,15 @@
         </div>
     </div>
 </div>
+
+@section PageScript {
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var vm = new LearnDetailViewModel();
+
+        // apply knockout bindings
+        ko.applyBindings(vm);
+    });
+</script>
+}

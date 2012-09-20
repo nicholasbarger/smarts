@@ -15,5 +15,10 @@ namespace Smarts.Api.Db
         public SmartsDbContext() : base("SmartsDbContext") { }
 
         public DbSet<Asset> Assets { get; set; }
+        public DbSet<AssetType> AssetTypes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Curriculum> Curriculums { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<WebUser> WebUsers { get; set; }
     }
 }
