@@ -29,9 +29,14 @@ namespace Smarts.Api.Controllers
             }
         }
 
-        // GET api/assettype
-        // Examples: 
-        //      api/assettype/     Retrieve list of all asset types (unfiltered)
+        #region GET Actions
+
+        /// <summary>
+        /// Retrieve list of all asset types (unfiltered)
+        ///     Usage: GET api/assettype/
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage Get()
         {
             var payload = new HttpResponsePayload<List<AssetType>>();
@@ -62,5 +67,7 @@ namespace Smarts.Api.Controllers
             // Return proper response message
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
+
+        #endregion
     }
 }

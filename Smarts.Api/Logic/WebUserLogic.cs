@@ -9,16 +9,18 @@ namespace Smarts.Api.Logic
     /// <summary>
     /// Place all business logic methods in here.
     /// </summary>
-    internal class AssetLogic
+    internal class WebUserLogic
     {
         /// <summary>
         /// Set the default values when creating a new educational asset.
         /// </summary>
-        /// <param name="asset"></param>
-        public void SetDefaults(ref Asset asset)
+        /// <param name="user"></param>
+        public void SetDefaults(ref WebUser user)
         {
-            asset.Created = DateTime.Now;
-            asset.IsActive = true;
+            user.Created = DateTime.Now;
+            user.Guid = new Guid();
+            user.IsActive = true;
+            user.IsLockedOut = false;
         }
     }
 }

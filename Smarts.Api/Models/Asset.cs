@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -22,11 +23,13 @@ namespace Smarts.Api.Models
         /// <summary>
         /// The type of asset such as a blog post, open courseware, etc.
         /// </summary>
+        [ForeignKey("AssetType")]
         public int AssetTypeId { get; set; }
 
         /// <summary>
         /// The id of the user who contributed the asset information.
         /// </summary>
+        [ForeignKey("Contributor")]
         public Guid ContributorGuid { get; set; }
 
         /// <summary>
@@ -47,13 +50,16 @@ namespace Smarts.Api.Models
         /// <summary>
         /// The rated difficulty of the asset.
         /// </summary>
-        public AssetDifficulty Difficulty { get; set; }
+        public AssetDifficulty? Difficulty { get; set; }
 
         /// <summary>
         /// The rated importance of the asset.
         /// </summary>
-        public AssetImportance Importance { get; set; }
+        public AssetImportance? Importance { get; set; }
 
+        /// <summary>
+        /// The path to a picture of the asset.
+        /// </summary>
         public string PictureUri { get; set; }
 
         /// <summary>
@@ -98,7 +104,7 @@ namespace Smarts.Api.Models
         /// <summary>
         /// User comments associated with this educational asset.
         /// </summary>
-        public virtual List<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         /// <summary>
         /// The user who contributed this educational asset.

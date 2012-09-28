@@ -173,4 +173,24 @@
     <value>The specified uri is too long, please use a url shortening tool such as http://www.bit.ly</value>
     <comment>Asset validation.</comment>
   </data>
+  <data name="ERR00200" xml:space="preserve">
+    <value>A value must be specified for a subject, it's used like a hashtag.</value>
+    <comment>Subject validation.</comment>
+  </data>
+  <data name="ERR00201" xml:space="preserve">
+    <value>The description must be less than 4000 characters long.</value>
+    <comment>Subject validation.</comment>
+  </data>
+  <data name="ERR00202" xml:space="preserve">
+    <value>The title must be less than 100 characters long.</value>
+    <comment>Subject validation.</comment>
+  </data>
+  <data name="ERR00301" xml:space="preserve">
+    <value>The description must be less than 4000 characters long.</value>
+    <comment>Curriculum validation.</comment>
+  </data>
+  <data name="ERR00302" xml:space="preserve">
+    <value>The title must be less than 100 characters long.</value>
+    <comment>Curriculum validation.</comment>
+  </data>
 </root>

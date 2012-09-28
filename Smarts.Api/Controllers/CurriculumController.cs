@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Smarts.Api.Db;
+using Smarts.Api.Logic;
+using Smarts.Api.Models;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Smarts.Api.Db;
-using Smarts.Api.Logic;
-using Smarts.Api.Models;
 
 namespace Smarts.Api.Controllers
 {
-    public class AssetController : ApiController
+    public class CurriculumController : ApiController
     {
         private SmartsDbContext db;
         private Guid contributor;
 
-        public AssetController()
+        public CurriculumController()
         {
             // initialize the db context
             db = new SmartsDbContext();
@@ -33,31 +31,33 @@ namespace Smarts.Api.Controllers
         #region GET Actions
 
         /// <summary>
-        /// Retrieve list of assets (unfiltered)
-        ///     USAGE: GET api/asset    
+        /// Retrieve list of curriculums (unfiltered).
+        ///     Usage: GET api/curriculum/      
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Curriculum>>();
+
+            // todo: Match signature to operation
 
             try
             {
-                // Get assets, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
+                // Get curriculums, using queries to ensure consistency of includes
+                List<Curriculum> curriculums = null;
+                using (var queries = new CurriculumQueries(db))
                 {
-                    assets = queries.GetQuery().ToList();
+                    curriculums = queries.GetQuery().ToList();
                 }
 
                 // Check if null to add error
-                if (assets == null)
+                if (curriculums == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
 
-                payload.Data = assets;
+                payload.Data = curriculums;
             }
             catch (Exception ex)
             {
@@ -70,32 +70,32 @@ namespace Smarts.Api.Controllers
         }
 
         /// <summary>
-        /// Get a specific asset.
-        ///     USAGE: GET api/asset/5
+        /// Get a specific curriculum by id.
+        ///     Usage: GET api/curriculum/5
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Curriculum>();
 
             try
             {
-                // Get asset, using queries to ensure consistency of includes
-                Asset asset = null;
-                using (var queries = new AssetQueries(db))
+                // Get curriculums, using queries to ensure consistency of includes
+                Curriculum curriculum = null;
+                using (var queries = new CurriculumQueries(db))
                 {
-                    asset = queries.Get(id);
+                    curriculum = queries.Get(id);
                 }
 
                 // Check if null to add error
-                if (asset == null)
+                if (curriculum == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
 
-                payload.Data = asset;
+                payload.Data = curriculum;
             }
             catch (Exception ex)
             {
@@ -108,55 +108,30 @@ namespace Smarts.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieve a list of assets matching a search term
-        ///     USAGE: GET api/asset/search/chem  
+        /// Retrieve a list of curriculums matching a search term.
+        ///     Usage: api/curriculum/search/chem  
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Search(string q)
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
-
-            try
-            {
-                // Get asset, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
-                {
-                    assets = queries.Search(q);
-                }
-
-                // Check if null to add error
-                if (assets == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = assets;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Log(ex);
-                payload.AssignExceptionErrors(ex);
-            }
-
-            // Return proper response message
-            return Request.CreateResponse(payload.HttpStatusCode, payload);
+            // TODO
+            throw new NotImplementedException();
         }
 
         #endregion
 
-        // POST api/asset
+        // POST api/curriculum
         [HttpPost]
-        public HttpResponseMessage Post(Asset obj)
+        public HttpResponseMessage Post(Curriculum obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Curriculum>();
 
             try
             {
                 // Prep
-                var logic = new AssetLogic();
+                var logic = new CurriculumLogic();
                 logic.SetDefaults(ref obj);
                 obj.ContributorGuid = contributor;
 
@@ -168,7 +143,7 @@ namespace Smarts.Api.Controllers
                 if (rules.IsValid)
                 {
                     // Save
-                    using (var queries = new AssetQueries(db))
+                    using (var queries = new CurriculumQueries(db))
                     {
                         queries.Save(ref obj);
                     }
@@ -192,11 +167,11 @@ namespace Smarts.Api.Controllers
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
-        // PUT api/asset/5
+        // PUT api/curriculum/5
         [HttpPut]
-        public HttpResponseMessage Put(int id, Asset obj)
+        public HttpResponseMessage Put(int id, Curriculum obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Curriculum>();
 
             try
             {
@@ -208,7 +183,7 @@ namespace Smarts.Api.Controllers
                 if (rules.IsValid)
                 {
                     // Save
-                    using (var queries = new AssetQueries(db))
+                    using (var queries = new CurriculumQueries(db))
                     {
                         queries.Save(ref obj);
                     }
@@ -232,7 +207,7 @@ namespace Smarts.Api.Controllers
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
-        // DELETE api/asset/5
+        // DELETE api/curriculum/5
         [HttpDelete]
         public HttpResponseMessage Delete(int id)
         {
@@ -240,7 +215,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                using (var queries = new AssetQueries(db))
+                using (var queries = new CurriculumQueries(db))
                 {
                     payload.Data = queries.Delete(id);
                 }

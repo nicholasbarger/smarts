@@ -1,23 +1,22 @@
-﻿using System;
+﻿using Smarts.Api.Db;
+using Smarts.Api.Logic;
+using Smarts.Api.Models;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Smarts.Api.Db;
-using Smarts.Api.Logic;
-using Smarts.Api.Models;
 
 namespace Smarts.Api.Controllers
 {
-    public class AssetController : ApiController
+    public class SubjectController : ApiController
     {
         private SmartsDbContext db;
         private Guid contributor;
 
-        public AssetController()
+        public SubjectController()
         {
             // initialize the db context
             db = new SmartsDbContext();
@@ -33,31 +32,31 @@ namespace Smarts.Api.Controllers
         #region GET Actions
 
         /// <summary>
-        /// Retrieve list of assets (unfiltered)
-        ///     USAGE: GET api/asset    
+        /// Retrieve list of subjects (unfiltered).
+        ///     Usage: GET api/subject/
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Subject>>();
 
             try
             {
-                // Get assets, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
+                // Get subjects, using queries to ensure consistency of includes
+                List<Subject> subjects = null;
+                using (var queries = new SubjectQueries(db))
                 {
-                    assets = queries.GetQuery().ToList();
+                    subjects = queries.GetQuery().ToList();
                 }
 
                 // Check if null to add error
-                if (assets == null)
+                if (subjects == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
 
-                payload.Data = assets;
+                payload.Data = subjects;
             }
             catch (Exception ex)
             {
@@ -70,32 +69,35 @@ namespace Smarts.Api.Controllers
         }
 
         /// <summary>
-        /// Get a specific asset.
-        ///     USAGE: GET api/asset/5
+        /// Retrieve a specific subject by hashtag.
+        ///     Usage: GET api/subject/#csharp
+        ///            GET api/subject/csharp
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="hashTag"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage Get(int id)
+        public HttpResponseMessage Get(string hashTag)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Subject>();
+
+            // todo: add appending of # if necessary
 
             try
             {
-                // Get asset, using queries to ensure consistency of includes
-                Asset asset = null;
-                using (var queries = new AssetQueries(db))
+                // Get subject, using queries to ensure consistency of includes
+                Subject subject = null;
+                using (var queries = new SubjectQueries(db))
                 {
-                    asset = queries.Get(id);
+                    subject = queries.Get(hashTag);
                 }
 
                 // Check if null to add error
-                if (asset == null)
+                if (subject == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
 
-                payload.Data = asset;
+                payload.Data = subject;
             }
             catch (Exception ex)
             {
@@ -108,32 +110,32 @@ namespace Smarts.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieve a list of assets matching a search term
-        ///     USAGE: GET api/asset/search/chem  
+        /// Search for subjects based on a specified search term.
+        ///     Usage: GET api/subject/search/bio
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Search(string q)
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Subject>>();
 
             try
             {
-                // Get asset, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
+                // Get subjects, using queries to ensure consistency of includes
+                List<Subject> subjects = null;
+                using (var queries = new SubjectQueries(db))
                 {
-                    assets = queries.Search(q);
+                    subjects = queries.Search(q);
                 }
 
                 // Check if null to add error
-                if (assets == null)
+                if (subjects == null)
                 {
                     payload.Errors.Add("00002", Resources.Errors.ERR00002);
                 }
 
-                payload.Data = assets;
+                payload.Data = subjects;
             }
             catch (Exception ex)
             {
@@ -147,16 +149,16 @@ namespace Smarts.Api.Controllers
 
         #endregion
 
-        // POST api/asset
+        // POST api/subject
         [HttpPost]
-        public HttpResponseMessage Post(Asset obj)
+        public HttpResponseMessage Post(Subject obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Subject>();
 
             try
             {
                 // Prep
-                var logic = new AssetLogic();
+                var logic = new SubjectLogic();
                 logic.SetDefaults(ref obj);
                 obj.ContributorGuid = contributor;
 
@@ -168,7 +170,7 @@ namespace Smarts.Api.Controllers
                 if (rules.IsValid)
                 {
                     // Save
-                    using (var queries = new AssetQueries(db))
+                    using (var queries = new SubjectQueries(db))
                     {
                         queries.Save(ref obj);
                     }
@@ -192,11 +194,11 @@ namespace Smarts.Api.Controllers
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
-        // PUT api/asset/5
+        // PUT api/subject/c#
         [HttpPut]
-        public HttpResponseMessage Put(int id, Asset obj)
+        public HttpResponseMessage Put(string hashTag, Subject obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Subject>();
 
             try
             {
@@ -208,7 +210,7 @@ namespace Smarts.Api.Controllers
                 if (rules.IsValid)
                 {
                     // Save
-                    using (var queries = new AssetQueries(db))
+                    using (var queries = new SubjectQueries(db))
                     {
                         queries.Save(ref obj);
                     }
@@ -232,17 +234,17 @@ namespace Smarts.Api.Controllers
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
-        // DELETE api/asset/5
+        // DELETE api/subject/c#
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(string hashTag)
         {
             var payload = new HttpResponsePayload<bool>();
 
             try
             {
-                using (var queries = new AssetQueries(db))
+                using (var queries = new SubjectQueries(db))
                 {
-                    payload.Data = queries.Delete(id);
+                    payload.Data = queries.Delete(hashTag);
                 }
             }
             catch (Exception ex)

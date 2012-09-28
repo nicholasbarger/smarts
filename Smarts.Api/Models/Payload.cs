@@ -15,7 +15,10 @@ namespace Smarts.Api.Models
     /// <typeparam name="T"></typeparam>
     public class Payload<T>
     {
-        private bool isSuccess = false;
+        /// <summary>
+        /// Controls if manually set successful regardless of errors in collection.
+        /// </summary>
+        private bool? isSuccess = null;
 
         /// <summary>
         /// The status code of the payload.
@@ -39,11 +42,24 @@ namespace Smarts.Api.Models
         public bool IsSuccess {
             get
             {
-                return (isSuccess && Errors.Count == 0);
+                bool result = false;
+
+                // Check if isSuccess is manually specified
+                if (this.isSuccess.HasValue)
+                {
+                    result = this.isSuccess.Value && this.Errors.Count == 0;
+                }
+                // Check if not manually set relying on errors count
+                else
+                {
+                    result = this.Errors.Count == 0;
+                }
+
+                return result;
             }
             set
             {
-                isSuccess = value;
+                this.isSuccess = value;
             }
         }
 

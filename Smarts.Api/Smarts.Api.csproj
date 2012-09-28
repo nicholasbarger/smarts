@@ -135,9 +135,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AssetTypeController.cs" />
+    <Compile Include="Controllers\CurriculumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\WebUserController.cs" />
     <Compile Include="Db\AssetQueries.cs" />
     <Compile Include="Db\AssetTypeQueries.cs" />
+    <Compile Include="Db\CurriculumQueries.cs" />
+    <Compile Include="Db\WebUserQueries.cs" />
+    <Compile Include="Db\SubjectQueries.cs" />
     <Compile Include="Db\IDbReadOnly.cs" />
     <Compile Include="Db\IDbCrud.cs" />
     <Compile Include="Db\SmartsDbContext.cs" />
@@ -145,6 +151,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logic\AssetLogic.cs" />
+    <Compile Include="Logic\CurriculumLogic.cs" />
+    <Compile Include="Logic\WebUserLogic.cs" />
+    <Compile Include="Logic\SubjectLogic.cs" />
     <Compile Include="Logic\ValidationRules.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetType.cs" />

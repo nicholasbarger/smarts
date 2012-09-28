@@ -46,6 +46,10 @@ namespace Smarts.Api.Logic
         //NOTE: All validation logic is nestled in here across all objects, we may want to refactor this depending on how big it becomes and if it is a maintenance issue
         #region Model Validations
 
+        /// <summary>
+        /// Asset validation
+        /// </summary>
+        /// <param name="obj"></param>
         public void Validate(Asset obj)
         {
             if (obj == null)
@@ -92,6 +96,78 @@ namespace Smarts.Api.Logic
             {
                 this.Errors.Add("00112", Resources.Errors.ERR00112);
             }
+        }
+
+        public void Validate(Curriculum obj)
+        {
+            if (obj == null)
+            {
+                this.Errors.Add("00004", Resources.Errors.ERR00004);
+                return;
+            }
+
+            if (obj.ContributorGuid == null || obj.ContributorGuid == Guid.Empty)
+            {
+                this.Errors.Add("00106", Resources.Errors.ERR00106);
+            }
+
+            if (obj.Description.Length > 4000)
+            {
+                this.Errors.Add("00301", Resources.Errors.ERR00301);
+            }
+
+            if (obj.Title.Length > 100)
+            {
+                this.Errors.Add("00302", Resources.Errors.ERR00302);
+            }
+        }
+
+        /// <summary>
+        /// Subject validation
+        /// </summary>
+        /// <param name="obj"></param>
+        public void Validate(Subject obj)
+        {
+            if (obj == null)
+            {
+                this.Errors.Add("00004", Resources.Errors.ERR00004);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(obj.Hashtag))
+            {
+                this.Errors.Add("00200", Resources.Errors.ERR00200);
+            }
+
+            if (obj.ContributorGuid == null || obj.ContributorGuid == Guid.Empty)
+            {
+                this.Errors.Add("00106", Resources.Errors.ERR00106);
+            }
+
+            if (obj.Description.Length > 4000)
+            {
+                this.Errors.Add("00201", Resources.Errors.ERR00201);
+            }
+
+            if (obj.Title.Length > 100)
+            {
+                this.Errors.Add("00202", Resources.Errors.ERR00202);
+            }
+        }
+
+        /// <summary>
+        /// Webuser validation
+        /// </summary>
+        /// <param name="obj"></param>
+        public void Validate(WebUser obj)
+        {
+            if (obj == null)
+            {
+                this.Errors.Add("00004", Resources.Errors.ERR00004);
+                return;
+            }
+
+            // TODO: add the rest of the validation logic here for webuser (user)
         }
 
         #endregion

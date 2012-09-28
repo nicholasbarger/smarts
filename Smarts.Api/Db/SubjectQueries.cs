@@ -10,70 +10,68 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class AssetQueries : IDbCrud<Asset>, IDisposable
+    internal class SubjectQueries : IDisposable
     {
         private SmartsDbContext context;
 
-        public AssetQueries(SmartsDbContext context)
+        public SubjectQueries(SmartsDbContext context)
         {
             this.context = context;
         }
 
-        public bool Delete(int id)
+        public bool Delete(string hashTag)
         {
             bool result = false;
-            if (id > 0)
+            if (!string.IsNullOrEmpty(hashTag))
             {
-                // Get asset
-                var asset = Get(id);
+                // Get subject
+                var subject = Get(hashTag);
 
-                // If not null, set inactive and save
-                if (asset != null)
+                // If not null, delete
+                if (subject != null)
                 {
-                    // Set asset to inactive
-                    asset.IsActive = false;
+                    // Remove from db collection
+                    context.Subjects.Remove(subject);
 
-                    // Save asset
-                    result = Save(ref asset);
+                    // Save changes to db
+                    result = context.SaveChanges() > 0;
                 }
             }
 
             return result;
         }
 
-        public Asset Get(int id)
+        public Subject Get(string hashTag)
         {
-            Asset asset = null;
-            if (id > 0)
+            Subject subject = null;
+            if (!string.IsNullOrEmpty(hashTag))
             {
-                asset = GetQuery().SingleOrDefault(a => a.Id == id);
+                subject = context.Subjects.SingleOrDefault(a => a.Hashtag == hashTag);
             }
 
-            return asset;
+            return subject;
         }
 
-        public IQueryable<Asset> GetQuery()
+        public IQueryable<Subject> GetQuery()
         {
-            return context.Assets
-                .Include("AssetType")
-                .Include("Contributor")
-                .Where(a => a.IsActive == true);
+            return context.Subjects
+                .Include("Contributor");
         }
 
-        public bool Save(ref Asset obj)
+        public bool Save(ref Subject obj)
         {
             bool result = false;
             if (obj != null)
             {
-                if (obj.Id == 0)
+                if (!string.IsNullOrEmpty(obj.Hashtag))
                 {
                     // Add to collection
-                    context.Assets.Add(obj);
+                    context.Subjects.Add(obj);
                 }
                 else
                 {
                     // Attach to collection
-                    context.Assets.Attach(obj);
+                    context.Subjects.Attach(obj);
                     context.Entry(obj).State = System.Data.EntityState.Modified;
                 }
 
@@ -84,14 +82,14 @@ namespace Smarts.Api.Db
             return result;
         }
 
-        public List<Asset> Search(string q)
+        public List<Subject> Search(string q)
         {
             return SearchQuery(q).ToList();
         }
 
-        public IQueryable<Asset> SearchQuery(string q)
+        public IQueryable<Subject> SearchQuery(string q)
         {
-            return GetQuery().Where(a => a.Title.Contains(q) || a.Description.Contains(q));
+            return GetQuery().Where(a => a.Hashtag.Contains(q) || a.Title.Contains(q) || a.Description.Contains(q));
         }
 
         public void Dispose()

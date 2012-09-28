@@ -19,29 +19,8 @@
 
         <!-- subject results -->
         <div id="subjectResults">
-            <ul>
-                <li><a href="#">Math</a></li>
-                <li><a href="#">Science</a>
-                    <ul>
-                        <li><a href="#">Computer Science</a>
-                            <ul>
-                                <li><a href="#">Programming</a>
-                                    <ul>
-                                        <li><a href="#">C#</a></li>
-                                        <li><a href="#">Ruby on Rails</a></li>
-                                        <li><a href="#">Java</a></li>
-                                        <li><a href="#">Python</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Biotechnology</a></li>
-                        <li><a href="#">Biology</a></li>
-                    </ul>
-                </li> 
-                <li><a href="#">Pottery</a></li>               
-                <li><a href="#">Gardening</a></li>        
-                <li><a href="#">Cooking</a></li>       
+            <ul data-bind="foreach: subjects">
+                <li><a href="#" data-bind="text: Hashtag">[Hashtag]</a></li>
             </ul>
         </div>
     </div>
@@ -112,7 +91,7 @@
         var vm = new LearnIndexViewModel();
 
         // apply knockout bindings
-        ko.applyBindings(vm);
+        ko.applyBindings(vm, $('#mainContent')[0]);
     });
 </script>
 }

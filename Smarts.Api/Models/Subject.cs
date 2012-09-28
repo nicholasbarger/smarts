@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace Smarts.Api.Models
     /// </summary>
     public class Subject
     {
+        #region Properties
+
         /// <summary>
         /// The primary key in the database and the hashtag itself.
         /// </summary>
@@ -20,7 +23,13 @@ namespace Smarts.Api.Models
         /// <summary>
         /// The contributor of the subject (either explicit or on first use).
         /// </summary>
+        [ForeignKey("Contributor")]
         public Guid ContributorGuid { get; set; }
+
+        /// <summary>
+        /// When the database record was created.
+        /// </summary>
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// An optional description for the subject.
@@ -31,5 +40,13 @@ namespace Smarts.Api.Models
         /// An elongated title for the hashtag.
         /// </summary>
         public string Title { get; set; }
+
+        #endregion
+
+        #region Virtual Properties
+
+        public virtual WebUser Contributor { get; set; }
+
+        #endregion
     }
 }

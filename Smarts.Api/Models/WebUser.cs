@@ -29,6 +29,11 @@ namespace Smarts.Api.Models
         public string City { get; set; }
 
         /// <summary>
+        /// When the database record was created.
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        /// <summary>
         /// The country (abbreviation) the user is from.
         /// </summary>
         public string Country { get; set; }
@@ -42,6 +47,16 @@ namespace Smarts.Api.Models
         /// The users first name.
         /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Specifies whether the user is still active or not.
+        /// </summary>
+        public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Specifies whether the user is locked out or not.
+        /// </summary>
+        public bool IsLockedOut { get; set; }
 
         /// <summary>
         /// The users last name.

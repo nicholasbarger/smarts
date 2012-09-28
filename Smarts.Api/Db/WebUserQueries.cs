@@ -10,70 +10,67 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class AssetQueries : IDbCrud<Asset>, IDisposable
+    internal class WebUserQueries : IDisposable
     {
         private SmartsDbContext context;
 
-        public AssetQueries(SmartsDbContext context)
+        public WebUserQueries(SmartsDbContext context)
         {
             this.context = context;
         }
 
-        public bool Delete(int id)
+        public bool Delete(Guid guid)
         {
             bool result = false;
-            if (id > 0)
+            if (guid != null)
             {
-                // Get asset
-                var asset = Get(id);
+                // Get user
+                var user = Get(guid);
 
                 // If not null, set inactive and save
-                if (asset != null)
+                if (user != null)
                 {
-                    // Set asset to inactive
-                    asset.IsActive = false;
+                    // Set user to inactive
+                    user.IsActive = false;
 
-                    // Save asset
-                    result = Save(ref asset);
+                    // Save user
+                    result = Save(ref user);
                 }
             }
 
             return result;
         }
 
-        public Asset Get(int id)
+        public WebUser Get(Guid guid)
         {
-            Asset asset = null;
-            if (id > 0)
+            WebUser user = null;
+            if (guid != null)
             {
-                asset = GetQuery().SingleOrDefault(a => a.Id == id);
+                user = context.WebUsers.SingleOrDefault(a => a.Guid == guid);
             }
 
-            return asset;
+            return user;
         }
 
-        public IQueryable<Asset> GetQuery()
+        public IQueryable<WebUser> GetQuery()
         {
-            return context.Assets
-                .Include("AssetType")
-                .Include("Contributor")
-                .Where(a => a.IsActive == true);
+            return context.WebUsers.Where(a => a.IsActive == true);
         }
 
-        public bool Save(ref Asset obj)
+        public bool Save(ref WebUser obj)
         {
             bool result = false;
             if (obj != null)
             {
-                if (obj.Id == 0)
+                if (obj.Guid != null)
                 {
                     // Add to collection
-                    context.Assets.Add(obj);
+                    context.WebUsers.Add(obj);
                 }
                 else
                 {
                     // Attach to collection
-                    context.Assets.Attach(obj);
+                    context.WebUsers.Attach(obj);
                     context.Entry(obj).State = System.Data.EntityState.Modified;
                 }
 
@@ -82,16 +79,6 @@ namespace Smarts.Api.Db
             }
 
             return result;
-        }
-
-        public List<Asset> Search(string q)
-        {
-            return SearchQuery(q).ToList();
-        }
-
-        public IQueryable<Asset> SearchQuery(string q)
-        {
-            return GetQuery().Where(a => a.Title.Contains(q) || a.Description.Contains(q));
         }
 
         public void Dispose()

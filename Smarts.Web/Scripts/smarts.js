@@ -56,9 +56,9 @@ var LayoutViewModel = function () {
     self.populateAssetTypes = function () {
 
         // get list of asset types and allow ko binding
-        $.getJSON('/api/assettype', null, function (response) {
+        $.getJSON('/api/assettype', function (response) {
 
-            // populate bindable comments and let ko take over
+            // populate bindable asset types and let ko take over
             self.assetTypes(response.Data);
         });
     };
@@ -66,7 +66,7 @@ var LayoutViewModel = function () {
     // Initialization
     // ****************************************************
 
-    // todo
+    self.populateAssetTypes();
 };
 
 var LearnIndexViewModel = function () {
@@ -92,17 +92,30 @@ var LearnIndexViewModel = function () {
 
     // search assets
     self.searchAssets = function () {
-        // todo
+        
+        // get list of asset types from search criteria and allow ko binding
+        $.getJSON('/api/asset/search/' + self.assetSearchTerm(), function (response) {
+
+            // populate bindable assets and let ko take over
+            self.assets(response.Data);
+        });
     };
 
     // search subjects
     self.searchSubjects = function () {
-        // todo
+        
+        // get list of subjects from search criteria and allow ko binding
+        $.getJSON('/api/subject/search/' + self.subjectSearchTerm(), function (response) {
+
+            // populate bindable subjects and let ko take over
+            self.subjects(response.Data);
+        });
     };
 
     // Initialization
     // ****************************************************
 
+    // nothing yet
 };
 
 var LearnDetailViewModel = function (id) {
@@ -128,7 +141,7 @@ var LearnDetailViewModel = function (id) {
     self.loadAsset = function () {
 
         // call rest service to get asset by specified id
-        $.getJSON('/api/asset', { id: self.id }, function (response) {
+        $.getJSON('/api/asset/' + self.id, function (response) {
 
             // populate bindable asset and let ko take over
             self.asset(response.Data);
@@ -139,7 +152,7 @@ var LearnDetailViewModel = function (id) {
     self.loadComments = function () {
 
         // call rest service to get comments associated with this asset
-        $.getJSON('/api/asset/comments', { assetId: self.id }, function (response) {
+        $.getJSON('/api/asset/comments/' + self.id, function (response) {
 
             // populate bindable comments and let ko take over
             self.comments(response.Data);

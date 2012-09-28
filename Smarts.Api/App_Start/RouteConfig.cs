@@ -57,6 +57,12 @@ namespace Smarts.Api
                 defaults: new { controller = "Do", id = RouteParameter.Optional }
             );
 
+            routes.MapHttpRoute(
+                name: "SearchVerbOverrideApi",
+                routeTemplate: "{controller}/search/{q}",
+                defaults: new { action = "Search", id = RouteParameter.Optional }
+            );
+
             // Purpose:
             // **********************************************************************
             // To call Http Verb convention REST-style controllers.

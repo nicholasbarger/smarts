@@ -12,5 +12,7 @@ namespace Smarts.Api.Db
         T Get(int id);
         IQueryable<T> GetQuery();
         bool Save(ref T obj);
+        List<T> Search(string q);
+        IQueryable<T> SearchQuery(string q);
     }
 }

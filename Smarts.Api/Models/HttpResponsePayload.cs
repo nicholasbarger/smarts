@@ -77,6 +77,15 @@ namespace Smarts.Api.Models
         /// A list of links that may help in navigation from one action to another or discovery of a REST pattern.
         /// </summary>
         public List<HttpResponsePayloadLink> Links { get; set; }
+
+        /// <summary>
+        /// Constructor for response payload.
+        /// </summary>
+        public HttpResponsePayload()
+        {
+            // Set default http status code
+            this.httpStatusCode = System.Net.HttpStatusCode.Unused;
+        }
     }
 
     /// <summary>

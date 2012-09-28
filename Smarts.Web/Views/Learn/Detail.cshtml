@@ -1,5 +1,5 @@
 ﻿<!-- breadcrumbs -->
-<ul class="breadcrumb">
+<ul class="breadcrumb" data-bind="with: asset">
     <li>
         <a href="/">Home</a> <span class="divider">/</span>
     </li>
@@ -9,7 +9,7 @@
     <li class="active" data-bind="text: Title">[Title]</li>
 </ul>
 
-<div class="row-fluid">
+<div class="row-fluid" data-bind="with: asset">
     <div class="span9">
         <!-- Asset detail -->
         <h1><a data-bind="text: Title">Title</a></h1>
@@ -63,7 +63,7 @@
         var vm = new LearnDetailViewModel();
 
         // apply knockout bindings
-        ko.applyBindings(vm);
+        ko.applyBindings(vm, $('#mainContent')[0]);
     });
 </script>
 }
