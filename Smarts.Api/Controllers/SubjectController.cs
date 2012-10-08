@@ -1,5 +1,5 @@
 ﻿using Smarts.Api.Db;
-using Smarts.Api.Logic;
+using Smarts.Api.BusinessLogic;
 using Smarts.Api.Models;
 using System;
 using System.Collections.Generic;
@@ -8,25 +8,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Smarts.Api.Utilities;
+using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
     public class SubjectController : ApiController
     {
-        private SmartsDbContext db;
+        private SubjectAppLogic logic;
         private Guid contributor;
 
         public SubjectController()
-        {
-            // initialize the db context
-            db = new SmartsDbContext();
-            
-            // get cookie from requestor if applicable
-            var cookie = HttpContext.Current.Request.Cookies["userid"];
-            if(cookie != null)
-            {
-                contributor = new Guid(cookie.Value);
-            }
+        {   
+            // initialize logic
+            logic = new SubjectAppLogic();
+
+            // assign contributor
+            var utility = new ControllerUtilities();
+            contributor = utility.GetWebUserGuidFromCookies();
         }
 
         #region GET Actions
@@ -43,20 +42,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get subjects, using queries to ensure consistency of includes
-                List<Subject> subjects = null;
-                using (var queries = new SubjectQueries(db))
-                {
-                    subjects = queries.GetQuery().ToList();
-                }
-
-                // Check if null to add error
-                if (subjects == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = subjects;
+                // get full list
+                payload = new HttpResponsePayload<List<Subject>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -80,24 +67,10 @@ namespace Smarts.Api.Controllers
         {
             var payload = new HttpResponsePayload<Subject>();
 
-            // todo: add appending of # if necessary
-
             try
             {
-                // Get subject, using queries to ensure consistency of includes
-                Subject subject = null;
-                using (var queries = new SubjectQueries(db))
-                {
-                    subject = queries.Get(hashTag);
-                }
-
-                // Check if null to add error
-                if (subject == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = subject;
+                // get specific
+                payload = new HttpResponsePayload<Subject>(logic.Get(hashTag));
             }
             catch (Exception ex)
             {
@@ -122,20 +95,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get subjects, using queries to ensure consistency of includes
-                List<Subject> subjects = null;
-                using (var queries = new SubjectQueries(db))
-                {
-                    subjects = queries.Search(q);
-                }
-
-                // Check if null to add error
-                if (subjects == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = subjects;
+                // search
+                payload = new HttpResponsePayload<List<Subject>>(logic.Search(q));
             }
             catch (Exception ex)
             {
@@ -157,32 +118,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Prep
-                var logic = new SubjectLogic();
-                logic.SetDefaults(ref obj);
-                obj.ContributorGuid = contributor;
-
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new SubjectQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -202,27 +138,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new SubjectQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -242,10 +158,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                using (var queries = new SubjectQueries(db))
-                {
-                    payload.Data = queries.Delete(hashTag);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {

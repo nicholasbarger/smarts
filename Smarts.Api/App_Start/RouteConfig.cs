@@ -14,6 +14,70 @@ namespace Smarts.Api
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            #region Controller-specific Routes
+
+            // Purpose
+            // **********************************************************************
+            // To get the comments for a specified Asset
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/asset/1001/comments/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "AssetCommentsOverride",
+                routeTemplate: "asset/{id}/comments",
+                defaults: new { controller = "Asset", action = "GetComments" }
+            );
+
+            // Purpose
+            // **********************************************************************
+            // To get the subjects for a specified Asset
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/asset/1001/subjects/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "AssetSubjectsOverride",
+                routeTemplate: "asset/{id}/subjects",
+                defaults: new { controller = "Asset", action = "GetSubjects" }
+            );
+
+            // Purpose
+            // **********************************************************************
+            // To get a list of assets by specified subject (hashtag).
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/asset/subject/computerscience
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "AssetBySubjectOverride",
+                routeTemplate: "asset/subject/{hashtag}",
+                defaults: new { controller = "Asset", action = "GetBySubject" }
+            );
+
+            // Purpose
+            // **********************************************************************
+            // Because I have two Get Actions with the same signature I need to
+            // explicitly define which route goes to which action.  This is a bummer
+            // and I hope is something that can be done in a more elegant way.
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/asset/1001
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "AssetGetByIdExplict",
+                routeTemplate: "asset/{id}",
+                defaults: new { controller = "Asset", action = "Get" }
+            );
+
+            #endregion
+
+            #region Generic Routes
+
             // Purpose:
             // **********************************************************************
             // To display documentation information about the API project.
@@ -41,15 +105,11 @@ namespace Smarts.Api
             // need to be called in a REST-style from ajax.
             //
             // Examples of this include:
-            //      ProcessImportedLineItems
-            //      ProspectiveCustomer (Email-only activity)
             //      ApproveAsset
             // **********************************************************************
             // Usage:
             // **********************************************************************
             // POST api/do/ApproveAsset/
-            // POST api/do/ProspectiveCustomer/
-            // GET  api/do/GetSalesForceDashboardMetrics/
             // **********************************************************************
             routes.MapHttpRoute(
                 name: "DefaultActionApi",
@@ -57,6 +117,20 @@ namespace Smarts.Api
                 defaults: new { controller = "Do", id = RouteParameter.Optional }
             );
 
+            // Purpose:
+            // **********************************************************************
+            // To add search functionality to the standard HttpVerbs.
+            // This was intentionally designed not using the GET generic verb due to
+            // some controllers requiring id lookups for a single result to use a
+            // string instead of id, thereby creating a conflict between search by
+            // string and lookup of id that is a string (or guid).
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/asset/search/bio
+            // GET api/subject/search/science
+            // GET api/user/search/john
+            // **********************************************************************
             routes.MapHttpRoute(
                 name: "SearchVerbOverrideApi",
                 routeTemplate: "{controller}/search/{q}",
@@ -85,6 +159,8 @@ namespace Smarts.Api
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            #endregion
         }
     }
 }

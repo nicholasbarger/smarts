@@ -53,7 +53,6 @@ namespace Smarts.Api.Tests.DbTests
         public void TestCreatingAnAsset()
         {
             // Prep
-            bool result;
             Guid newGuid = Guid.NewGuid();
 
             Asset actual = new Asset()
@@ -94,11 +93,10 @@ namespace Smarts.Api.Tests.DbTests
             var db = new SmartsDbContext();
             using (var queries = new Smarts.Api.Db.AssetQueries(db))
             {
-                result = queries.Save(ref actual);
+                queries.Save(ref actual);
             }
 
             // Test
-            Assert.IsTrue(result);
             Assert.IsNotNull(actual);
             if (actual.Id <= 0)
             {

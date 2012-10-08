@@ -8,10 +8,11 @@ namespace Smarts.Api.Db
 {
     internal interface IDbCrud<T> where T: class
     {
-        bool Delete(int id);
+        void Delete(ref T obj);
+        void Delete(int id);
         T Get(int id);
         IQueryable<T> GetQuery();
-        bool Save(ref T obj);
+        void Save(ref T obj);
         List<T> Search(string q);
         IQueryable<T> SearchQuery(string q);
     }

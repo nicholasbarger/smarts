@@ -14,6 +14,11 @@ namespace Smarts.Api.Db
     {
         private SmartsDbContext context;
 
+        public CurriculumQueries()
+        {
+            this.context = new SmartsDbContext();
+        }
+
         public CurriculumQueries(SmartsDbContext context)
         {
             this.context = context;

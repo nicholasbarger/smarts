@@ -1,20 +1,33 @@
 ﻿<!-- breadcrumbs -->
-<ul class="breadcrumb" data-bind="with: asset">
+<ul class="breadcrumb">
     <li>
         <a href="/">Home</a> <span class="divider">/</span>
     </li>
     <li>
         <a href="/Learn">Learn</a> <span class="divider">/</span>
     </li>
-    <li class="active" data-bind="text: Title">[Title]</li>
+    <li class="active" data-bind="text: asset().Title">[Title]</li>
 </ul>
 
-<div class="row-fluid" data-bind="with: asset">
+<div class="row-fluid">
     <div class="span9">
         <!-- Asset detail -->
-        <h1><a data-bind="text: Title">Title</a></h1>
-        <small data-bind="text: Contributor.FullName + ', ' + Contributor.Title">[Contributor Name], [Contributor Title]</small><br /><br />
-        <div data-bind="text: Description">[Description]</div>
+        <h1 data-bind="text: asset().Title">Title</h1>
+        <small data-bind="text: asset().Contributor.FullName + ', ' + asset().Contributor.Title">[Contributor Name], [Contributor Title]</small><br />
+        
+        <!-- Edit -->
+        <a href="#" data-bind="click: edit">Contribute to this educational asset</a><br /><br />
+        
+        <!-- Primary description -->
+        <div data-bind="text: asset().Description">[Description]</div>
+
+        <hr />
+
+        <!-- Associated subjects -->
+        <h3>Associated Subjects</h3>
+        <div data-bind="foreach: subjects">
+            <a href="#" data-bind="text: asset().Title + ' (' + asset().Hashtag + ')'"></a>&nbsp;
+        </div>
 
         <hr />
 
@@ -34,21 +47,21 @@
         </div>
     </div>
     <div class="span3" style="text-align: center;">
-        <a data-bind="attr: { href: Uri }"><img data-bind="attr: { src: PictureUri, alt: Title }" /></a><br /><br />
+        <a data-bind="attr: { href: asset().Uri }"><img data-bind="attr: { src: asset().PictureUri, alt: asset().Title }" /></a><br /><br />
         <p class="resourceUrl">
             Access this resource here:
-            <a data-bind="attr: { href: Uri, text: Uri }">[Uri of Asset]</a>
+            <a data-bind="attr: { href: asset().Uri }, text: asset().Uri">[Uri of Asset]</a>
         </p>
 
         <div style="text-align: left;">
             <span>Importance</span>
             <div class="progress progress-striped">
-                <div class="bar" style="width: 75%;"></div>
+                <div class="bar" data-bind="attr: { style: 'width: ' + asset().ImportanceAsPercent + '%' }"></div>
             </div>
 
             <span>Difficulty</span>
             <div class="progress progress-striped">
-                <div class="bar" style="width: 50%;"></div>
+                <div class="bar" data-bind="attr: { style: 'width: ' + asset().DifficultyAsPercent + '%' }"></div>
             </div>
 
             <p>1,024 students have completed this resource</p>
@@ -60,7 +73,8 @@
 <script type="text/javascript">
     $(function () {
         // create viewmodel
-        var vm = new LearnDetailViewModel();
+        var id = '@ViewContext.RouteData.Values["id"]';
+        var vm = new LearnDetailViewModel(id);
 
         // apply knockout bindings
         ko.applyBindings(vm, $('#mainContent')[0]);

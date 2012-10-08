@@ -1,0 +1,103 @@
+﻿<!-- breadcrumbs -->
+<ul class="breadcrumb">
+    <li>
+        <a href="/">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+        <a href="/Learn">Learn</a> <span class="divider">/</span>
+    </li>
+    <li class="active" data-bind="text: 'Edit ' + asset().Title">[Edit Title]</li>
+</ul>
+
+<div class="row-fluid top-actions">
+    <div class="span12">
+        <!-- Edit actions -->
+        <button class="btn" data-bind="click: cancel">Cancel Changes</button>
+        <button class="btn btn-success" data-bind="click: save">Save Changes</button>
+
+        <span id="message" class="simplemsg">[Save result message]</span>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span9">
+        <!-- Asset detail -->
+        <input type="text" id="title" name="title" style="width: 100%;" data-bind="value: title" /><br />
+        <small data-bind="text: 'Original Contributor: ' + asset().Contributor.FullName + ', ' + asset().Contributor.Title">[Contributor Name], [Contributor Title]</small><br /><br />
+        
+        <!-- Primary description -->
+        <textarea id="description" name="description" class="bigedit" data-bind="value: description"></textarea>
+    </div>
+    <div class="span3">
+        <a data-bind="attr: { href: uri }"><img data-bind="attr: { src: asset().PictureUri, alt: asset().Title }" /></a><br /><br />
+        <span>Access this resource here:</span><br />
+        <input type="text" id="uri" name="uri" style="width: 100%;" data-bind="value: uri" /><br />
+
+        <div class="control-group">
+            <label class="control-label" for="isTestRequired">Is a test required to complete this resource?</label>
+            <div class="controls">
+                <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" /> Yes, a test is required.</label>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <label class="control-label" for="isScoreable">Can you receive a score for this resource?</label>
+            <div class="controls">
+                <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" /> Yes, you can receive a score for this resource.</label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="passingScore">Minimum Passing Score</label>
+            <div class="controls">
+                <input type="text" id="passingScore" name="passingScore" class="input-small">
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="control-group">
+            <label class="control-label" for="isCost">Does this resource cost money?</label>
+            <div class="controls">
+                <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" /> Yes, this resource costs money.</label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="cost">Cost in USD</label>
+            <div class="controls">
+                <input type="text" id="cost" name="cost" class="input-small">
+            </div>
+        </div>
+
+        <div style="text-align: left;">
+            <span>Importance</span>
+            <div class="progress progress-striped">
+                <div class="bar" data-bind="attr: { style: 'width: ' + asset().ImportanceAsPercent + '%' }"></div>
+            </div>
+
+            <span>Difficulty</span>
+            <div class="progress progress-striped">
+                <div class="bar" data-bind="attr: { style: 'width: ' + asset().DifficultyAsPercent + '%' }"></div>
+            </div>
+
+            <p>1,024 students have completed this resource</p>
+        </div>
+    </div>
+</div>
+
+@section PageScript {
+<script src="/Scripts/nicEdit.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // create viewmodel
+        var id = '@ViewContext.RouteData.Values["id"]';
+        var vm = new LearnEditViewModel(id);
+
+        // apply knockout bindings
+        ko.applyBindings(vm, $('#mainContent')[0]);
+    });
+</script>
+}

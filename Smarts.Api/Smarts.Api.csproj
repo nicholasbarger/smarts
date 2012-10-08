@@ -120,6 +120,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppLogic\AssetAppLogic.cs" />
+    <Compile Include="AppLogic\AssetTypeAppLogic.cs" />
+    <Compile Include="AppLogic\CurriculumAppLogic.cs" />
+    <Compile Include="AppLogic\SubjectAppLogic.cs" />
+    <Compile Include="AppLogic\WebUserAppLogic.cs" />
     <Compile Include="App_GlobalResources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -133,12 +138,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BusinessLogic\AssetBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\AssetTypeBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\CurriculumBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\SubjectBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\WebUserBusinessLogic.cs" />
     <Compile Include="Controllers\AssetController.cs" />
     <Compile Include="Controllers\AssetTypeController.cs" />
     <Compile Include="Controllers\CurriculumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\WebUserController.cs" />
+    <Compile Include="Db\CommentQueries.cs" />
+    <Compile Include="Utilities\ControllerUtilities.cs" />
     <Compile Include="Db\AssetQueries.cs" />
     <Compile Include="Db\AssetTypeQueries.cs" />
     <Compile Include="Db\CurriculumQueries.cs" />
@@ -150,11 +162,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Logic\AssetLogic.cs" />
-    <Compile Include="Logic\CurriculumLogic.cs" />
-    <Compile Include="Logic\WebUserLogic.cs" />
-    <Compile Include="Logic\SubjectLogic.cs" />
-    <Compile Include="Logic\ValidationRules.cs" />
+    <Compile Include="BusinessLogic\ValidationRules.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -165,6 +173,8 @@
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\WebUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DbUtilities.cs" />
+    <Compile Include="Utilities\SecurityUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />

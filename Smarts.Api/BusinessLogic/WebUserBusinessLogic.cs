@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Smarts.Api.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Smarts.Api.Models;
 
-namespace Smarts.Api.Logic
+namespace Smarts.Api.BusinessLogic
 {
-    /// <summary>
-    /// Place all business logic methods in here.
-    /// </summary>
-    internal class WebUserLogic
+    public class WebUserBusinessLogic
     {
         /// <summary>
         /// Set the default values when creating a new educational asset.

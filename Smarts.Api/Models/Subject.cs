@@ -45,6 +45,14 @@ namespace Smarts.Api.Models
 
         #region Virtual Properties
 
+        /// <summary>
+        /// The list of assets tagged by this subject hashtag.
+        /// </summary>
+        public ICollection<Asset> Assets { get; set; }
+
+        /// <summary>
+        /// The user who contributed this educational asset.
+        /// </summary>
         public virtual WebUser Contributor { get; set; }
 
         #endregion

@@ -1,5 +1,5 @@
 ﻿using Smarts.Api.Db;
-using Smarts.Api.Logic;
+using Smarts.Api.BusinessLogic;
 using Smarts.Api.Models;
 using System;
 using System.Collections.Generic;
@@ -8,25 +8,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Smarts.Api.AppLogic;
+using Smarts.Api.Utilities;
 
 namespace Smarts.Api.Controllers
 {
     public class WebUserController : ApiController
     {
-        private SmartsDbContext db;
+        private WebUserAppLogic logic;
         private Guid contributor;
-        
+
         public WebUserController()
-        {
-            // initialize the db context
-            db = new SmartsDbContext();
-            
-            // get cookie from requestor if applicable
-            var cookie = HttpContext.Current.Request.Cookies["userid"];
-            if(cookie != null)
-            {
-                contributor = new Guid(cookie.Value);
-            }
+        {   
+            // initialize logic
+            logic = new WebUserAppLogic();
+
+            // assign contributor
+            var utility = new ControllerUtilities();
+            contributor = utility.GetWebUserGuidFromCookies();
         }
 
         #region GET Actions
@@ -45,20 +44,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get users, using queries to ensure consistency of includes
-                List<WebUser> users = null;
-                using (var queries = new WebUserQueries(db))
-                {
-                    users = queries.GetQuery().ToList();
-                }
-
-                // Check if null to add error
-                if (users == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = users;
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -83,20 +69,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get user, using queries to ensure consistency of includes
-                WebUser user = null;
-                using (var queries = new WebUserQueries(db))
-                {
-                    user = queries.Get(guid);
-                }
-
-                // Check if null to add error
-                if (user == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = user;
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -131,31 +104,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Prep
-                var logic = new WebUserLogic();
-                logic.SetDefaults(ref obj);
-
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new WebUserQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -175,27 +124,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new WebUserQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -215,10 +144,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                using (var queries = new WebUserQueries(db))
-                {
-                    payload.Data = queries.Delete(guid);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {

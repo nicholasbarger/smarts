@@ -1,24 +1,24 @@
 ﻿<div class="row-fluid">
     <div class="span4">
-        <form id="enrollForm" class="well" novalidate="novalidate">
+        <form id="enrollForm" class="well" novalidate="novalidate" data-bind="submit: save">
             <fieldset>
                 <legend>Login Info</legend>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="username" name="username" class="required" placeholder="Username">
+                        <input type="text" id="username" name="username" class="required" placeholder="Username" data-bind="value: username">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="password" id="pw" name="pw" class="required" placeholder="Password">
+                        <input type="password" id="pw" name="pw" class="required" placeholder="Password" data-bind="value: password">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="password" id="pwConfirm" name="pwConfirm" class="required" placeholder="Confirm Password">
+                        <input type="password" id="pwConfirm" name="pwConfirm" class="required" placeholder="Confirm Password" data-bind="value: confirmPassword">
                     </div>
                 </div>
             </fieldset>
@@ -28,38 +28,40 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="firstName" name="firstName" class="required" placeholder="First Name">
+                        <input type="text" id="firstName" name="firstName" class="required" placeholder="First Name" data-bind="value: firstName">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="lastName" name="lastName" class="required" placeholder="Last Name">
+                        <input type="text" id="lastName" name="lastName" class="required" placeholder="Last Name" data-bind="value: lastName">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="country" name="country" placeholder="Country">
+                        <input type="text" id="country" name="country" placeholder="Country" data-bind="value: country">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="state" name="state" placeholder="State">
+                        <input type="text" id="state" name="state" placeholder="State" data-bind="value: state">
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="text" id="city" name="city" placeholder="City">
+                        <input type="text" id="city" name="city" placeholder="City" data-bind="value: city">
                     </div>
                 </div>
             </fieldset>
 
             <div class="form-actions">
+                <button class="btn" data-bind="click: cancel">Cancel</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <button class="btn">Cancel</button>
+
+                <span id="message" class="simplemsg" style="float: left;">[Add message based on save]</span>
             </div>
         </form>
     </div>
@@ -87,7 +89,7 @@
         var vm = new HomeEnrollViewModel();
 
         // apply knockout bindings
-        ko.applyBindings(vm);
+        ko.applyBindings(vm, $('#mainContent')[0]);
     });
 </script>
 }

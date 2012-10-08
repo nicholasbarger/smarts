@@ -41,7 +41,7 @@
                     <h3>Add New Resource</h3>
                 </div>
                 <div class="modal-body">
-                    <form id="addForm" name="addForm" class="well form-vertical">
+                    <form id="addForm" name="addForm" class="well form-vertical" data-bind="submit: addResource">
                         <fieldset>
                             <legend>Please enter the basics</legend>
 
@@ -49,10 +49,10 @@
                                 <div class="controls">
                                     <select id="assetType" name="assetType" class="required" 
                                         data-bind="options: assetTypes, 
-                                            optionsCaption: 'Asset Type', 
+                                            optionsCaption: 'Type', 
                                             optionsText: 'Name', 
                                             optionsValue: 'Id', 
-                                            value: assetType">
+                                            value: assetTypeId">
                                     </select>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" id="url" name="url" class="required url" data-bind="value: url" placeholder="Url" />
+                                    <input type="text" id="uri" name="uri" class="required url" data-bind="value: uri" placeholder="Url" />
                                 </div>
                             </div>
 
@@ -76,9 +76,9 @@
                             </div>
                         </fieldset>
                     
-                        <a href="#">Advanced</a>
+                        <a href="#" data-bind="click: showAdvancedAdd">Advanced</a>
 
-                        <div id="advancedAdd" style="display: none;">
+                        <div id="advancedAdd" style="display: none;" data-bind="visible: isAdvancedAdd">
                             <fieldset>
                                 <legend>Tag this resource with subject(s)</legend>
 
@@ -137,7 +137,9 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn" data-dismiss="modal">Close</a>
-                    <a href="#" class="btn btn-primary" data-bind="click: addResource">Save changes</a>
+                    <a href="#" class="btn btn-primary">Save changes</a>
+
+                    <span id="addMessage" class="simplemsg" style="float: left;">[Information about adding an educational resource]</span>
                 </div>
             </div>
 

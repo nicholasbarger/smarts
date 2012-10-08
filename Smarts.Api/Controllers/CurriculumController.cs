@@ -1,5 +1,5 @@
 ﻿using Smarts.Api.Db;
-using Smarts.Api.Logic;
+using Smarts.Api.BusinessLogic;
 using Smarts.Api.Models;
 using System;
 using System.Collections.Generic;
@@ -7,25 +7,24 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Smarts.Api.AppLogic;
+using Smarts.Api.Utilities;
 
 namespace Smarts.Api.Controllers
 {
     public class CurriculumController : ApiController
     {
-        private SmartsDbContext db;
+        private CurriculumAppLogic logic;
         private Guid contributor;
 
         public CurriculumController()
-        {
-            // initialize the db context
-            db = new SmartsDbContext();
-            
-            // get cookie from requestor if applicable
-            var cookie = HttpContext.Current.Request.Cookies["userid"];
-            if(cookie != null)
-            {
-                contributor = new Guid(cookie.Value);
-            }
+        {   
+            // initialize logic
+            logic = new CurriculumAppLogic();
+
+            // assign contributor
+            var utility = new ControllerUtilities();
+            contributor = utility.GetWebUserGuidFromCookies();
         }
 
         #region GET Actions
@@ -40,24 +39,10 @@ namespace Smarts.Api.Controllers
         {
             var payload = new HttpResponsePayload<List<Curriculum>>();
 
-            // todo: Match signature to operation
-
             try
             {
-                // Get curriculums, using queries to ensure consistency of includes
-                List<Curriculum> curriculums = null;
-                using (var queries = new CurriculumQueries(db))
-                {
-                    curriculums = queries.GetQuery().ToList();
-                }
-
-                // Check if null to add error
-                if (curriculums == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = curriculums;
+                // Get full list
+                payload = new HttpResponsePayload<List<Curriculum>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -82,20 +67,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get curriculums, using queries to ensure consistency of includes
-                Curriculum curriculum = null;
-                using (var queries = new CurriculumQueries(db))
-                {
-                    curriculum = queries.Get(id);
-                }
-
-                // Check if null to add error
-                if (curriculum == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = curriculum;
+                // Get specific
+                payload = new HttpResponsePayload<Curriculum>(logic.Get(id));
             }
             catch (Exception ex)
             {
@@ -130,32 +103,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Prep
-                var logic = new CurriculumLogic();
-                logic.SetDefaults(ref obj);
-                obj.ContributorGuid = contributor;
-
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new CurriculumQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -175,27 +123,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new CurriculumQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -215,10 +143,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                using (var queries = new CurriculumQueries(db))
-                {
-                    payload.Data = queries.Delete(id);
-                }
+                throw new NotImplementedException();
             }
             catch (Exception ex)
             {

@@ -23,6 +23,7 @@ namespace Smarts.Api.Models
         /// <summary>
         /// The contributor of the curriculum (other users may contribute assets to the curriculum).
         /// </summary>
+        [ForeignKey("Contributor")]
         public Guid ContributorGuid { get; set; }
 
         /// <summary>

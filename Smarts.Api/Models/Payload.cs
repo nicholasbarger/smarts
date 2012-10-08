@@ -75,6 +75,7 @@ namespace Smarts.Api.Models
         {
             this.Errors = new Dictionary<string, string>();
             this.Messages = new List<string>();
+            this.Code = PayloadStatusCode.Unknown;
         }
 
         public Payload(PayloadStatusCode statusCode, T data) 
@@ -133,7 +134,7 @@ namespace Smarts.Api.Models
             }
             else
             {
-                this.Errors.Add("00000", Resources.Errors.ERR00000);
+                this.Errors.Add("00000", ex.Message);
             }
         }
 
@@ -163,6 +164,11 @@ namespace Smarts.Api.Models
 
     public enum PayloadStatusCode
     {
+        /// <summary>
+        /// When the payload status is unassigned or unknown.
+        /// </summary>
+        Unknown = 0,
+
         /// <summary>
         /// When everything worked properly.
         /// </summary>

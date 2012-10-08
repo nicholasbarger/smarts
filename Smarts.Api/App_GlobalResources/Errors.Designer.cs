@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please provide a non-blank entry..
+        /// </summary>
+        internal static string ERR00006 {
+            get {
+                return ResourceManager.GetString("ERR00006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The asset type must be specified..
         /// </summary>
         internal static string ERR00105 {

@@ -141,6 +141,10 @@
     <value>You are not authorized to access the resource or action specified.</value>
     <comment>General authentication error.</comment>
   </data>
+  <data name="ERR00006" xml:space="preserve">
+    <value>Please provide a non-blank entry.</value>
+    <comment>For when a value is passed that is blank or whitespace.</comment>
+  </data>
   <data name="ERR00105" xml:space="preserve">
     <value>The asset type must be specified.</value>
     <comment>Asset validation.</comment>

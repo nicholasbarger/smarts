@@ -120,6 +120,7 @@
     <Content Include="Content\images\logo-small-white.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo2.png" />
+    <Content Include="Content\images\nicEditorIcons.gif" />
     <Content Include="Content\images\sample-asset.gif" />
     <Content Include="Content\images\sample-asset2.jpg" />
     <Content Include="Content\images\sample-asset3.gif" />
@@ -152,6 +153,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Scripts\nicEdit.js" />
     <Content Include="Scripts\smarts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -172,6 +174,7 @@
     <Content Include="Views\Home\Enroll.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Info\Index.cshtml" />
+    <Content Include="Views\Learn\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

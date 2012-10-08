@@ -20,5 +20,18 @@ namespace Smarts.Api.Db
         public DbSet<Curriculum> Curriculums { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<WebUser> WebUsers { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Asset>()
+                .HasMany(a => a.Subjects)
+                .WithMany(a => a.Assets)
+                .Map(a =>
+                {
+                    a.ToTable("MapAssetToSubject");
+                    a.MapLeftKey("AssetId");
+                    a.MapRightKey("Hashtag");
+                });
+        }
     }
 }

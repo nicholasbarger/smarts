@@ -14,6 +14,11 @@ namespace Smarts.Api.Db
     {
         private SmartsDbContext context;
 
+        public SubjectQueries()
+        {
+            this.context = new SmartsDbContext();
+        }
+
         public SubjectQueries(SmartsDbContext context)
         {
             this.context = context;
@@ -46,10 +51,17 @@ namespace Smarts.Api.Db
             Subject subject = null;
             if (!string.IsNullOrEmpty(hashTag))
             {
-                subject = context.Subjects.SingleOrDefault(a => a.Hashtag == hashTag);
+                subject = GetQuery().SingleOrDefault(a => a.Hashtag == hashTag);
             }
 
             return subject;
+        }
+
+        public List<Subject> GetByAsset(int assetId)
+        {
+            return GetQuery()
+                .Where(a => a.Assets.Any(b => b.Id == assetId))
+                .ToList();
         }
 
         public IQueryable<Subject> GetQuery()

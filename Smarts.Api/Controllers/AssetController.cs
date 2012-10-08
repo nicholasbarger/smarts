@@ -7,27 +7,26 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Smarts.Api.Db;
-using Smarts.Api.Logic;
+using Smarts.Api.BusinessLogic;
 using Smarts.Api.Models;
+using Smarts.Api.Utilities;
+using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
     public class AssetController : ApiController
     {
-        private SmartsDbContext db;
+        private AssetAppLogic logic;
         private Guid contributor;
 
         public AssetController()
-        {
-            // initialize the db context
-            db = new SmartsDbContext();
-            
-            // get cookie from requestor if applicable
-            var cookie = HttpContext.Current.Request.Cookies["userid"];
-            if(cookie != null)
-            {
-                contributor = new Guid(cookie.Value);
-            }
+        {   
+            // initialize logic
+            logic = new AssetAppLogic();
+
+            // assign contributor
+            var utility = new ControllerUtilities();
+            contributor = utility.GetWebUserGuidFromCookies();
         }
 
         #region GET Actions
@@ -44,20 +43,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get assets, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
-                {
-                    assets = queries.GetQuery().ToList();
-                }
-
-                // Check if null to add error
-                if (assets == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = assets;
+                // Get full list
+                payload = new HttpResponsePayload<List<Asset>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -82,20 +69,81 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get asset, using queries to ensure consistency of includes
-                Asset asset = null;
-                using (var queries = new AssetQueries(db))
-                {
-                    asset = queries.Get(id);
-                }
+                // get specific
+                payload = new HttpResponsePayload<Asset>(logic.Get(id));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
 
-                // Check if null to add error
-                if (asset == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
 
-                payload.Data = asset;
+        [HttpGet]
+        public HttpResponseMessage GetBySubject(string hashtag)
+        {
+            var payload = new HttpResponsePayload<List<Asset>>();
+
+            // Prep from controller to add back the '#', which was removed for WebApi
+            hashtag = '#' + hashtag;
+
+            try
+            {
+                // get specific
+                payload = new HttpResponsePayload<List<Asset>>(logic.GetBySubject(hashtag));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
+
+        /// <summary>
+        /// Get the list of comments associated with an asset.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetComments(int id)
+        {
+            var payload = new HttpResponsePayload<List<Comment>>();
+
+            try
+            {
+                // get comments
+                payload = new HttpResponsePayload<List<Comment>>(logic.GetComments(id));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
+
+        /// <summary>
+        /// Get the list of subjects (tags) associated with an asset.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetSubjects(int id)
+        {
+            var payload = new HttpResponsePayload<List<Subject>>();
+
+            try
+            {
+                // get subjects
+                payload = new HttpResponsePayload<List<Subject>>(logic.GetSubjects(id));
             }
             catch (Exception ex)
             {
@@ -120,20 +168,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get asset, using queries to ensure consistency of includes
-                List<Asset> assets = null;
-                using (var queries = new AssetQueries(db))
-                {
-                    assets = queries.Search(q);
-                }
-
-                // Check if null to add error
-                if (assets == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = assets;
+                // search
+                payload = new HttpResponsePayload<List<Asset>>(logic.Search(q));
             }
             catch (Exception ex)
             {
@@ -155,32 +191,14 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Prep
-                var logic = new AssetLogic();
-                logic.SetDefaults(ref obj);
-                obj.ContributorGuid = contributor;
-
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
+                // Prep from controller level
+                if (obj != null)
                 {
-                    // Save
-                    using (var queries = new AssetQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
+                    obj.ContributorGuid = contributor;
+                }
 
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                // Save through logic
+                payload = new HttpResponsePayload<Asset>(logic.Save(obj));
             }
             catch (Exception ex)
             {
@@ -194,33 +212,14 @@ namespace Smarts.Api.Controllers
 
         // PUT api/asset/5
         [HttpPut]
-        public HttpResponseMessage Put(int id, Asset obj)
+        public HttpResponseMessage Put(Asset obj)
         {
             var payload = new HttpResponsePayload<Asset>();
 
             try
             {
-                // Validate
-                var rules = new ValidationRules();
-                rules.Validate(obj);
-
-                // Check if valid
-                if (rules.IsValid)
-                {
-                    // Save
-                    using (var queries = new AssetQueries(db))
-                    {
-                        queries.Save(ref obj);
-                    }
-
-                    // Update payload
-                    payload.Data = obj;
-                }
-                else
-                {
-                    // Assign errors from validation
-                    payload.AssignValidationErrors(rules.Errors);
-                }
+                // Save through logic
+                payload = new HttpResponsePayload<Asset>(logic.Save(obj));
             }
             catch (Exception ex)
             {
@@ -234,16 +233,14 @@ namespace Smarts.Api.Controllers
 
         // DELETE api/asset/5
         [HttpDelete]
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete(Asset obj)
         {
-            var payload = new HttpResponsePayload<bool>();
+            var payload = new HttpResponsePayload<Asset>();
 
             try
             {
-                using (var queries = new AssetQueries(db))
-                {
-                    payload.Data = queries.Delete(id);
-                }
+                // Delete through logic
+                payload = new HttpResponsePayload<Asset>(logic.Delete(obj));
             }
             catch (Exception ex)
             {

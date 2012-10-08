@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Smarts.Api.Logic
+namespace Smarts.Api.BusinessLogic
 {
-    /// <summary>
-    /// Place all business logic methods in here.
-    /// </summary>
-    internal class CurriculumLogic
+    public class CurriculumBusinessLogic
     {
         /// <summary>
         /// Set the default values when creating a new subject tag.

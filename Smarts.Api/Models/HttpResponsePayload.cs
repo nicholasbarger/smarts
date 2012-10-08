@@ -86,6 +86,19 @@ namespace Smarts.Api.Models
             // Set default http status code
             this.httpStatusCode = System.Net.HttpStatusCode.Unused;
         }
+
+        /// <summary>
+        /// Constructor for promoting payload to http response payload.
+        /// </summary>
+        /// <param name="payload"></param>
+        public HttpResponsePayload(Payload<T> payload) : this()
+        {
+            this.Code = payload.Code;
+            this.Data = payload.Data;
+            this.Errors = payload.Errors;
+            this.IsSuccess = payload.IsSuccess;
+            this.Messages = payload.Messages;
+        }
     }
 
     /// <summary>

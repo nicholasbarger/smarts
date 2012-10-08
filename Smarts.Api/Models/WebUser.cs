@@ -112,6 +112,8 @@ namespace Smarts.Api.Models
 
         #region Virtual Properties
 
+        // Currently none, but I am sure there will be some soon
+
         #endregion
 
         #region Calulcated Properties

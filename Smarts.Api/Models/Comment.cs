@@ -25,6 +25,7 @@ namespace Smarts.Api.Models
         /// <summary>
         /// The contributor that specified the comment.
         /// </summary>
+        [ForeignKey("Contributor")]
         public Guid ContributorGuid { get; set; }
 
         /// <summary>

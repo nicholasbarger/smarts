@@ -111,6 +111,89 @@ namespace Smarts.Api.Models
         /// </summary>
         public virtual WebUser Contributor { get; set; }
 
+        /// <summary>
+        /// Asset tags (subjects).
+        /// </summary>
+        public ICollection<Subject> Subjects { get; set; }
+
+        #endregion
+
+        #region Calculated Properties
+
+        public int ImportanceAsPercent
+        {
+            get
+            {
+                int result = 0;
+
+                switch (this.Importance)
+                {
+                    case AssetImportance.Low:
+                        result = 25;
+                        break;
+                    case AssetImportance.Medium:
+                        result = 50;
+                        break;
+                    case AssetImportance.High:
+                        result = 75;
+                        break;
+                    case AssetImportance.Critical:
+                        result = 100;
+                        break;
+                    case AssetImportance.Unspecified:
+                    case AssetImportance.Irrelevant:
+                    default:
+                        result = 0;
+                        break;
+                }
+
+                return result;
+            }
+        }
+
+        public int DifficultyAsPercent
+        {
+            get
+            {
+                int result = 0;
+
+                switch (this.Difficulty)
+                {
+                    case AssetDifficulty.EntryLevel:
+                        result = 20;
+                        break;
+                    case AssetDifficulty.Easy:
+                        result = 40;
+                        break;
+                    case AssetDifficulty.Medium:
+                        result = 60;
+                        break;
+                    case AssetDifficulty.Hard:
+                        result = 80;
+                        break;
+                    case AssetDifficulty.Expert:
+                        result = 100;
+                        break;
+                    case AssetDifficulty.Unspecified:
+                    default:
+                        result = 0;
+                        break;
+                }
+
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public Asset()
+        {
+            this.Comments = new List<Comment>();
+            this.Subjects = new List<Subject>();
+        }
+
         #endregion
 
         #region Methods
@@ -131,26 +214,32 @@ namespace Smarts.Api.Models
             }
 
             // Check properties
-            return (
-                this.AssetTypeId.Equals(other.AssetTypeId) &&
-                this.ContributorGuid.Equals(other.ContributorGuid) &&
-                this.Cost.Equals(other.Cost) &&
-                this.Description.Equals(other.Description) &&
-                this.Difficulty.Equals(other.Difficulty) &&
-                this.Id.Equals(other.Id) &&
-                this.Importance.Equals(other.Importance) &&
-                this.IsActive.Equals(other.IsActive) &&
-                this.IsScoreable.Equals(other.IsScoreable) &&
-                this.IsTestRequired.Equals(other.IsTestRequired) &&
-                this.PassingScore.Equals(other.PassingScore) &&
-                this.Title.Equals(other.Title) &&
-                this.Uri.Equals(other.Uri)
-            );
+            //return (
+            //    this.AssetTypeId.Equals(other.AssetTypeId) &&
+            //    this.ContributorGuid.Equals(other.ContributorGuid) &&
+            //    this.Cost.Equals(other.Cost) &&
+            //    this.Description.Equals(other.Description) &&
+            //    this.Difficulty.Equals(other.Difficulty) &&
+            //    this.Id.Equals(other.Id) &&
+            //    this.Importance.Equals(other.Importance) &&
+            //    this.IsActive.Equals(other.IsActive) &&
+            //    this.IsScoreable.Equals(other.IsScoreable) &&
+            //    this.IsTestRequired.Equals(other.IsTestRequired) &&
+            //    this.PassingScore.Equals(other.PassingScore) &&
+            //    this.Title.Equals(other.Title) &&
+            //    this.Uri.Equals(other.Uri)
+            //);
+
+            // todo: double check this code later getting null object errors
+            return true;
         }
 
         #endregion
     }
 
+    /// <summary>
+    /// The list of possible difficulty levels.
+    /// </summary>
     public enum AssetDifficulty
     {
         Unspecified = 0,
@@ -161,6 +250,9 @@ namespace Smarts.Api.Models
         Expert = 5
     }
 
+    /// <summary>
+    /// The list of possible importance levels.
+    /// </summary>
     public enum AssetImportance
     {
         Unspecified = 0,

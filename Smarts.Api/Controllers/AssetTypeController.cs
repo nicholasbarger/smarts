@@ -8,25 +8,24 @@ using System.Web;
 using System.Web.Http;
 using Smarts.Api.Db;
 using Smarts.Api.Models;
+using Smarts.Api.Utilities;
+using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
     public class AssetTypeController : ApiController
     {
-        private SmartsDbContext db;
+        private AssetTypeAppLogic logic;
         private Guid contributor;
 
         public AssetTypeController()
-        {
-            // initialize the db context
-            db = new SmartsDbContext();
-            
-            // get cookie from requestor if applicable
-            var cookie = HttpContext.Current.Request.Cookies["userid"];
-            if(cookie != null)
-            {
-                contributor = new Guid(cookie.Value);
-            }
+        {   
+            // initialize logic
+            logic = new AssetTypeAppLogic();
+
+            // assign contributor
+            var utility = new ControllerUtilities();
+            contributor = utility.GetWebUserGuidFromCookies();
         }
 
         #region GET Actions
@@ -43,20 +42,8 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                // Get list of asset types, using queries to ensure consistency of includes
-                List<AssetType> assetTypes = null;
-                using (var queries = new AssetTypeQueries(db))
-                {
-                    assetTypes = queries.GetQuery().ToList();
-                }
-
-                // Check if null to add error
-                if (assetTypes == null)
-                {
-                    payload.Errors.Add("00002", Resources.Errors.ERR00002);
-                }
-
-                payload.Data = assetTypes;
+                // Get full list
+                payload = new HttpResponsePayload<List<AssetType>>(logic.Get());
             }
             catch (Exception ex)
             {

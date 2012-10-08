@@ -14,6 +14,11 @@ namespace Smarts.Api.Db
     {
         private SmartsDbContext context;
 
+        public AssetTypeQueries()
+        {
+            this.context = new SmartsDbContext();
+        }
+
         public AssetTypeQueries(SmartsDbContext context)
         {
             this.context = context;

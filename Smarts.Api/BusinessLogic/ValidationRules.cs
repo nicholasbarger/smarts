@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Smarts.Api.Models;
 
-namespace Smarts.Api.Logic
+namespace Smarts.Api.BusinessLogic
 {
     /// <summary>
     /// Put all validation rules across all objects here.
@@ -43,6 +43,30 @@ namespace Smarts.Api.Logic
             this.Errors = new Dictionary<string, string>();
         }
 
+        #region Generic Validations
+
+        /// <summary>
+        /// Check that a valid Id has been passed.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void ValidateHasId(dynamic obj)
+        {
+            if (obj.Id <= 0)
+            {
+                this.Errors.Add("00003", Resources.Errors.ERR00003);
+            }
+        }
+
+        public void ValidateIsNotEmpty(string q)
+        {
+            if (string.IsNullOrWhiteSpace(q))
+            {
+                this.Errors.Add("00006", Resources.Errors.ERR00006);
+            }
+        }
+
+        #endregion
+
         //NOTE: All validation logic is nestled in here across all objects, we may want to refactor this depending on how big it becomes and if it is a maintenance issue
         #region Model Validations
 
@@ -68,12 +92,12 @@ namespace Smarts.Api.Logic
                 this.Errors.Add("00106", Resources.Errors.ERR00106);
             }
 
-            if (obj.Difficulty != AssetDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
+            if (obj.Difficulty.HasValue && obj.Difficulty != AssetDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
             {
                 this.Errors.Add("00107", Resources.Errors.ERR00107);
             }
 
-            if (obj.Importance != AssetImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
+            if (obj.Importance.HasValue && obj.Importance != AssetImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
             {
                 this.Errors.Add("00108", Resources.Errors.ERR00108);
             }
