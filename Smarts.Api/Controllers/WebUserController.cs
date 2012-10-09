@@ -96,6 +96,44 @@ namespace Smarts.Api.Controllers
 
         #endregion
 
+        // POST api/user/login
+        [HttpPost]
+        public HttpResponseMessage Login(WebUser obj)
+        {
+            var payload = new HttpResponsePayload<WebUser>();
+
+            try
+            {
+                // assign email and username to same value to assist in login
+                if (string.IsNullOrEmpty(obj.Username) && !string.IsNullOrEmpty(obj.Email))
+                {
+                    obj.Username = obj.Email;
+                }
+                if (string.IsNullOrEmpty(obj.Email) && !string.IsNullOrEmpty(obj.Username))
+                {
+                    obj.Email = obj.Username;
+                }
+
+                // login through logic using either username or email and matching password
+                payload = new HttpResponsePayload<WebUser>(logic.Login(obj.Username, obj.Email, obj.Password));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
+
+        // POST api/user/logout
+        [HttpPost]
+        public HttpResponseMessage Logout(WebUser obj)
+        {
+            throw new NotImplementedException();
+        }
+
         // POST api/user
         [HttpPost]
         public HttpResponseMessage Post(WebUser obj)

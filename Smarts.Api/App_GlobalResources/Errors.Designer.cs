@@ -239,5 +239,59 @@ namespace Resources {
                 return ResourceManager.GetString("ERR00302", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Either a username or email address must be specified to login..
+        /// </summary>
+        internal static string ERR00400 {
+            get {
+                return ResourceManager.GetString("ERR00400", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your password to login..
+        /// </summary>
+        internal static string ERR00401 {
+            get {
+                return ResourceManager.GetString("ERR00401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The username or email address must be less than 320 characters long..
+        /// </summary>
+        internal static string ERR00402 {
+            get {
+                return ResourceManager.GetString("ERR00402", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password must be less than 255 characters long..
+        /// </summary>
+        internal static string ERR00403 {
+            get {
+                return ResourceManager.GetString("ERR00403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password did not match..
+        /// </summary>
+        internal static string ERR00404 {
+            get {
+                return ResourceManager.GetString("ERR00404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user was not found..
+        /// </summary>
+        internal static string ERR00405 {
+            get {
+                return ResourceManager.GetString("ERR00405", resourceCulture);
+            }
+        }
     }
 }

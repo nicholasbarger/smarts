@@ -195,5 +195,44 @@ namespace Smarts.Api.BusinessLogic
         }
 
         #endregion
+
+        #region Event Validations
+
+        public void ValidateLoginEvent(string username, string email, string password)
+        {
+            // check that either username or email were passed in
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(email))
+            {
+                this.Errors.Add("00400", Resources.Errors.ERR00400);
+            }
+            else
+            {
+                // check that the fields are not too long
+                if (email != null && email.Length > 320)
+                {
+                    this.Errors.Add("00402", Resources.Errors.ERR00402);
+                }
+
+                // not checking the username length since they are both shared with email - defaulting to longest
+
+                // also not checking that the email is actually email formatted due to shared entry with username
+            }
+
+            // check that the password was passed in
+            if (string.IsNullOrEmpty(password))
+            {
+                this.Errors.Add("00401", Resources.Errors.ERR00401);
+            }
+            else
+            {
+                // check that password is not too long
+                if (password.Length > 255)
+                {
+                    this.Errors.Add("00403", Resources.Errors.ERR00403);
+                }
+            }
+        }
+
+        #endregion
     }
 }

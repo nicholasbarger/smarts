@@ -14,13 +14,13 @@
         <header>
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="container">
+                    <div class="container layoutBindings">
                         <img src="/Content/images/logo-small-white.png" /> 
                         <a href="/" class="company">Smarts</a>
 
-                        <a href="/Home/Enroll" class="btn btn-success pull-right"><i class="icon-star icon-white"></i></a>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#account"><i class="icon-user icon-white"></i></button>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add"><i class="icon-plus icon-white"></i></button>
+                        <a href="/Home/Enroll" class="btn btn-success pull-right" data-bind="visible: !isLoggedIn()"><i class="icon-star icon-white"></i></a>
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#account" data-bind="visible: isLoggedIn"><i class="icon-user icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add" data-bind="visible: isLoggedIn"><i class="icon-plus icon-white"></i></button>
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                         <a href="#">Edit profile</a><br />
                         <a href="#">Change password</a><br />
                         <a href="#">Manage notifications</a><br />
-                        <a href="#">Logout</a>
+                        <a href="#" data-bind="click: logout">Logout</a>
                     </div>
                 </div>
                 <div class="modal-footer">

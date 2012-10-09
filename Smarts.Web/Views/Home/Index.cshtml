@@ -26,9 +26,34 @@
             <p>Find out what the <strong>best educational resources</strong> <i>really</i> are. Amidst the videos, books, articles, and tests - Smarts brings it all together to build <strong>structured courses</strong> amongst the madness for people <strong>serious about learning</strong>.</p>
             <p>
                 <a href="/Learn/">Start Learning</a> |
-                <a href="/Home/HowItWorks">See How it Works</a>
+                <a href="/Home/HowItWorks">See How it Works</a> |
+                <a href="#" data-bind="click: showLoginPanel">Login</a>
             </p>
+
+            <div data-bind="visible: isLoginPanelVisible">
+                <form class="form" data-bind="submit: login">
+                <fieldset>
+                <legend>Login</legend>
+                    <div class="control-group">
+                        <div class="controls">
+                            <input type="text" id="email" name="email" class="required" data-bind="value: email" placeholder="Username or email address" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <input type="password" id="password" name="password" class="required" data-bind="value: password" placeholder="Password" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <span id="message" class="simplemsg">[Information about adding an educational resource]</span>
+                </fieldset>
+                </form>
+            </div>
         </div>
+
+        
     </div>
 </div>
 
@@ -39,7 +64,7 @@
         var vm = new HomeIndexViewModel();
 
         // apply knockout bindings
-        ko.applyBindings(vm);
+        ko.applyBindings(vm, $('#mainContent')[0]);
     });
 </script>
 }

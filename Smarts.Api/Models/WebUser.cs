@@ -49,6 +49,12 @@ namespace Smarts.Api.Models
         public string FirstName { get; set; }
 
         /// <summary>
+        /// The hashed password.
+        /// </summary>
+        [Column("Password")]
+        public string HashedPassword { get; set; }
+
+        /// <summary>
         /// Specifies whether the user is still active or not.
         /// </summary>
         public bool IsActive { get; set; }
@@ -62,6 +68,12 @@ namespace Smarts.Api.Models
         /// The users last name.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// A transport mechanism for passing in the password (not retrieved from db).
+        /// </summary>
+        [NotMapped]
+        public string Password { get; set; }
 
         /// <summary>
         /// An optional phone number to contact the user.

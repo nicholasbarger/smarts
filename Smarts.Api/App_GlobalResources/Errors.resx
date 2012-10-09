@@ -197,4 +197,28 @@
     <value>The title must be less than 100 characters long.</value>
     <comment>Curriculum validation.</comment>
   </data>
+  <data name="ERR00400" xml:space="preserve">
+    <value>Either a username or email address must be specified to login.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
+  <data name="ERR00401" xml:space="preserve">
+    <value>Please enter your password to login.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
+  <data name="ERR00402" xml:space="preserve">
+    <value>The username or email address must be less than 320 characters long.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
+  <data name="ERR00403" xml:space="preserve">
+    <value>The password must be less than 255 characters long.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
+  <data name="ERR00404" xml:space="preserve">
+    <value>The password did not match.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
+  <data name="ERR00405" xml:space="preserve">
+    <value>The user was not found.</value>
+    <comment>WebUser validation (Login Event).</comment>
+  </data>
 </root>

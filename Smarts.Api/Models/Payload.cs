@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -127,6 +128,10 @@ namespace Smarts.Api.Models
             else if (ex is DbUpdateException || ex is SqlException)
             {
                 this.Errors.Add("00001", ex.Message);
+            }
+            else if (ex is EntityCommandExecutionException)
+            {
+                this.Errors.Add("00001", ex.InnerException.Message);
             }
             else if (ex is UnauthorizedAccessException)
             {

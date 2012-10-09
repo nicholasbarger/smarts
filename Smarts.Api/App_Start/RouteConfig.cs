@@ -74,6 +74,18 @@ namespace Smarts.Api
                 defaults: new { controller = "Asset", action = "Get" }
             );
 
+            routes.MapHttpRoute(
+                name: "WebUserLogin",
+                routeTemplate: "webuser/login/",
+                defaults: new { controller = "WebUser", action = "Login" }
+            );
+
+            routes.MapHttpRoute(
+                name: "WebUserLogout",
+                routeTemplate: "webuser/logout/",
+                defaults: new { controller = "WebUser", action = "Logout" }
+            );
+
             #endregion
 
             #region Generic Routes

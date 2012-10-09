@@ -14,6 +14,11 @@ namespace Smarts.Api.Db
     {
         private SmartsDbContext context;
 
+        public WebUserQueries()
+        {
+            this.context = new SmartsDbContext();
+        }
+
         public WebUserQueries(SmartsDbContext context)
         {
             this.context = context;
@@ -46,10 +51,15 @@ namespace Smarts.Api.Db
             WebUser user = null;
             if (guid != null)
             {
-                user = context.WebUsers.SingleOrDefault(a => a.Guid == guid);
+                user = GetQuery().SingleOrDefault(a => a.Guid == guid);
             }
 
             return user;
+        }
+
+        public WebUser GetByLogin(string username, string email)
+        {
+            return GetQuery().Where(a => a.Username == username || a.Email == email).FirstOrDefault();
         }
 
         public IQueryable<WebUser> GetQuery()

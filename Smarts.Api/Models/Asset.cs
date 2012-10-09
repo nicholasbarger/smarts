@@ -120,6 +120,34 @@ namespace Smarts.Api.Models
 
         #region Calculated Properties
 
+        private int? _commentCount;
+
+        [NotMapped]
+        public int CommentCount
+        {
+            get
+            {
+                if (_commentCount != null)
+                {
+                    return _commentCount.Value;
+                }
+                else
+                {
+                    if (this.Comments != null)
+                    {
+                        return this.Comments.Count();
+                    }
+                }
+
+                return 0;
+            }
+            set
+            {
+                _commentCount = value;
+            }
+        }
+
+        [NotMapped]
         public int ImportanceAsPercent
         {
             get
@@ -151,6 +179,7 @@ namespace Smarts.Api.Models
             }
         }
 
+        [NotMapped]
         public int DifficultyAsPercent
         {
             get
@@ -183,6 +212,9 @@ namespace Smarts.Api.Models
                 return result;
             }
         }
+
+        [NotMapped]
+        public int StudentCompletions { get; set; }
 
         #endregion
 

@@ -67,6 +67,9 @@ var LayoutViewModel = function () {
     // controls whether to hide/show the advanced add features
     self.isAdvancedAdd = ko.observable();
 
+    // controls whether the user is considered logged in and toggles visible elements
+    self.isLoggedIn = ko.observable(false);
+
     // **** Asset ko model properties ****
     // ----------------------------------------------------
     // the selected asset type of a new resource
@@ -87,6 +90,8 @@ var LayoutViewModel = function () {
 
     // add a resource
     self.addResource = function () {
+
+        // call service
         $.ajax({
             url: '/api/asset/',
             data: { assetTypeId: self.assetTypeId(), title: self.title(), uri: self.uri(), description: self.description() },
@@ -97,6 +102,37 @@ var LayoutViewModel = function () {
             },
             error: function (response) {
                 handleError(response, $('#addMessage'), 'Bummer, something is wrong: ', true)
+            }
+        });
+    };
+
+    // logout and clear cookies
+    self.logout = function () {
+
+        // get cookie
+        var uid = getCookie('uid');
+
+        // call service
+        $.ajax({
+            url: '/api/webuser/logout/',
+            data: { Guid: uid },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (response) {
+                handleSuccess(response, $('#message'), 'Feel safe, you\'ve been successfully logged out.', 'Doh! We malfunctioned: ', true)
+
+                // handle successful login
+                if (response.IsSuccess) {
+
+                    // clear all cookies
+                    clearCookies();
+
+                    // redirect to homepage
+                    window.location = '/';
+                }
+            },
+            error: function (response) {
+                handleError(response, $('#message'), 'Doh! We malfunctioned: ', true)
             }
         });
     };
@@ -119,10 +155,21 @@ var LayoutViewModel = function () {
         self.isAdvancedAdd(!self.isAdvancedAdd());
     };
 
+    // set visual elements if logged in
+    self.toggleLoggedInUI = function () {
+
+        // set isLoggedIn flag which is attached to UI elements through ko bindings
+        var cookie = getCookie('uid');
+        if (cookie != null) {
+            self.isLoggedIn(true);
+        }
+    };
+
     // Initialization
     // ****************************************************
 
     self.populateAssetTypes();
+    self.toggleLoggedInUI();
 };
 
 var LearnIndexViewModel = function () {
@@ -440,10 +487,59 @@ var HomeIndexViewModel = function () {
     // Properties
     // ****************************************************
 
+    // the email to login with
+    self.email = ko.observable();
+
+    // specifies whether to show the login panel or not
+    self.isLoginPanelVisible = ko.observable(false);
+
+    // the password to login with
+    self.password = ko.observable();
+    
 
     // Methods
     // ****************************************************
 
+    // perform login
+    self.login = function () {
+
+        // call login service
+        $.ajax({
+            url: '/api/webuser/login/',
+            data: { Email: self.email(), Password: self.password() },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (response) {
+                handleSuccess(response, $('#message'), 'Success logging in, now redirecting...', 'Hmm... it looks like something went wrong: ', true)
+
+                // handle successful login
+                if (response.IsSuccess) {
+
+                    // assign cookies
+                    setCookie('uid', response.Data.Guid, 1);
+                    setCookie('uname', response.Data.Username, 1);
+                    setCookie('ufname', response.Data.FirstName, 1);
+                    setCookie('ulname', response.Data.LastName, 1);
+
+                    // redirect to learning page
+                    window.location = '/Learn/';
+                }
+            },
+            error: function (response) {
+                handleError(response, $('#message'), 'Hmm... it looks like something went wrong: ', true)
+            }
+        });
+    };
+
+    // toggles visibility of login panel
+    self.showLoginPanel = function () {
+
+        // toggle flag and let ko binding takeover
+        self.isLoginPanelVisible(true);
+
+        // set focus to login control
+        $('#email').focus();
+    };
 
     // Initialization
     // ****************************************************
@@ -452,6 +548,31 @@ var HomeIndexViewModel = function () {
 
 // Helper Utilities
 // ****************************************************
+
+// clear all cookies
+function clearCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
+// get a browser cookie
+function getCookie(c_name) {
+    var i, x, y, ARRcookies = document.cookie.split(";");
+    for (i = 0; i < ARRcookies.length; i++) {
+        x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+        y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+        x = x.replace(/^\s+|\s+$/g, "");
+        if (x == c_name) {
+            return unescape(y);
+        }
+    }
+}
 
 // handle ajax error responses
 function handleError(response, container, errorText, displayErrorDetail) {
@@ -521,6 +642,18 @@ function returnToPreviousPage() {
     }
     catch (ex) {
     }
+}
+
+// set a browser cookie
+function setCookie(c_name, value, exdays) {
+    var hostname = window.location.hostname.replace('business', '');
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString()) + ";path=/;";
+    if (hostname != 'localhost') {
+        c_value += 'domain=' + hostname;
+    }
+    document.cookie = c_name + "=" + c_value;
 }
 
 // show message
