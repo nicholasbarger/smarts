@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A valid Guid was not provided..
+        /// </summary>
+        internal static string ERR00007 {
+            get {
+                return ResourceManager.GetString("ERR00007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The asset type must be specified..
         /// </summary>
         internal static string ERR00105 {

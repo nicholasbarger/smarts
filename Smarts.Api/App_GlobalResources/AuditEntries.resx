@@ -117,112 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ERR00000" xml:space="preserve">
-    <value />
-    <comment>This is a placholder, it dynamically generates errors based on any generic errors.</comment>
+  <data name="Enroll" xml:space="preserve">
+    <value>{0} has enrolled as a new user.</value>
+    <comment>Logs entry for a new user using a placeholder for username.</comment>
   </data>
-  <data name="ERR00001" xml:space="preserve">
-    <value />
-    <comment>This is a placeholder, it dynamically generates errors based on db errors.</comment>
+  <data name="Login" xml:space="preserve">
+    <value>{0} successfully logged in.</value>
+    <comment>Logs entry for a successful login using a placeholder for username.</comment>
   </data>
-  <data name="ERR00002" xml:space="preserve">
-    <value>The item specified was not found.</value>
-    <comment>For when an object that is expected to be found does not exist.</comment>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>A login attempt from {0} failed to login due to: {1}</value>
+    <comment>Logs entry for a failed login using placeholders for username and error message.</comment>
   </data>
-  <data name="ERR00003" xml:space="preserve">
-    <value>The required Id was not specified.</value>
-    <comment>For when a required id in a parameter or object is not specified.</comment>
-  </data>
-  <data name="ERR00004" xml:space="preserve">
-    <value>The item is null.</value>
-    <comment>For when an object is null.</comment>
-  </data>
-  <data name="ERR00005" xml:space="preserve">
-    <value>You are not authorized to access the resource or action specified.</value>
-    <comment>General authentication error.</comment>
-  </data>
-  <data name="ERR00006" xml:space="preserve">
-    <value>Please provide a non-blank entry.</value>
-    <comment>For when a value is passed that is blank or whitespace.</comment>
-  </data>
-  <data name="ERR00007" xml:space="preserve">
-    <value>A valid Guid was not provided.</value>
-    <comment>General validation for Guid's.</comment>
-  </data>
-  <data name="ERR00105" xml:space="preserve">
-    <value>The asset type must be specified.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00106" xml:space="preserve">
-    <value>The contributor must be specified.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00107" xml:space="preserve">
-    <value>Difficulty rating must be between 1 and 5 if specified.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00108" xml:space="preserve">
-    <value>Importance rating must be between 1 and 5 if specified.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00109" xml:space="preserve">
-    <value>Passing score must be between 1 and 100 if specified.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00110" xml:space="preserve">
-    <value>Asset title must be specified and can not exceed 100 characters.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00111" xml:space="preserve">
-    <value>Asset uri is required.</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00112" xml:space="preserve">
-    <value>The specified uri is too long, please use a url shortening tool such as http://www.bit.ly</value>
-    <comment>Asset validation.</comment>
-  </data>
-  <data name="ERR00200" xml:space="preserve">
-    <value>A value must be specified for a subject, it's used like a hashtag.</value>
-    <comment>Subject validation.</comment>
-  </data>
-  <data name="ERR00201" xml:space="preserve">
-    <value>The description must be less than 4000 characters long.</value>
-    <comment>Subject validation.</comment>
-  </data>
-  <data name="ERR00202" xml:space="preserve">
-    <value>The title must be less than 100 characters long.</value>
-    <comment>Subject validation.</comment>
-  </data>
-  <data name="ERR00301" xml:space="preserve">
-    <value>The description must be less than 4000 characters long.</value>
-    <comment>Curriculum validation.</comment>
-  </data>
-  <data name="ERR00302" xml:space="preserve">
-    <value>The title must be less than 100 characters long.</value>
-    <comment>Curriculum validation.</comment>
-  </data>
-  <data name="ERR00400" xml:space="preserve">
-    <value>Either a username or email address must be specified to login.</value>
-    <comment>WebUser validation (Login Event).</comment>
-  </data>
-  <data name="ERR00401" xml:space="preserve">
-    <value>Please enter your password to login.</value>
-    <comment>WebUser validation (Login Event).</comment>
-  </data>
-  <data name="ERR00402" xml:space="preserve">
-    <value>The username or email address must be less than 320 characters long.</value>
-    <comment>WebUser validation (Login Event).</comment>
-  </data>
-  <data name="ERR00403" xml:space="preserve">
-    <value>The password must be less than 255 characters long.</value>
-    <comment>WebUser validation (Login Event).</comment>
-  </data>
-  <data name="ERR00404" xml:space="preserve">
-    <value>The password did not match.</value>
-    <comment>WebUser validation (Login Event).</comment>
-  </data>
-  <data name="ERR00405" xml:space="preserve">
-    <value>The user was not found.</value>
-    <comment>WebUser validation (Login Event).</comment>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>{0} has updated their profile; changing the following properties: {1}</value>
+    <comment>Logs entry for when a user updates their profile using a placeholder for username and the changed properties.</comment>
   </data>
 </root>

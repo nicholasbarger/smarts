@@ -14,6 +14,8 @@ namespace Smarts.Api.Db
     {
         public SmartsDbContext() : base("SmartsDbContext") { }
 
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityEvent> ActivityEvents { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<Comment> Comments { get; set; }

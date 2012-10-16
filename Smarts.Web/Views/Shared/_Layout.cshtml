@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width" />
 
         <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/Content/smarts.css" />
     </head>
     <body>
@@ -19,8 +19,9 @@
                         <a href="/" class="company">Smarts</a>
 
                         <a href="/Home/Enroll" class="btn btn-success pull-right" data-bind="visible: !isLoggedIn()"><i class="icon-star icon-white"></i></a>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#account" data-bind="visible: isLoggedIn"><i class="icon-user icon-white"></i></button>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add" data-bind="visible: isLoggedIn"><i class="icon-plus icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" style="margin-left: 3px;" data-toggle="modal" data-target="#account" data-bind="visible: isLoggedIn"><i class="icon-user icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" style="margin-left: 3px;" data-toggle="modal" data-target="#add" data-bind="visible: isLoggedIn"><i class="icon-plus icon-white"></i></button>
+                        <span class="login-name pull-right" data-bind="text: 'logged in as: ' + username(), visible: isLoggedIn">[logged in as: username]</span>
                     </div>
                 </div>
             </div>
@@ -147,13 +148,13 @@
             <div class="modal hide fade" id="account">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>Nicholas Barger</h3>
+                    <h3 data-bind="text: user().FullName">[Full Name]</h3>
                 </div>
                 <div class="modal-body">
-                    <img src="http://nbarger.files.wordpress.com/2012/02/me1-e1328417011254.jpg?w=270&h=206" alt="Nicholas Barger" class="pull-right" />
+                    <img data-bind="attr: { src: user().PictureUri, alt: user().FullName }" class="pull-right" />
                 
                     <div class="account-stats">
-                        <label>Member Since</label><span>8/1/2012 (4 days)</span>
+                        <label>Member Since</label><span data-bind="text: user().MemberSince">[MemberSince]</span>
                         <label>Smarts Score</label><span class="score-small">10,240</span>
                         <label>Contributed</label>
                         <span>
@@ -172,9 +173,9 @@
                     </div>
 
                     <div class="links">
-                        <a href="#">Edit profile</a><br />
-                        <a href="#">Change password</a><br />
-                        <a href="#">Manage notifications</a><br />
+                        <a href="/Home/Profile">Edit profile</a><br />
+                        <a href="/Home/Profile/#password">Change password</a><br />
+                        <a href="/Home/Profile/#notifications">Manage notifications</a><br />
                         <a href="#" data-bind="click: logout">Logout</a>
                     </div>
                 </div>
@@ -212,9 +213,9 @@
     </body>
 
 <!-- Scripts -->
-<script type="text/javascript" src="/Scripts/jquery-1.8.1.min.js"></script>
-<script type="text/javascript" src="/Scripts/knockout-2.1.0.js"></script>
-<script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/Scripts/smarts.js"></script>
 
 <script type="text/javascript">

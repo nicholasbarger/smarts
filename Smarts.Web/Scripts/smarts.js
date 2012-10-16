@@ -49,6 +49,7 @@ var WebUser = function () {
     this.Username;
 
     this.FullName;
+    this.MemberSince;
     this.OneLineAddress;
 
 };
@@ -69,6 +70,12 @@ var LayoutViewModel = function () {
 
     // controls whether the user is considered logged in and toggles visible elements
     self.isLoggedIn = ko.observable(false);
+
+    // the full user (populated upon profile request only)
+    self.user = ko.observable(new WebUser());
+
+    // the logged in users username
+    self.username = ko.observable();
 
     // **** Asset ko model properties ****
     // ----------------------------------------------------
@@ -103,6 +110,17 @@ var LayoutViewModel = function () {
             error: function (response) {
                 handleError(response, $('#addMessage'), 'Bummer, something is wrong: ', true)
             }
+        });
+    };
+
+    // get the user to be displayed in the profile
+    self.getUser = function () {
+
+        // get full user and allow ko binding
+        $.getJSON('/api/webuser/', { Guid: uid }, function (response) {
+
+            // populate user and let ko take over
+            self.user(response.Data);
         });
     };
 
@@ -170,6 +188,7 @@ var LayoutViewModel = function () {
 
     self.populateAssetTypes();
     self.toggleLoggedInUI();
+    self.username(getCookie('uname'));
 };
 
 var LearnIndexViewModel = function () {

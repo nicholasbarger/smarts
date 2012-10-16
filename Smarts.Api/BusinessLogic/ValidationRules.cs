@@ -46,6 +46,18 @@ namespace Smarts.Api.BusinessLogic
         #region Generic Validations
 
         /// <summary>
+        /// Check that a valid Guid has been passed.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void ValidateGuid(Guid guid)
+        {
+            if (guid == null || guid == Guid.Empty)
+            {
+                this.Errors.Add("00007", Resources.Errors.ERR00007);
+            }
+        }
+
+        /// <summary>
         /// Check that a valid Id has been passed.
         /// </summary>
         /// <param name="obj"></param>

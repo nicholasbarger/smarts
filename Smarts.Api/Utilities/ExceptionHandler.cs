@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Smarts.Api.Models
+namespace Smarts.Api.Utilities
 {
     /// <summary>
     /// A centralized exception handler for logging, error handing, and routing of exceptions.

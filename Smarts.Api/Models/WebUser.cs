@@ -141,6 +141,14 @@ namespace Smarts.Api.Models
             }
         }
 
+        public string MemberSince
+        {
+            get
+            {
+                return string.Format("{0} ({1} days)", this.Created.ToShortDateString(), (DateTime.Now - this.Created).TotalDays);
+            }
+        }
+
         /// <summary>
         /// The user address on one line.
         /// </summary>

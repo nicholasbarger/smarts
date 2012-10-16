@@ -125,6 +125,11 @@
     <Compile Include="AppLogic\CurriculumAppLogic.cs" />
     <Compile Include="AppLogic\SubjectAppLogic.cs" />
     <Compile Include="AppLogic\WebUserAppLogic.cs" />
+    <Compile Include="App_GlobalResources\AuditEntries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditEntries.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,7 +154,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\WebUserController.cs" />
+    <Compile Include="Db\ActivityQueries.cs" />
     <Compile Include="Db\CommentQueries.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityEvent.cs" />
+    <Compile Include="Utilities\AuditUtilities.cs" />
     <Compile Include="Utilities\ControllerUtilities.cs" />
     <Compile Include="Db\AssetQueries.cs" />
     <Compile Include="Db\AssetTypeQueries.cs" />
@@ -167,7 +176,7 @@
     <Compile Include="Models\AssetType.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Curriculum.cs" />
-    <Compile Include="Models\ExceptionHandler.cs" />
+    <Compile Include="Utilities\ExceptionHandler.cs" />
     <Compile Include="Models\HttpResponsePayload.cs" />
     <Compile Include="Models\Payload.cs" />
     <Compile Include="Models\Subject.cs" />
@@ -259,6 +268,12 @@
     <Content Include="App_GlobalResources\Messages.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\AuditEntries.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AuditEntries.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>
