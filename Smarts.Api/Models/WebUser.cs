@@ -96,6 +96,11 @@ namespace Smarts.Api.Models
         public string Province { get; set; }
 
         /// <summary>
+        /// The infamous Smarts Score.
+        /// </summary>
+        public int Score { get; set; }
+
+        /// <summary>
         /// The optional state (abbreviation) the user is located in.
         /// </summary>
         public string State { get; set; }
@@ -131,6 +136,18 @@ namespace Smarts.Api.Models
         #region Calulcated Properties
 
         /// <summary>
+        /// The total number of assets added by this user.
+        /// </summary>
+        public int AssetsAddedCount
+        {
+            get
+            {
+                // todo
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// The concatenated full name (FirstName + " " + LastName).
         /// </summary>
         public string FullName
@@ -145,7 +162,7 @@ namespace Smarts.Api.Models
         {
             get
             {
-                return string.Format("{0} ({1} days)", this.Created.ToShortDateString(), (DateTime.Now - this.Created).TotalDays);
+                return string.Format("{0} ({1} days)", this.Created.ToShortDateString(), Convert.ToInt32((DateTime.Now - this.Created).TotalDays));
             }
         }
 
@@ -167,6 +184,30 @@ namespace Smarts.Api.Models
                     return string.Format("{0} {1} {2}, {3} {4} ", new object[] { 
                         this.Street1, this.Street2, this.City, this.Country, this.PostalCode });
                 }
+            }
+        }
+
+        /// <summary>
+        /// Total number of votes cast by this user.
+        /// </summary>
+        public int VotesCastCount
+        {
+            get
+            {
+                // todo
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Total number of votes received by other users.
+        /// </summary>
+        public int VotesReceivedCount
+        {
+            get
+            {
+                // todo
+                return 0;
             }
         }
 

@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssetCreated" xml:space="preserve">
+    <value>{0} has created a new asset titled {1}.</value>
+    <comment>Logs entry for when a user creates a new asset using a placeholder for the username and title of the asset.</comment>
+  </data>
+  <data name="AssetModified" xml:space="preserve">
+    <value>{0} has modified an asset, changing the following properties: {1}</value>
+    <comment>Logs entry for when a user modified an existing asset using a placeholder for the username and changed properties.</comment>
+  </data>
   <data name="Enroll" xml:space="preserve">
     <value>{0} has enrolled as a new user.</value>
     <comment>Logs entry for a new user using a placeholder for username.</comment>
@@ -129,8 +137,16 @@
     <value>A login attempt from {0} failed to login due to: {1}</value>
     <comment>Logs entry for a failed login using placeholders for username and error message.</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>{0} successfully logged out.</value>
+    <comment>Logs entry for a successful logout using a placeholder for the username.</comment>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>{0} has changed their password.</value>
+    <comment>Logs entry for when a user changes their password (does not state the original or new password for security reasons).</comment>
+  </data>
   <data name="ProfileUpdated" xml:space="preserve">
-    <value>{0} has updated their profile; changing the following properties: {1}</value>
+    <value>{0} has updated their profile, changing the following properties: {1}</value>
     <comment>Logs entry for when a user updates their profile using a placeholder for username and the changed properties.</comment>
   </data>
 </root>

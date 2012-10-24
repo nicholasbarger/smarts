@@ -29,6 +29,11 @@ namespace Smarts.Api.Models
         public Guid ContributorGuid { get; set; }
 
         /// <summary>
+        /// When the database record was created.
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        /// <summary>
         /// The actual comment text stated by the user.
         /// </summary>
         public string Text { get; set; }

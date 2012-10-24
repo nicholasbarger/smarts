@@ -19,7 +19,7 @@
                         <a href="/" class="company">Smarts</a>
 
                         <a href="/Home/Enroll" class="btn btn-success pull-right" data-bind="visible: !isLoggedIn()"><i class="icon-star icon-white"></i></a>
-                        <button class="btn btn-primary pull-right" style="margin-left: 3px;" data-toggle="modal" data-target="#account" data-bind="visible: isLoggedIn"><i class="icon-user icon-white"></i></button>
+                        <button class="btn btn-primary pull-right" style="margin-left: 3px;" data-toggle="modal" data-target="#account" data-bind="click: getUser, visible: isLoggedIn"><i class="icon-user icon-white"></i></button>
                         <button class="btn btn-primary pull-right" style="margin-left: 3px;" data-toggle="modal" data-target="#add" data-bind="visible: isLoggedIn"><i class="icon-plus icon-white"></i></button>
                         <span class="login-name pull-right" data-bind="text: 'logged in as: ' + username(), visible: isLoggedIn">[logged in as: username]</span>
                     </div>
@@ -86,18 +86,33 @@
                                 <div class="control-group">
                                     <label class="control-label" for="subject">Subject</label>
                                     <div class="controls">
-                                        <input type="text" id="subject" name="subject">
+                                        <div class="input-append" style="width: 100%;">
+                                            <input type="text" id="subject" name="subject" data-bind="value: subject" form="addSubjectForm" style="width: 75%;"><button class="btn" type="submit" form="addSubjectForm">Add</button>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <ul data-bind="foreach: taggedSubjects">
+                                    <li><span data-bind="text: Hashtag">[Hashtag]</span> <a href="#" data-bind="click: $parent.removeSubject">(remove)</a></li>
+                                </ul>
                             </fieldset>
 
                             <fieldset>
                                 <legend>You can also add specific information</legend>
 
                                 <div class="control-group">
+                                    <label class="control-label" for="pictureUri">Picture</label>
+                                    <div class="controls">
+                                        <input type="text" id="pictureUri" name="pictureUri" class="input-small" data-bind="value: pictureUri">
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="control-group">
                                     <label class="control-label" for="isTestRequired">Is a test required to complete this resource?</label>
                                     <div class="controls">
-                                        <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" /> Yes, a test is required.</label>
+                                        <label class="checkbox"><input type="checkbox" id="isTestRequired" name="isTestRequired" data-bind="checked: isTestRequired" /> Yes, a test is required.</label>
                                     </div>
                                 </div>
 
@@ -106,14 +121,14 @@
                                 <div class="control-group">
                                     <label class="control-label" for="isScoreable">Can you receive a score for this resource?</label>
                                     <div class="controls">
-                                        <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" /> Yes, you can receive a score for this resource.</label>
+                                        <label class="checkbox"><input type="checkbox" id="isScoreable" name="isScoreable" data-bind="checked: isScoreable" /> Yes, you can receive a score for this resource.</label>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="passingScore">Minimum Passing Score</label>
                                     <div class="controls">
-                                        <input type="text" id="passingScore" name="passingScore" class="input-small">
+                                        <input type="text" id="passingScore" name="passingScore" class="input-small" data-bind="value: passingScore">
                                     </div>
                                 </div>
 
@@ -122,23 +137,26 @@
                                 <div class="control-group">
                                     <label class="control-label" for="isCost">Does this resource cost money?</label>
                                     <div class="controls">
-                                        <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" /> Yes, this resource costs money.</label>
+                                        <label class="checkbox"><input type="checkbox" id="isCost" name="isCost" data-bind="checked: isCost" /> Yes, this resource costs money.</label>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="cost">Cost in USD</label>
                                     <div class="controls">
-                                        <input type="text" id="cost" name="cost" class="input-small">
+                                        <input type="text" id="cost" name="cost" class="input-small" data-bind="value: cost">
                                     </div>
                                 </div>
                             </fieldset>
                         </div>
                     </form>
+                    <form id="addSubjectForm" data-bind="submit: tagSubject">
+                        <!-- components are within addForm above -->
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn" data-dismiss="modal">Close</a>
-                    <a href="#" class="btn btn-primary">Save changes</a>
+                    <button type="submit" href="#" class="btn btn-primary" form="addForm">Save changes</button>
 
                     <span id="addMessage" class="simplemsg" style="float: left;">[Information about adding an educational resource]</span>
                 </div>
@@ -155,12 +173,12 @@
                 
                     <div class="account-stats">
                         <label>Member Since</label><span data-bind="text: user().MemberSince">[MemberSince]</span>
-                        <label>Smarts Score</label><span class="score-small">10,240</span>
+                        <label>Smarts Score</label><span class="score-small" data-bind="text: user().Score">[Score]</span>
                         <label>Contributed</label>
                         <span>
-                            <span class="stat-number">419</span> educational resources added<br /> 
-                            <span class="stat-number">1,289</span> votes cast<br />
-                            <span class="stat-number">3,200</span> votes by other people</span>
+                            <span class="stat-number" data-bind="text: user().AssetsAddedCount">[AssetsAddedCount]</span> educational resources added<br /> 
+                            <span class="stat-number" data-bind="text: user().VotesCastCount">[VotesCastCount]</span> votes cast<br />
+                            <span class="stat-number" data-bind="text: user().VotesReceivedCount">[VotesReceivedCount]</span> votes by other people</span>
                     </div>
 
                     <div>
@@ -182,6 +200,8 @@
                 <div class="modal-footer">
                     <a href="#" class="btn" data-dismiss="modal">Close</a>
                     <a href="#" class="btn btn-primary">Save changes</a>
+
+                    <span id="accountMessage" class="simplemsg" style="float: left;">[Information about your account]</span>
                 </div>
             </div>
 
@@ -210,26 +230,27 @@
         </div>
 
         <footer></footer>        
+
+        <!-- Scripts -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/Scripts/smarts.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                // create viewmodel
+                var layoutVM = new LayoutViewModel();
+
+                // apply knockout bindings specifically to the first instance of layout bindings
+                // if we add additional areas for knockout binding in the layout we will need to iterate through the array
+                // this is to support multi-viewmodels from child pages.
+                ko.applyBindings(layoutVM, $('.layoutBindings')[0]);
+                ko.applyBindings(layoutVM, $('.layoutBindings')[1]);
+            });
+        </script>
+
+        @RenderSection("PageScript")
+
     </body>
-
-<!-- Scripts -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/Scripts/smarts.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        // create viewmodel
-        var layoutVM = new LayoutViewModel();
-
-        // apply knockout bindings specifically to the first instance of layout bindings
-        // if we add additional areas for knockout binding in the layout we will need to iterate through the array
-        // this is to support multi-viewmodels from child pages.
-        ko.applyBindings(layoutVM, $('.layoutBindings')[0]);
-    });
-</script>
-
-@RenderSection("PageScript")
-
 </html>

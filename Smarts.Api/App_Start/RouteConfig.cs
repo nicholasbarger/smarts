@@ -18,6 +18,34 @@ namespace Smarts.Api
 
             // Purpose
             // **********************************************************************
+            // To get activities for a specific asset
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // GET api/activity/asset/5/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "GetActivityByAsset",
+                routeTemplate: "asset/{id}/activity/",
+                defaults: new { controller = "Activity", action = "GetByAsset" }
+            );
+
+            // Purpose
+            // **********************************************************************
+            // To comment on a specific asset
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // POST api/asset/comment/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "CreateAssetCommentOverride",
+                routeTemplate: "asset/comment/{id}&{comment}",
+                defaults: new { controller = "Asset", action = "Comment" }
+            );
+
+            // Purpose
+            // **********************************************************************
             // To get the comments for a specified Asset
             // **********************************************************************
             // Usage:
@@ -26,7 +54,7 @@ namespace Smarts.Api
             // **********************************************************************
             routes.MapHttpRoute(
                 name: "AssetCommentsOverride",
-                routeTemplate: "asset/{id}/comments",
+                routeTemplate: "asset/{id}/comments/",
                 defaults: new { controller = "Asset", action = "GetComments" }
             );
 
@@ -40,7 +68,7 @@ namespace Smarts.Api
             // **********************************************************************
             routes.MapHttpRoute(
                 name: "AssetSubjectsOverride",
-                routeTemplate: "asset/{id}/subjects",
+                routeTemplate: "asset/{id}/subjects/",
                 defaults: new { controller = "Asset", action = "GetSubjects" }
             );
 

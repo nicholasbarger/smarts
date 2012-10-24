@@ -26,6 +26,17 @@ namespace Smarts.Api.BusinessLogic
                 obj.Created = DateTime.Now;
                 obj.IsActive = true;
             }
+
+            // Update child defaults
+            if (obj.SubjectAssociations != null)
+            {
+                for (int i = 0; i < obj.SubjectAssociations.Count; i++)
+                {
+                    var subjectLogic = new SubjectBusinessLogic();
+                    var subject = obj.SubjectAssociations.ElementAt(i);
+                    subjectLogic.SetDefaults(ref subject);
+                }
+            }
         }
     }
 }

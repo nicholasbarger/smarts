@@ -13,10 +13,9 @@
     <div class="span9">
         <!-- Asset detail -->
         <h1 data-bind="text: asset().Title">Title</h1>
-        <small data-bind="text: asset().Contributor.FullName + ', ' + asset().Contributor.Title">[Contributor Name], [Contributor Title]</small><br />
-        
-        <!-- Edit -->
-        <a href="#" data-bind="click: edit">Contribute to this educational asset</a><br /><br />
+        <small>Original Contributor: <a data-bind="attr: { href: '/ViewProfile/' + asset().Contributor.Guid }, text: asset().Contributor.Username">[Contributor Username]</a></small>
+
+        <br /><br />
         
         <!-- Primary description -->
         <div data-bind="text: asset().Description">[Description]</div>
@@ -26,7 +25,7 @@
         <!-- Associated subjects -->
         <h3>Associated Subjects</h3>
         <div data-bind="foreach: subjects">
-            <a href="#" data-bind="text: asset().Title + ' (' + asset().Hashtag + ')'"></a>&nbsp;
+            <a href="#" data-bind="text: Title + ' (' + Hashtag + ')'"></a>&nbsp;
         </div>
 
         <hr />
@@ -34,19 +33,47 @@
         <!-- Asset comments -->
         <h3><span data-bind="text: comments().length">[Number of comments]</span> Comments</h3>
 
+        <!-- Add new comment -->
+        <p><a href="#" data-toggle="modal" data-target="#addCommentPopup">Add comment</a></p>
+
+        <!-- List comments -->
         <div data-bind="foreach: comments">
             <div class="row-fluid">
                 <div class="span1">
-                    <img data-bind="attr: { src: Contributor.PictureUri, alt: Contributor.FullName }" />
+                    <img data-bind="attr: { src: Contributor.PictureUri, alt: Contributor.Username }" />
                 </div>
                 <div class="span11">
                     <p data-bind="text: Text">[Comment Text]</p>
+                    <small data-bind="text: Contributor.Username + ' | ' + Created"></small>
                 </div>
             </div>
             <hr />
         </div>
+
+        <!-- List history of activities -->
+        <h3>History</h3>
+        <div data-bind="foreach: activities">
+            <div class="row-fluid">
+                <div class="span1">
+                    <!-- ko if: User != null -->
+                    <img data-bind="attr: { src: User.PictureUri, alt: User.Username }" />
+                    <!-- /ko -->
+                </div>
+                <div class="span11">
+                    <p data-bind="text: Value"></p>
+                    <small data-bind="text: Created"></small>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="span3" style="text-align: center;">
+        <!-- Edit -->
+        <div style="margin-bottom: 15px;">
+            <a href="#" class="btn" data-bind="click: edit">Contribute More Info</a>
+            <a href="#" class="btn btn-success">Mark Complete</a>
+        </div>
+
         <a data-bind="attr: { href: asset().Uri }"><img data-bind="attr: { src: asset().PictureUri, alt: asset().Title }" /></a><br /><br />
         <p class="resourceUrl">
             Access this resource here:
@@ -66,6 +93,25 @@
 
             <p>1,024 students have completed this resource</p>
         </div>
+    </div>
+</div>
+
+<!-- Add comment modal popup -->
+<div id="addCommentPopup" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Add Comment</h3>
+    </div>
+    <div class="modal-body">
+        <form id="addCommentForm" name="addCommentForm" data-bind="submit: addComment">
+            <textarea id="comment" style="width: 95%; height: 150px;" data-bind="value: comment"></textarea><br />
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <button type="submit" class="btn btn-primary" form="addCommentForm">Comment</button>
+
+        <span id="message" class="simplemsg" style="float: left;">[Information about adding a comment]</span>
     </div>
 </div>
 

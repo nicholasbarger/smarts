@@ -32,6 +32,9 @@ namespace Smarts.Api.Utilities
         /// </summary>
         public static void Log(Activity activity)
         {
+            // set create date
+            activity.Created = DateTime.Now;
+
             // add to db
             using (var queries = new ActivityQueries())
             {

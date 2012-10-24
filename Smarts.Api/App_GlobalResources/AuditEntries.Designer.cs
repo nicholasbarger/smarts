@@ -61,6 +61,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has created a new asset titled {1}..
+        /// </summary>
+        internal static string AssetCreated {
+            get {
+                return ResourceManager.GetString("AssetCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has modified an asset, changing the following properties: {1}.
+        /// </summary>
+        internal static string AssetModified {
+            get {
+                return ResourceManager.GetString("AssetModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has enrolled as a new user..
         /// </summary>
         internal static string Enroll {
@@ -88,7 +106,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has updated their profile; changing the following properties: {1}.
+        ///   Looks up a localized string similar to {0} successfully logged out..
+        /// </summary>
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has changed their password..
+        /// </summary>
+        internal static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has updated their profile, changing the following properties: {1}.
         /// </summary>
         internal static string ProfileUpdated {
             get {

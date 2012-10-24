@@ -46,6 +46,9 @@ namespace Smarts.Api.Models
         /// </summary>
         Login = 1,
 
+        /// <summary>
+        /// Found in the app logic when successfully logging out.
+        /// </summary>
         Logout = 2,
         
         /// <summary>
@@ -57,6 +60,7 @@ namespace Smarts.Api.Models
         /// Currently not implemented, thinking I should keep this to google analytics.
         /// </summary>
         PageHit = 4,
+
         AssetViewed = 5,
         AssetCompleted = 6,
         TagCreated = 7,
@@ -69,7 +73,12 @@ namespace Smarts.Api.Models
         /// Found in the app logic when an existing user is updated (saved).
         /// </summary>
         ProfileUpdated = 12,
+
+        /// <summary>
+        /// Found in the app logic when an existing user has changed their password.
+        /// </summary>
         PasswordChanged = 13,
+
         NotificationsChanged = 14,
         ContactedUs = 15,
         InterviewRequested = 16,
@@ -80,6 +89,21 @@ namespace Smarts.Api.Models
         /// <summary>
         /// Found in the app logic when a failed login attempt occurs.
         /// </summary>
-        LoginFailed = 20
+        LoginFailed = 20,
+
+        /// <summary>
+        /// Any generic error that occurs within the system and is logged.
+        /// </summary>
+        Error = 21,
+
+        /// <summary>
+        /// Found in the app logic when a new asset is created.
+        /// </summary>
+        AssetCreated = 22,
+
+        /// <summary>
+        /// Found in the app logic when an existing asset is modified.
+        /// </summary>
+        AssetModified = 23
     }
 }

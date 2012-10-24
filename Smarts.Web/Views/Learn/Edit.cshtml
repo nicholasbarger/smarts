@@ -12,7 +12,7 @@
 <div class="row-fluid top-actions">
     <div class="span12">
         <!-- Edit actions -->
-        <button class="btn" data-bind="click: cancel">Cancel Changes</button>
+        <button class="btn" data-bind="click: cancel">Return</button>
         <button class="btn btn-success" data-bind="click: save">Save Changes</button>
 
         <span id="message" class="simplemsg">[Save result message]</span>
@@ -23,13 +23,15 @@
     <div class="span9">
         <!-- Asset detail -->
         <input type="text" id="title" name="title" style="width: 100%;" data-bind="value: title" /><br />
-        <small data-bind="text: 'Original Contributor: ' + asset().Contributor.FullName + ', ' + asset().Contributor.Title">[Contributor Name], [Contributor Title]</small><br /><br />
+        <small>Original Contributor: <a data-bind="attr: { href: '/ViewProfile/' + asset().Contributor.Guid }, text: asset().Contributor.Username">[Contributor Username]</a></small><br /><br />
         
         <!-- Primary description -->
         <textarea id="description" name="description" class="bigedit" data-bind="value: description"></textarea>
     </div>
     <div class="span3">
         <a data-bind="attr: { href: uri }"><img data-bind="attr: { src: asset().PictureUri, alt: asset().Title }" /></a><br /><br />
+        <span>Picture URI:</span>
+        <input type="text" id="pictureUri" name="pictureUri" style="width: 100%;" data-bind="value: pictureUri" /><br />
         <span>Access this resource here:</span><br />
         <input type="text" id="uri" name="uri" style="width: 100%;" data-bind="value: uri" /><br />
 

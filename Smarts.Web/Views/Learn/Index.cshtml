@@ -11,8 +11,16 @@
         <!-- search subjects -->
         <form id="subjectSearchForm" class="well form-search" data-bind="submit: searchSubjects">
             <div class="controls">
-                <div class="input-append" style="width: 100%;">
-                    <input type="text" placeholder="search subjects" style="width: 75%;" data-bind="value: subjectSearchTerm"><button class="btn" type="submit"><i class="icon-wrench"></i></button>
+                <div class="input-append btn-group" style="width: 100%;">
+                    <input type="search" placeholder="search subjects" style="width: 75%;" data-bind="value: subjectSearchTerm, valueUpdate: 'afterkeydown'"><button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i></button>
+                    <ul class="dropdown-menu" style="left: 78%">
+                        <li><label for="subjectMatchAny"><input id="subjectMatchAny" name="subjectMatchAny" type="radio" />Match 'any'</label></li>
+                        <li><label for="subjectManyBegins"><input id="subjectMatchBegins" name="subjectMatchBegins" type="radio" />Match 'begins with' only</label></li>
+                        <li><hr /></li>
+                        <li><label for="subjectTreeView"><input id="subjectTreeView" name="subjectTreeView" type="radio" />View as tree</label></li>
+                        <li><label for="subjectListView"><input id="subjectListView" name="subjectListView" type="radio" />View as list</label></li>
+                        <li><label for="subjectMapView"><input id="subjectMapView" name="subjectMapView" type="radio" />View as mapped hierarchy</label></li>
+                    </ul>
                 </div>
             </div>
         </form>
@@ -39,8 +47,17 @@
         <!-- search assets -->
         <form id="assetSearchForm" class="well form-search" data-bind="submit: searchAssets">
             <div class="controls">
-                <div class="input-append" style="width: 100%;">
-                    <input type="text" placeholder="search assets" style="width: 90%;" data-bind="value: assetSearchTerm"><button class="btn" type="submit"><i class="icon-wrench"></i></button>
+                <div class="input-append btn-group" style="width: 100%;">
+                    <input type="search" placeholder="search assets" style="width: 90%;" data-bind="value: assetSearchTerm, valueUpdate: 'afterkeydown'"><button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench"></i></button>
+                    <ul class="dropdown-menu" style="left: 78%;">
+                        <li><label for="assetMatchAny"><input id="assetMatchAny" name="assetMatchAny" type="radio" />Match 'any'</label></li>
+                        <li><label for="assetManyBegins"><input id="assetMatchBegins" name="assetMatchBegins" type="radio" />Match 'begins with' only</label></li>
+                        <li><hr /></li>
+                        <li><label for="assetTreeView"><input id="assetTreeView" name="assetTreeView" type="radio" />View as tree</label></li>
+                        <li><label for="assetListView"><input id="assetListView" name="assetListView" type="radio" />View as list</label></li>
+                        <li><label for="assetMapView"><input id="assetMapView" name="assetMapView" type="radio" />View as mapped hierarchy</label></li>
+                    </ul>
+                </div>
                 </div>
             </div>
         </form>
@@ -62,7 +79,7 @@
                     <div class="span6">
                         <i class="icon-book"></i>
                         <strong><a data-bind="attr: { href: '/Learn/Detail/' + Id }, text: Title">[Title]</a></strong><br />
-                        <small data-bind="text: Contributor.FullName + ', ' + Contributor.Title">[Contributor.FullName, Contributor.Title]</small><br /><br />
+                        <small>Original Contributor: <a data-bind="attr: { href: '/ViewProfile/' + Contributor.Guid }, text: Contributor.Username">[Contributor Username]</a></small><br />
                         <div data-bind="text: Description"></div>
                     </div>
 

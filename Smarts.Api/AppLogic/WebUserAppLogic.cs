@@ -62,8 +62,9 @@ namespace Smarts.Api.AppLogic
             // check if valid
             if (rules.IsValid)
             {
-                // todo: hash password
-                var hashedPassword = password;
+                // hash password
+                var securityUtility = new SecurityUtilities();
+                var hashedPassword = securityUtility.HashSomething(password);
 
                 // get user based on email/username and hashed password
                 WebUser user = null;
@@ -82,7 +83,7 @@ namespace Smarts.Api.AppLogic
                         payload.Data = user;
 
                         // log activity
-                        AuditUtilities.Log(null, ActivityEventItem.Login, 
+                        AuditUtilities.Log(user, ActivityEventItem.Login, 
                             string.Format(Resources.AuditEntries.Login, username));
                     }
                     else
@@ -112,6 +113,22 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
+        public Payload<bool> Logout(WebUser obj)
+        {
+            // create payload
+            var payload = new Payload<bool>();
+
+            // todo: add more content around this to toggle logouts from db
+            payload.Data = true;
+
+            // based on a successful logout, log activity
+            AuditUtilities.Log(obj, ActivityEventItem.Logout, 
+                string.Format(Resources.AuditEntries.Logout, obj.Username));
+
+            // return payload
+            return payload;
+        }
+
         public Payload<WebUser> Save(WebUser obj)
         {
             // create payload
@@ -122,6 +139,10 @@ namespace Smarts.Api.AppLogic
             // Prep obj
             bool isNewUser = (obj.Guid == null || obj.Guid == Guid.Empty);
             business.SetDefaults(ref obj);
+
+            // hash password
+            var securityUtility = new SecurityUtilities();
+            obj.HashedPassword = securityUtility.HashSomething(obj.Password);
 
             // validate
             var rules = new ValidationRules();
@@ -135,10 +156,12 @@ namespace Smarts.Api.AppLogic
             {
                 // if existing user, check the properties that have changed prior to update
                 var changedProperties = new StringBuilder();
+                bool isChangedPassword = false;
                 if (!isNewUser)
                 {
                     var originalUser = Get(obj.Guid).Data;
                     CheckChangedProperties(originalUser, obj, ref changedProperties);
+                    isChangedPassword = CheckChangedPassword(originalUser, obj);
                 }
 
                 // save to db
@@ -162,6 +185,13 @@ namespace Smarts.Api.AppLogic
                     // updated user
                     AuditUtilities.Log(obj, ActivityEventItem.ProfileUpdated,
                         string.Format(Resources.AuditEntries.ProfileUpdated, obj.Username, changedProperties));
+
+                    // update if password was changed
+                    if (isChangedPassword)
+                    {
+                        AuditUtilities.Log(obj, ActivityEventItem.PasswordChanged,
+                            string.Format(Resources.AuditEntries.PasswordChanged, obj.Username));
+                    }
                 }
             }
 
@@ -172,7 +202,18 @@ namespace Smarts.Api.AppLogic
         }
 
         /// <summary>
-        /// Compare two web users and specify their differences.
+        /// Compare two instances of a web user to see if the password has been changed.
+        /// </summary>
+        /// <param name="original"></param>
+        /// <param name="updated"></param>
+        /// <returns></returns>
+        private bool CheckChangedPassword(WebUser original, WebUser updated)
+        {
+            return updated.HashedPassword.Equals(original.HashedPassword);
+        }
+
+        /// <summary>
+        /// Compare two instances of a web user and specify their differences.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="changedProperties"></param>

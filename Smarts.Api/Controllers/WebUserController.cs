@@ -40,8 +40,6 @@ namespace Smarts.Api.Controllers
         {
             var payload = new HttpResponsePayload<List<WebUser>>();
 
-            // todo: Match signature to operation
-
             try
             {
                 throw new NotImplementedException();
@@ -69,7 +67,7 @@ namespace Smarts.Api.Controllers
 
             try
             {
-                throw new NotImplementedException();
+                payload = new HttpResponsePayload<WebUser>(logic.Get(guid));
             }
             catch (Exception ex)
             {
@@ -131,7 +129,20 @@ namespace Smarts.Api.Controllers
         [HttpPost]
         public HttpResponseMessage Logout(WebUser obj)
         {
-            throw new NotImplementedException();
+            var payload = new HttpResponsePayload<bool>();
+
+            try
+            {
+                payload = new HttpResponsePayload<bool>(logic.Logout(obj));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
         // POST api/user

@@ -60,7 +60,7 @@ namespace Smarts.Api.Db
         public List<Subject> GetByAsset(int assetId)
         {
             return GetQuery()
-                .Where(a => a.Assets.Any(b => b.Id == assetId))
+                .Where(a => a.AssetAssociations.Any(b => b.AssetId == assetId))
                 .ToList();
         }
 

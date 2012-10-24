@@ -24,6 +24,18 @@ namespace Smarts.Api.Db
             this.context = context;
         }
 
+        public void Delete(int id)
+        {
+            // todo
+            throw new NotImplementedException();
+        }
+
+        public void Delete(ref Activity obj)
+        {
+            // todo
+            Delete(obj.Id);
+        }
+
         public Activity Get(int id)
         {
             Activity activity = null;
@@ -35,9 +47,14 @@ namespace Smarts.Api.Db
             return activity;
         }
 
+        public List<Activity> GetByAsset(int assetId)
+        {
+            return GetQuery().Where(a => a.AssetId == assetId).ToList();
+        }
+
         public IQueryable<Activity> GetQuery()
         {
-            return this.context.Activities;
+            return this.context.Activities.Include("User");
         }
 
         public void Save(ref Activity obj)

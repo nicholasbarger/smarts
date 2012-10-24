@@ -183,6 +183,35 @@ namespace Smarts.Api.Controllers
 
         #endregion
 
+        // POST api/asset/comment
+        [HttpPost]
+        public HttpResponseMessage Comment(int id, string comment)
+        {
+            var payload = new HttpResponsePayload<Comment>();
+
+            try
+            {
+                // Prep from controller level
+                var obj = new Comment()
+                {
+                    Id = id,
+                    Text = comment,
+                    ContributorGuid = contributor
+                };
+
+                // Save through logic
+                payload = new HttpResponsePayload<Comment>(logic.Comment(obj));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
+
         // POST api/asset
         [HttpPost]
         public HttpResponseMessage Post(Asset obj)
@@ -195,6 +224,16 @@ namespace Smarts.Api.Controllers
                 if (obj != null)
                 {
                     obj.ContributorGuid = contributor;
+
+                    // Prep children - Subject associations 
+                    if (obj.SubjectAssociations != null)
+                    {
+                        foreach (var association in obj.SubjectAssociations)
+                        {
+                            // Assign contributor to the subject associations
+                            association.ContributorGuid = contributor;
+                        }
+                    }
                 }
 
                 // Save through logic

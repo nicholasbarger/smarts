@@ -12,7 +12,11 @@ namespace Smarts.Api.Db
     /// </summary>
     internal class SmartsDbContext : DbContext
     {
-        public SmartsDbContext() : base("SmartsDbContext") { }
+        public SmartsDbContext() : base("SmartsDbContext") 
+        {
+            base.Configuration.ProxyCreationEnabled = false;
+            base.Configuration.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityEvent> ActivityEvents { get; set; }
@@ -25,15 +29,15 @@ namespace Smarts.Api.Db
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Asset>()
-                .HasMany(a => a.Subjects)
-                .WithMany(a => a.Assets)
-                .Map(a =>
-                {
-                    a.ToTable("MapAssetToSubject");
-                    a.MapLeftKey("AssetId");
-                    a.MapRightKey("Hashtag");
-                });
+            //modelBuilder.Entity<Asset>()
+            //    .HasMany(a => a.SubjectAssociations)
+            //    .WithMany(a => a.Asset)
+            //    .Map(a =>
+            //    {
+            //        a.ToTable("MapAssetToSubject");
+            //        a.MapLeftKey("AssetId");
+            //        a.MapRightKey("Hashtag");
+            //    });
         }
     }
 }

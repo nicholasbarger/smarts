@@ -134,6 +134,19 @@ namespace Smarts.Api.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Comment validation
+        /// </summary>
+        /// <param name="obj"></param>
+        public void Validate(Comment obj)
+        {
+
+        }
+
+        /// <summary>
+        /// Curriculum validation
+        /// </summary>
+        /// <param name="obj"></param>
         public void Validate(Curriculum obj)
         {
             if (obj == null)

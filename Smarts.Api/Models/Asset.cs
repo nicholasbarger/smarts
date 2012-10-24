@@ -104,7 +104,7 @@ namespace Smarts.Api.Models
         /// <summary>
         /// User comments associated with this educational asset.
         /// </summary>
-        public ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         /// <summary>
         /// The user who contributed this educational asset.
@@ -114,7 +114,7 @@ namespace Smarts.Api.Models
         /// <summary>
         /// Asset tags (subjects).
         /// </summary>
-        public ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<AssetToSubjectAssociation> SubjectAssociations { get; set; }
 
         #endregion
 
@@ -223,7 +223,7 @@ namespace Smarts.Api.Models
         public Asset()
         {
             this.Comments = new List<Comment>();
-            this.Subjects = new List<Subject>();
+            this.SubjectAssociations = new List<AssetToSubjectAssociation>();
         }
 
         #endregion

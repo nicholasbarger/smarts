@@ -127,7 +127,7 @@ namespace Smarts.Api.Models
             }
             else if (ex is DbUpdateException || ex is SqlException)
             {
-                this.Errors.Add("00001", ex.Message);
+                this.Errors.Add("00001", ex.InnerException.Message);
             }
             else if (ex is EntityCommandExecutionException)
             {

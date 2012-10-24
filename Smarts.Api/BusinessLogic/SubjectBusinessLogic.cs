@@ -12,7 +12,7 @@ namespace Smarts.Api.BusinessLogic
         /// Set the default values when creating a new subject tag.
         /// </summary>
         /// <param name="subject"></param>
-        public void SetDefaults(ref Subject subject)
+        public void SetDefaults(ref AssetToSubjectAssociation subject)
         {
             subject.Created = DateTime.Now;
         }

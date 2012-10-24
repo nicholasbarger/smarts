@@ -35,13 +35,13 @@ namespace Smarts.Api.Models
         /// <summary>
         /// A reference to the type of event this activity is.
         /// </summary>
-        [ForeignKey("ActivityEvent")]
+        [ForeignKey("Event")]
         public int EventId { get; set; }
 
         /// <summary>
         /// An optional reference to a user performing the activity.
         /// </summary>
-        [ForeignKey("WebUser")]
+        [ForeignKey("User")]
         public Guid? UserGuid { get; set; }
 
         /// <summary>

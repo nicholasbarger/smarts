@@ -16,5 +16,11 @@ namespace Smarts.Api.Utilities
         {
             // todo
         }
+
+        public string HashSomething(string something)
+        {
+            // todo
+            return something;
+        }
     }
 }

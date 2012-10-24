@@ -74,7 +74,7 @@ namespace Smarts.Api.Db
 
         public List<Asset> GetBySubject(string hashtag)
         {
-            return GetQuery().Where(a => a.Subjects.Any(b => b.Hashtag == hashtag))
+            return GetQuery().Where(a => a.SubjectAssociations.Any(b => b.Hashtag == hashtag))
                 .ToList();
         }
 
