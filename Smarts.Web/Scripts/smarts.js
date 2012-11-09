@@ -421,8 +421,14 @@ var LearnDetailViewModel = function (id) {
     // comments on the learning asset
     self.comments = ko.observableArray([]);
 
+    // specifies the difficulty when marking the asset as complete
+    self.difficulty = ko.observable();
+
     // store the passed param id for specific learning asset
     self.id = id;
+
+    // specifies the importance when marketing the asset as complete
+    self.importance = ko.observable();
 
     // subjects (tags) on the learning asset
     self.subjects = ko.observableArray([]);
@@ -452,6 +458,49 @@ var LearnDetailViewModel = function (id) {
             error: function (response) {
 
                 handleError(response, $('#message'), 'Yikes! There was an error while adding the comment: ', true);
+            }
+        });
+    };
+
+    // complete an asset
+    self.complete = function () {
+
+        // show modal
+        $('#completePopup').modal('show');
+
+        // call ajax to mark the asset complete
+        $.ajax({
+            url: '/api/asset/complete/',
+            data: { assetId: self.id },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (response) {
+
+                handleSuccess(response, $('#message'), 'Awesome, way to go on completing this asset!', 'Grrr, something went wrong while trying to complete: ', true);
+            },
+            error: function (response) {
+
+                handleError(response, $('#message'), 'Grrr, something went wrong while trying to complete: ', true);
+            }
+        });
+    };
+
+    // update a completed an asset
+    self.completeUpdate = function () {
+
+        // call ajax to mark the asset complete
+        $.ajax({
+            url: '/api/asset/complete/',
+            data: { assetId: self.id, dificulty: self.dificulty(), importance: self.importance() },
+            type: 'PUT',
+            dataType: 'JSON',
+            success: function (response) {
+
+                handleSuccess(response, $('#message'), 'You\'ve updated the resource with your feedback!', 'Grrr, something went wrong while trying to update: ', true);
+            },
+            error: function (response) {
+
+                handleError(response, $('#message'), 'Grrr, something went wrong while trying to update: ', true);
             }
         });
     };

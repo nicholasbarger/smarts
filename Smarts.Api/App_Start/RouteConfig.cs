@@ -18,6 +18,35 @@ namespace Smarts.Api
 
             // Purpose
             // **********************************************************************
+            // To complete an asset
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // POST api/asset/complete/5/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "CompleteAsset",
+                routeTemplate: "asset/complete/{id}",
+                defaults: new { controller = "Asset", action = "Complete" }
+            );
+
+            // Purpose
+            // **********************************************************************
+            // To update a completed an asset (primarily voting importance 
+            // and difficulty
+            // **********************************************************************
+            // Usage:
+            // **********************************************************************
+            // PUT api/asset/complete/5/
+            // **********************************************************************
+            routes.MapHttpRoute(
+                name: "CompleteUpdateAsset",
+                routeTemplate: "asset/complete/{id}",
+                defaults: new { controller = "Asset", action = "CompleteUpdate" }
+            );
+
+            // Purpose
+            // **********************************************************************
             // To get activities for a specific asset
             // **********************************************************************
             // Usage:
