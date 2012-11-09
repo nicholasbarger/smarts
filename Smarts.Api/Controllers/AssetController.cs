@@ -212,6 +212,32 @@ namespace Smarts.Api.Controllers
             return Request.CreateResponse(payload.HttpStatusCode, payload);
         }
 
+        // POST api/asset/complete/5
+        [HttpPost]
+        public HttpResponseMessage Complete(Asset obj)
+        {
+            var payload = new HttpResponsePayload<Comment>();
+
+            try
+            {
+                // Prep from controller level
+                obj.ContributorGuid = contributor;
+
+                // Save through logic
+                //payload = new HttpResponsePayload<Comment>(logic.Complete(obj));
+
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Log(ex);
+                payload.AssignExceptionErrors(ex);
+            }
+
+            // Return proper response message
+            return Request.CreateResponse(payload.HttpStatusCode, payload);
+        }
+
         // POST api/asset
         [HttpPost]
         public HttpResponseMessage Post(Asset obj)

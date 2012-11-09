@@ -55,7 +55,7 @@ body {
     font-size: x-large;
     padding-bottom: 0px;
     display: inline-block;
-    color: #eee;
+    color: #fff;
 }
 .company:hover, company:active {
     color: #DDD;

@@ -27,6 +27,9 @@
         <div data-bind="foreach: subjects">
             <a href="#" data-bind="text: Title + ' (' + Hashtag + ')'"></a>&nbsp;
         </div>
+        <!-- ko if: (subjects == null || subjects().length <= 0) -->
+        <i>None specified</i>
+        <!-- /ko -->
 
         <hr />
 
@@ -65,13 +68,16 @@
                 </div>
             </div>
         </div>
+        <!-- ko if: (activities == null || activities().length <= 0) -->
+        <i>None captured</i>
+        <!-- /ko -->
     </div>
 
     <div class="span3" style="text-align: center;">
         <!-- Edit -->
         <div style="margin-bottom: 15px;">
             <a href="#" class="btn" data-bind="click: edit">Contribute More Info</a>
-            <a href="#" class="btn btn-success">Mark Complete</a>
+            <a href="#" class="btn btn-success" data-bind="click: complete">Mark Complete</a>
         </div>
 
         <a data-bind="attr: { href: asset().Uri }"><img data-bind="attr: { src: asset().PictureUri, alt: asset().Title }" /></a><br /><br />
@@ -112,6 +118,64 @@
         <button type="submit" class="btn btn-primary" form="addCommentForm">Comment</button>
 
         <span id="message" class="simplemsg" style="float: left;">[Information about adding a comment]</span>
+    </div>
+</div>
+
+<!-- Complete a resource -->
+<div class="modal hide fade" id="completePopup">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Complete Resource</h3>
+    </div>
+    <div class="modal-body">
+        <form id="completeForm" name="completeForm" class="well form-vertical" data-bind="submit: completeUpdate">
+            <fieldset>
+                <legend>Way to go! You can fill out as much as you like</legend>
+
+                <span>Difficulty</span>
+                <div class="control-group">
+                    <div class="controls">
+                        <select data-bind="value: difficulty">
+                            <option value="0">Select Difficulty</option>
+                            <option value="1">Entry Level</option>
+                            <option value="2">Easy</option>
+                            <option value="3">Medium</option>
+                            <option value="4">Hard</option>
+                            <option value="5">Expert</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="progress progress-striped">
+                    <div class="bar" data-bind="attr: { style: 'width: ' + difficultyAsPercent + '%' }"></div>
+                </div>
+
+                <span>Importance</span>
+                <div class="control-group">
+                    <div class="controls">
+                        <select data-bind="value: importance">
+                            <option value="0">Select Importance</option>
+                            <option value="1">Irrelevant</option>
+                            <option value="2">Low</option>
+                            <option value="3">Medium</option>
+                            <option value="4">High</option>
+                            <option value="5">Critical</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="progress progress-striped">
+                    <div class="bar" data-bind="attr: { style: 'width: ' + importanceAsPercent + '%' }"></div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <button type="submit" href="#" class="btn btn-primary" form="completeForm">Save changes</button>
+
+        <span id="completeMessage" class="simplemsg" style="float: left;">[Information about completing an educational resource]</span>
     </div>
 </div>
 
