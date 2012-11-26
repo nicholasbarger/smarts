@@ -20,11 +20,11 @@ namespace Smarts.Api.Db
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityEvent> ActivityEvents { get; set; }
-        public DbSet<Asset> Assets { get; set; }
-        public DbSet<AssetType> AssetTypes { get; set; }
+        public DbSet<Resource> Assets { get; set; }
+        public DbSet<ResourceType> AssetTypes { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Curriculum> Curriculums { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Plan> Curriculums { get; set; }
+        public DbSet<Topic> Subjects { get; set; }
         public DbSet<WebUser> WebUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

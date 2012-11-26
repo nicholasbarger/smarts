@@ -8,25 +8,25 @@ using System.Web;
 
 namespace Smarts.Api.AppLogic
 {
-    public class CurriculumAppLogic
+    public class PlanAppLogic
     {
-        CurriculumBusinessLogic business;
+        PlanBusinessLogic business;
 
-        public CurriculumAppLogic()
+        public PlanAppLogic()
         {
             // create reference to business logic
-            business = new CurriculumBusinessLogic();
+            business = new PlanBusinessLogic();
         }
 
-        public Payload<List<Curriculum>> Get()
+        public Payload<List<Plan>> Get()
         {
             // create payload
-            var payload = new Payload<List<Curriculum>>();
+            var payload = new Payload<List<Plan>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new CurriculumQueries())
+            using (var queries = new PlanQueries())
             {
                 payload.Data = queries.GetQuery().ToList();
             }
@@ -35,15 +35,15 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<Curriculum> Get(int id)
+        public Payload<Plan> Get(int id)
         {
             // create payload
-            var payload = new Payload<Curriculum>();
+            var payload = new Payload<Plan>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new CurriculumQueries())
+            using (var queries = new PlanQueries())
             {
                 payload.Data = queries.Get(id);
             }

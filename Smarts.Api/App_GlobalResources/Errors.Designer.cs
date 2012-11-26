@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asset title must be specified and can not exceed 100 characters..
+        ///   Looks up a localized string similar to Educational resource title must be specified and can not exceed 100 characters..
         /// </summary>
         internal static string ERR00110 {
             get {
@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asset uri is required..
+        ///   Looks up a localized string similar to Educational resource uri is required..
         /// </summary>
         internal static string ERR00111 {
             get {
@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A value must be specified for a subject, it&apos;s used like a hashtag..
+        ///   Looks up a localized string similar to A value must be specified for a topic, it&apos;s used like a hashtag..
         /// </summary>
         internal static string ERR00200 {
             get {

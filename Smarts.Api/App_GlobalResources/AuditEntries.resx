@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AssetCreated" xml:space="preserve">
-    <value>{0} has created a new asset titled {1}.</value>
-    <comment>Logs entry for when a user creates a new asset using a placeholder for the username and title of the asset.</comment>
+  <data name="ResourceCreated" xml:space="preserve">
+    <value>{0} has created a new educational resource titled {1}.</value>
+    <comment>Logs entry for when a user creates a new educational resource using a placeholder for the username and title of the resource.</comment>
   </data>
-  <data name="AssetModified" xml:space="preserve">
-    <value>{0} has modified an asset, changing the following properties: {1}</value>
-    <comment>Logs entry for when a user modified an existing asset using a placeholder for the username and changed properties.</comment>
+  <data name="ResourceModified" xml:space="preserve">
+    <value>{0} has modified an educational resource, changing the following properties: {1}</value>
+    <comment>Logs entry for when a user modified an existing educational resource using a placeholder for the username and changed properties.</comment>
   </data>
   <data name="Enroll" xml:space="preserve">
     <value>{0} has enrolled as a new user.</value>

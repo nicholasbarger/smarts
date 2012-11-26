@@ -61,13 +61,13 @@ namespace Smarts.Api.Models
         /// </summary>
         PageHit = 4,
 
-        AssetViewed = 5,
-        AssetCompleted = 6,
+        ResourceViewed = 5,
+        ResourceCompleted = 6,
         TagCreated = 7,
-        AssetCommented = 8,
-        AssetMappedToCurriculum = 9,
-        AssetMappedToSubject = 10,
-        CurriculumMappedToSubject = 11,
+        ResourceCommented = 8,
+        ResourceMappedToPlan = 9,
+        ResourceMappedToTopic = 10,
+        PlanMappedToTopic = 11,
 
         /// <summary>
         /// Found in the app logic when an existing user is updated (saved).
@@ -97,13 +97,13 @@ namespace Smarts.Api.Models
         Error = 21,
 
         /// <summary>
-        /// Found in the app logic when a new asset is created.
+        /// Found in the app logic when a new educational resource is created.
         /// </summary>
-        AssetCreated = 22,
+        ResourceCreated = 22,
 
         /// <summary>
-        /// Found in the app logic when an existing asset is modified.
+        /// Found in the app logic when an existing educational resource is modified.
         /// </summary>
-        AssetModified = 23
+        ResourceModified = 23
     }
 }

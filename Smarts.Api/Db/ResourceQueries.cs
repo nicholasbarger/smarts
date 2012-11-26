@@ -11,14 +11,14 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class AssetQueries : IDbCrud<Asset>, IDisposable
+    internal class ResourceQueries : IDbCrud<Resource>, IDisposable
     {
         private SmartsDbContext context;
 
         /// <summary>
         /// The default constructor.
         /// </summary>
-        public AssetQueries()
+        public ResourceQueries()
         {
             this.context = new SmartsDbContext();
         }
@@ -29,12 +29,12 @@ namespace Smarts.Api.Db
         /// additional filter criteria.
         /// </summary>
         /// <param name="context"></param>
-        public AssetQueries(SmartsDbContext context)
+        public ResourceQueries(SmartsDbContext context)
         {
             this.context = context;
         }
 
-        public void Delete(ref Asset obj)
+        public void Delete(ref Resource obj)
         {
             if (obj != null)
             {
@@ -61,9 +61,9 @@ namespace Smarts.Api.Db
             }
         }
 
-        public Asset Get(int id)
+        public Resource Get(int id)
         {
-            Asset asset = null;
+            Resource asset = null;
             if (id > 0)
             {
                 asset = GetQuery().SingleOrDefault(a => a.Id == id);
@@ -72,13 +72,13 @@ namespace Smarts.Api.Db
             return asset;
         }
 
-        public List<Asset> GetBySubject(string hashtag)
+        public List<Resource> GetBySubject(string hashtag)
         {
-            return GetQuery().Where(a => a.SubjectAssociations.Any(b => b.Hashtag == hashtag))
+            return GetQuery().Where(a => a.TopicAssociations.Any(b => b.Tag == hashtag))
                 .ToList();
         }
 
-        public IQueryable<Asset> GetQuery()
+        public IQueryable<Resource> GetQuery()
         {
             return context.Assets
                 .Include("AssetType")
@@ -86,7 +86,7 @@ namespace Smarts.Api.Db
                 .Where(a => a.IsActive == true);
         }
 
-        public void Save(ref Asset obj)
+        public void Save(ref Resource obj)
         {
             if (obj != null)
             {
@@ -111,7 +111,7 @@ namespace Smarts.Api.Db
             }
         }
 
-        private void LoadOriginalFromDbAndMap(ref Asset obj)
+        private void LoadOriginalFromDbAndMap(ref Resource obj)
         {
             // Use utility for easier readability
             var utility = new DbUtilities();
@@ -120,7 +120,7 @@ namespace Smarts.Api.Db
             var original = Get(obj.Id);
 
             // Map if the value has changed
-            original.AssetTypeId = utility.Map(original.AssetTypeId, obj.AssetTypeId);
+            original.ResourceTypeId = utility.Map(original.ResourceTypeId, obj.ResourceTypeId);
             original.Comments = utility.Map(original.Comments, obj.Comments);
             original.Cost = utility.Map(original.Cost, obj.Cost);
             original.Description = utility.Map(original.Description, obj.Description);
@@ -137,12 +137,12 @@ namespace Smarts.Api.Db
             obj = original;
         }
 
-        public List<Asset> Search(string q)
+        public List<Resource> Search(string q)
         {
             return SearchQuery(q).ToList();
         }
 
-        public IQueryable<Asset> SearchQuery(string q)
+        public IQueryable<Resource> SearchQuery(string q)
         {
             return GetQuery().Where(a => a.Title.Contains(q) || a.Description.Contains(q));
         }

@@ -10,16 +10,16 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class SubjectQueries : IDisposable
+    internal class TopicQueries : IDisposable
     {
         private SmartsDbContext context;
 
-        public SubjectQueries()
+        public TopicQueries()
         {
             this.context = new SmartsDbContext();
         }
 
-        public SubjectQueries(SmartsDbContext context)
+        public TopicQueries(SmartsDbContext context)
         {
             this.context = context;
         }
@@ -46,36 +46,36 @@ namespace Smarts.Api.Db
             return result;
         }
 
-        public Subject Get(string hashTag)
+        public Topic Get(string hashTag)
         {
-            Subject subject = null;
+            Topic subject = null;
             if (!string.IsNullOrEmpty(hashTag))
             {
-                subject = GetQuery().SingleOrDefault(a => a.Hashtag == hashTag);
+                subject = GetQuery().SingleOrDefault(a => a.Tag == hashTag);
             }
 
             return subject;
         }
 
-        public List<Subject> GetByAsset(int assetId)
+        public List<Topic> GetByAsset(int assetId)
         {
             return GetQuery()
-                .Where(a => a.AssetAssociations.Any(b => b.AssetId == assetId))
+                .Where(a => a.ResourceAssociations.Any(b => b.ResourceId == assetId))
                 .ToList();
         }
 
-        public IQueryable<Subject> GetQuery()
+        public IQueryable<Topic> GetQuery()
         {
             return context.Subjects
                 .Include("Contributor");
         }
 
-        public bool Save(ref Subject obj)
+        public bool Save(ref Topic obj)
         {
             bool result = false;
             if (obj != null)
             {
-                if (!string.IsNullOrEmpty(obj.Hashtag))
+                if (!string.IsNullOrEmpty(obj.Tag))
                 {
                     // Add to collection
                     context.Subjects.Add(obj);
@@ -94,14 +94,14 @@ namespace Smarts.Api.Db
             return result;
         }
 
-        public List<Subject> Search(string q)
+        public List<Topic> Search(string q)
         {
             return SearchQuery(q).ToList();
         }
 
-        public IQueryable<Subject> SearchQuery(string q)
+        public IQueryable<Topic> SearchQuery(string q)
         {
-            return GetQuery().Where(a => a.Hashtag.Contains(q) || a.Title.Contains(q) || a.Description.Contains(q));
+            return GetQuery().Where(a => a.Tag.Contains(q) || a.Title.Contains(q) || a.Description.Contains(q));
         }
 
         public void Dispose()

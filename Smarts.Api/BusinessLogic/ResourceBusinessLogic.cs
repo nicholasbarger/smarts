@@ -6,13 +6,13 @@ using System.Web;
 
 namespace Smarts.Api.BusinessLogic
 {
-    public class AssetBusinessLogic
+    public class ResourceBusinessLogic
     {
         /// <summary>
         /// Set the default values when creating a new educational asset.
         /// </summary>
         /// <param name="obj"></param>
-        public void SetDefaults(ref Asset obj)
+        public void SetDefaults(ref Resource obj)
         {
             // Return on empty
             if (obj == null)
@@ -28,12 +28,12 @@ namespace Smarts.Api.BusinessLogic
             }
 
             // Update child defaults
-            if (obj.SubjectAssociations != null)
+            if (obj.TopicAssociations != null)
             {
-                for (int i = 0; i < obj.SubjectAssociations.Count; i++)
+                for (int i = 0; i < obj.TopicAssociations.Count; i++)
                 {
-                    var subjectLogic = new SubjectBusinessLogic();
-                    var subject = obj.SubjectAssociations.ElementAt(i);
+                    var subjectLogic = new TopicBusinessLogic();
+                    var subject = obj.TopicAssociations.ElementAt(i);
                     subjectLogic.SetDefaults(ref subject);
                 }
             }

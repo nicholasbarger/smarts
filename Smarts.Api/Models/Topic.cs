@@ -8,9 +8,9 @@ using System.Web;
 namespace Smarts.Api.Models
 {
     /// <summary>
-    /// An educational subject (also used as hashtags for curriculums and educational assets).
+    /// An educational topic (also used as hashtags for plans and educational resources).
     /// </summary>
-    public class Subject
+    public class Topic
     {
         #region Properties
 
@@ -18,7 +18,7 @@ namespace Smarts.Api.Models
         /// The primary key in the database and the hashtag itself.
         /// </summary>
         [Key]
-        public string Hashtag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>
         /// The contributor of the subject (either explicit or on first use).
@@ -46,12 +46,12 @@ namespace Smarts.Api.Models
         #region Virtual Properties
 
         /// <summary>
-        /// The list of assets tagged by this subject hashtag.
+        /// The list of assets tagged by this topic.
         /// </summary>
-        public virtual ICollection<AssetToSubjectAssociation> AssetAssociations { get; set; }
+        public virtual ICollection<ResourceToTopicAssociation> ResourceAssociations { get; set; }
 
         /// <summary>
-        /// The user who contributed this educational asset.
+        /// The user who contributed this educational resource.
         /// </summary>
         public virtual WebUser Contributor { get; set; }
 

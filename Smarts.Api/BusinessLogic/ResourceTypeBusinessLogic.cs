@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Smarts.Api.BusinessLogic
 {
-    public class AssetTypeBusinessLogic
+    public class ResourceTypeBusinessLogic
     {
         // nothing right now
     }

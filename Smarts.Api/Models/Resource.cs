@@ -8,9 +8,9 @@ using System.Web;
 namespace Smarts.Api.Models
 {
     /// <summary>
-    /// An educational asset.
+    /// An educational resource.
     /// </summary>
-    public class Asset
+    public class Resource
     {
         #region Properties
 
@@ -21,10 +21,10 @@ namespace Smarts.Api.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// The type of asset such as a blog post, open courseware, etc.
+        /// The type of educational resource such as a blog post, open courseware, etc.
         /// </summary>
-        [ForeignKey("AssetType")]
-        public int AssetTypeId { get; set; }
+        [ForeignKey("ResourceType")]
+        public int ResourceTypeId { get; set; }
 
         /// <summary>
         /// The id of the user who contributed the asset information.
@@ -48,47 +48,47 @@ namespace Smarts.Api.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// The rated difficulty of the asset.
+        /// The rated difficulty of the educational resource.
         /// </summary>
-        public AssetDifficulty? Difficulty { get; set; }
+        public ResourceDifficulty? Difficulty { get; set; }
 
         /// <summary>
-        /// The rated importance of the asset.
+        /// The rated importance of the educational resource.
         /// </summary>
-        public AssetImportance? Importance { get; set; }
+        public ResourceImportance? Importance { get; set; }
 
         /// <summary>
-        /// The path to a picture of the asset.
+        /// The path to a picture of the educational resource.
         /// </summary>
         public string PictureUri { get; set; }
 
         /// <summary>
-        /// Whether the asset is active (not deleted) or not.
+        /// Whether the educational resource is active (not deleted) or not.
         /// </summary>
         public bool IsActive { get; set; }
 
         /// <summary>
-        /// Whether completion of the asset will be scored.
+        /// Whether completion of the educational resource will be scored.
         /// </summary>
         public bool IsScoreable { get; set; }
 
         /// <summary>
-        /// Whether a test will be required to complete the asset.
+        /// Whether a test will be required to complete the educational resource.
         /// </summary>
         public bool IsTestRequired { get; set; }
 
         /// <summary>
-        /// The score required to pass to complete the asset if a test is required.
+        /// The score required to pass to complete the educational resource if a test is required.
         /// </summary>
         public int? PassingScore { get; set; }
 
         /// <summary>
-        /// The title of the asset.
+        /// The title of the educational resource.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// The web location of the asset.
+        /// The web location of the educational resource.
         /// </summary>
         public string Uri { get; set; }
 
@@ -97,24 +97,24 @@ namespace Smarts.Api.Models
         #region Virtual Properties
 
         /// <summary>
-        /// The type of asset.
+        /// The type of educational resource.
         /// </summary>
-        public virtual AssetType AssetType { get; set; }
+        public virtual ResourceType ResourceType { get; set; }
 
         /// <summary>
-        /// User comments associated with this educational asset.
+        /// User comments associated with this educational resource.
         /// </summary>
         public virtual ICollection<Comment> Comments { get; set; }
 
         /// <summary>
-        /// The user who contributed this educational asset.
+        /// The user who contributed this educational resource.
         /// </summary>
         public virtual WebUser Contributor { get; set; }
 
         /// <summary>
-        /// Asset tags (subjects).
+        /// Asset tags (topics).
         /// </summary>
-        public virtual ICollection<AssetToSubjectAssociation> SubjectAssociations { get; set; }
+        public virtual ICollection<ResourceToTopicAssociation> TopicAssociations { get; set; }
 
         #endregion
 
@@ -156,20 +156,20 @@ namespace Smarts.Api.Models
 
                 switch (this.Importance)
                 {
-                    case AssetImportance.Low:
+                    case ResourceImportance.Low:
                         result = 25;
                         break;
-                    case AssetImportance.Medium:
+                    case ResourceImportance.Medium:
                         result = 50;
                         break;
-                    case AssetImportance.High:
+                    case ResourceImportance.High:
                         result = 75;
                         break;
-                    case AssetImportance.Critical:
+                    case ResourceImportance.Critical:
                         result = 100;
                         break;
-                    case AssetImportance.Unspecified:
-                    case AssetImportance.Irrelevant:
+                    case ResourceImportance.Unspecified:
+                    case ResourceImportance.Irrelevant:
                     default:
                         result = 0;
                         break;
@@ -188,22 +188,22 @@ namespace Smarts.Api.Models
 
                 switch (this.Difficulty)
                 {
-                    case AssetDifficulty.EntryLevel:
+                    case ResourceDifficulty.EntryLevel:
                         result = 20;
                         break;
-                    case AssetDifficulty.Easy:
+                    case ResourceDifficulty.Easy:
                         result = 40;
                         break;
-                    case AssetDifficulty.Medium:
+                    case ResourceDifficulty.Medium:
                         result = 60;
                         break;
-                    case AssetDifficulty.Hard:
+                    case ResourceDifficulty.Hard:
                         result = 80;
                         break;
-                    case AssetDifficulty.Expert:
+                    case ResourceDifficulty.Expert:
                         result = 100;
                         break;
-                    case AssetDifficulty.Unspecified:
+                    case ResourceDifficulty.Unspecified:
                     default:
                         result = 0;
                         break;
@@ -214,16 +214,16 @@ namespace Smarts.Api.Models
         }
 
         [NotMapped]
-        public int StudentCompletions { get; set; }
+        public int UserCompletions { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Asset()
+        public Resource()
         {
             this.Comments = new List<Comment>();
-            this.SubjectAssociations = new List<AssetToSubjectAssociation>();
+            this.TopicAssociations = new List<ResourceToTopicAssociation>();
         }
 
         #endregion
@@ -239,7 +239,7 @@ namespace Smarts.Api.Models
             }
 
             // If parameter cannot be cast to Asset return false.
-            Asset other = obj as Asset;
+            Resource other = obj as Resource;
             if ((System.Object)other == null)
             {
                 return false;
@@ -272,7 +272,7 @@ namespace Smarts.Api.Models
     /// <summary>
     /// The list of possible difficulty levels.
     /// </summary>
-    public enum AssetDifficulty
+    public enum ResourceDifficulty
     {
         Unspecified = 0,
         EntryLevel = 1,
@@ -285,7 +285,7 @@ namespace Smarts.Api.Models
     /// <summary>
     /// The list of possible importance levels.
     /// </summary>
-    public enum AssetImportance
+    public enum ResourceImportance
     {
         Unspecified = 0,
         Irrelevant = 1,

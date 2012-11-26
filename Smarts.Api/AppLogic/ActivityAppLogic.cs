@@ -26,7 +26,7 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Activity>> GetByAsset(int id)
+        public Payload<List<Activity>> GetByResource(int id)
         {
             // create payload
             var payload = new Payload<List<Activity>>();
@@ -36,7 +36,7 @@ namespace Smarts.Api.AppLogic
             // get from db
             using (var queries = new ActivityQueries())
             {
-                payload.Data = queries.GetByAsset(id);
+                payload.Data = queries.GetByResource(id);
             }
 
             // return payload

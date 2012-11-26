@@ -18,101 +18,101 @@ namespace Smarts.Api
 
             // Purpose
             // **********************************************************************
-            // To complete an asset
+            // To complete an educational resource.
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // POST api/asset/complete/5/
+            // POST api/resource/5/complete/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "CompleteAsset",
-                routeTemplate: "asset/complete/{id}",
-                defaults: new { controller = "Asset", action = "Complete" }
+                name: "CompleteResource",
+                routeTemplate: "resource/{id}/complete",
+                defaults: new { controller = "Resource", action = "Complete" }
             );
 
             // Purpose
             // **********************************************************************
-            // To update a completed an asset (primarily voting importance 
-            // and difficulty
+            // To update a completed educational resource (primarily voting importance 
+            // and difficulty).
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // PUT api/asset/complete/5/
+            // PUT api/resource/5/complete/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "CompleteUpdateAsset",
-                routeTemplate: "asset/complete/{id}",
-                defaults: new { controller = "Asset", action = "CompleteUpdate" }
+                name: "CompleteUpdateResource",
+                routeTemplate: "resource/{id}/complete",
+                defaults: new { controller = "Resource", action = "CompleteUpdate" }
             );
 
             // Purpose
             // **********************************************************************
-            // To get activities for a specific asset
+            // To get activities for a specific educational resource.
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/activity/asset/5/
+            // GET api/resource/5/activities/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "GetActivityByAsset",
-                routeTemplate: "asset/{id}/activity/",
-                defaults: new { controller = "Activity", action = "GetByAsset" }
+                name: "GetActivityByResource",
+                routeTemplate: "resource/{id}/activities/",
+                defaults: new { controller = "Activity", action = "GetByResource" }
             );
 
             // Purpose
             // **********************************************************************
-            // To comment on a specific asset
+            // To comment on a specific educational resource.
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // POST api/asset/comment/
+            // POST api/resource/comment/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "CreateAssetCommentOverride",
-                routeTemplate: "asset/comment/{id}&{comment}",
-                defaults: new { controller = "Asset", action = "Comment" }
+                name: "CreateResourceCommentOverride",
+                routeTemplate: "resource/comment/{id}&{comment}",
+                defaults: new { controller = "Resource", action = "Comment" }
             );
 
             // Purpose
             // **********************************************************************
-            // To get the comments for a specified Asset
+            // To get the comments for a specified resource.
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/asset/1001/comments/
+            // GET api/resource/1001/comments/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "AssetCommentsOverride",
-                routeTemplate: "asset/{id}/comments/",
-                defaults: new { controller = "Asset", action = "GetComments" }
+                name: "ResourceCommentsOverride",
+                routeTemplate: "resource/{id}/comments/",
+                defaults: new { controller = "Resource", action = "GetComments" }
             );
 
             // Purpose
             // **********************************************************************
-            // To get the subjects for a specified Asset
+            // To get the topics for a specified educational resource.
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/asset/1001/subjects/
+            // GET api/asset/1001/topics/
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "AssetSubjectsOverride",
-                routeTemplate: "asset/{id}/subjects/",
-                defaults: new { controller = "Asset", action = "GetSubjects" }
+                name: "ResourceTopicsOverride",
+                routeTemplate: "resource/{id}/topics/",
+                defaults: new { controller = "Resource", action = "GetTopics" }
             );
 
             // Purpose
             // **********************************************************************
-            // To get a list of assets by specified subject (hashtag).
+            // To get a list of educational resources by specified topic (tag).
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/asset/subject/computerscience
+            // GET api/resource/topic/computerscience
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "AssetBySubjectOverride",
-                routeTemplate: "asset/subject/{hashtag}",
-                defaults: new { controller = "Asset", action = "GetBySubject" }
+                name: "ResourceByTopicOverride",
+                routeTemplate: "resource/topic/{tag}",
+                defaults: new { controller = "Resource", action = "GetByTopic" }
             );
 
             // Purpose
@@ -123,12 +123,12 @@ namespace Smarts.Api
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/asset/1001
+            // GET api/resource/1001
             // **********************************************************************
             routes.MapHttpRoute(
-                name: "AssetGetByIdExplict",
-                routeTemplate: "asset/{id}",
-                defaults: new { controller = "Asset", action = "Get" }
+                name: "ResourceGetByIdExplict",
+                routeTemplate: "resource/{id}",
+                defaults: new { controller = "Resource", action = "Get" }
             );
 
             routes.MapHttpRoute(
@@ -174,11 +174,11 @@ namespace Smarts.Api
             // need to be called in a REST-style from ajax.
             //
             // Examples of this include:
-            //      ApproveAsset
+            //      ApproveResource
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // POST api/do/ApproveAsset/
+            // POST api/do/ApproveResource/
             // **********************************************************************
             routes.MapHttpRoute(
                 name: "DefaultActionApi",
@@ -196,8 +196,8 @@ namespace Smarts.Api
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET api/asset/search/bio
-            // GET api/subject/search/science
+            // GET api/resource/search/bio
+            // GET api/topic/search/science
             // GET api/user/search/john
             // **********************************************************************
             routes.MapHttpRoute(
@@ -217,11 +217,11 @@ namespace Smarts.Api
             // **********************************************************************
             // Usage:
             // **********************************************************************
-            // GET      api/asset/  (all assets)
-            // GET      api/asset/1 (the asset with id = 1)
-            // POST     api/asset/  (creation of a new asset)
-            // PUT      api/asset/1 (update of an existing asset with id = 1)
-            // DELETE   api/asset/1 (delete an existing asset with id = 1)
+            // GET      api/resource/  (all resources)
+            // GET      api/resource/1 (the resource with id = 1)
+            // POST     api/resource/  (creation of a new resource)
+            // PUT      api/resource/1 (update of an existing resource with id = 1)
+            // DELETE   api/resource/1 (delete an existing resource with id = 1)
             // **********************************************************************
             routes.MapHttpRoute(
                 name: "DefaultApi",

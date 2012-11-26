@@ -10,14 +10,14 @@ using System.Web;
 
 namespace Smarts.Api.AppLogic
 {
-    public class AssetAppLogic
+    public class ResourceAppLogic
     {
-        AssetBusinessLogic business;
+        ResourceBusinessLogic business;
 
-        public AssetAppLogic()
+        public ResourceAppLogic()
         {
             // create reference to business logic
-            business = new AssetBusinessLogic();
+            business = new ResourceBusinessLogic();
         }
 
         public Payload<Comment> Comment(Comment obj)
@@ -50,10 +50,10 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<Asset> Delete(Asset obj)
+        public Payload<Resource> Delete(Resource obj)
         {
             // create payload
-            var payload = new Payload<Asset>();
+            var payload = new Payload<Resource>();
 
             // todo: check security
 
@@ -68,7 +68,7 @@ namespace Smarts.Api.AppLogic
             if (rules.IsValid)
             {
                 // db delete (inactive)
-                using (var queries = new AssetQueries())
+                using (var queries = new ResourceQueries())
                 {
                     queries.Delete(ref obj);
                 }
@@ -82,15 +82,15 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Asset>> Get()
+        public Payload<List<Resource>> Get()
         {
             // create payload
-            var payload = new Payload<List<Asset>>();
+            var payload = new Payload<List<Resource>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new AssetQueries())
+            using (var queries = new ResourceQueries())
             {
                 payload.Data = queries.GetQuery().ToList();
             }
@@ -99,15 +99,15 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<Asset> Get(int id)
+        public Payload<Resource> Get(int id)
         {
             // create payload
-            var payload = new Payload<Asset>();
+            var payload = new Payload<Resource>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new AssetQueries())
+            using (var queries = new ResourceQueries())
             {
                 payload.Data = queries.Get(id);
             }
@@ -122,15 +122,15 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Asset>> GetBySubject(string hashtag)
+        public Payload<List<Resource>> GetBySubject(string hashtag)
         {
             // create payload
-            var payload = new Payload<List<Asset>>();
+            var payload = new Payload<List<Resource>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new AssetQueries())
+            using (var queries = new ResourceQueries())
             {
                 payload.Data = queries.GetBySubject(hashtag);
             }
@@ -139,7 +139,7 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Comment>> GetComments(Asset obj)
+        public Payload<List<Comment>> GetComments(Resource obj)
         {
             return GetComments(obj.Id);
         }
@@ -161,20 +161,20 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Subject>> GetSubjects(Asset obj)
+        public Payload<List<Topic>> GetSubjects(Resource obj)
         {
             return GetSubjects(obj.Id);
         }
 
-        public Payload<List<Subject>> GetSubjects(int assetId)
+        public Payload<List<Topic>> GetSubjects(int assetId)
         {
             // create payload
-            var payload = new Payload<List<Subject>>();
+            var payload = new Payload<List<Topic>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new SubjectQueries())
+            using (var queries = new TopicQueries())
             {
                 payload.Data = queries.GetByAsset(assetId);
             }
@@ -183,10 +183,10 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<Asset> Save(Asset obj)
+        public Payload<Resource> Save(Resource obj)
         {
             // create payload
-            var payload = new Payload<Asset>();
+            var payload = new Payload<Resource>();
 
             // todo: check security
 
@@ -195,20 +195,20 @@ namespace Smarts.Api.AppLogic
             business.SetDefaults(ref obj);
 
             // Check if we need to create new subject
-            foreach (var association in obj.SubjectAssociations)
+            foreach (var association in obj.TopicAssociations)
             {
                 // Get from db and see if it already exists
-                var subjectLogic = new SubjectAppLogic();
-                if (association.Subject == null)
+                var subjectLogic = new TopicAppLogic();
+                if (association.Topic == null)
                 {
                     // check if exists
-                    var subjectIsNew = (subjectLogic.Get(association.Hashtag).Data == null);
+                    var subjectIsNew = (subjectLogic.Get(association.Tag).Data == null);
                     if (subjectIsNew)
                     {
                         // create new subject
-                        association.Subject = new Subject()
+                        association.Topic = new Topic()
                         {
-                            Hashtag = association.Hashtag,
+                            Tag = association.Tag,
                             ContributorGuid = association.ContributorGuid,
                             Contributor = association.Contributor,
                             Created = DateTime.Now
@@ -236,7 +236,7 @@ namespace Smarts.Api.AppLogic
                 }
 
                 // save to db
-                using (var queries = new AssetQueries())
+                using (var queries = new ResourceQueries())
                 {
                     queries.Save(ref obj);
                 }
@@ -248,14 +248,14 @@ namespace Smarts.Api.AppLogic
                 if (isNewAsset)
                 {
                     // new asset
-                    AuditUtilities.Log(obj.Contributor, ActivityEventItem.AssetCreated,
-                        string.Format(Resources.AuditEntries.AssetCreated, obj.Contributor.Username));
+                    AuditUtilities.Log(obj.Contributor, ActivityEventItem.ResourceCreated,
+                        string.Format(Resources.AuditEntries.ResourceCreated, obj.Contributor.Username));
                 }
                 else
                 {
                     // updated asset
-                    AuditUtilities.Log(obj.Contributor, ActivityEventItem.AssetModified,
-                        string.Format(Resources.AuditEntries.AssetModified, obj.Contributor.Username, changedProperties));
+                    AuditUtilities.Log(obj.Contributor, ActivityEventItem.ResourceModified,
+                        string.Format(Resources.AuditEntries.ResourceModified, obj.Contributor.Username, changedProperties));
                 }
             }
 
@@ -265,11 +265,11 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        private void CheckChangedProperties(Asset original, Asset updated, ref StringBuilder changedProperties)
+        private void CheckChangedProperties(Resource original, Resource updated, ref StringBuilder changedProperties)
         {
-            if (original.AssetTypeId != updated.AssetTypeId)
+            if (original.ResourceTypeId != updated.ResourceTypeId)
             {
-                changedProperties.AppendFormat("Original asset type: {0}, updated asset type: {1}\n", original.AssetTypeId, updated.AssetTypeId);
+                changedProperties.AppendFormat("Original asset type: {0}, updated asset type: {1}\n", original.ResourceTypeId, updated.ResourceTypeId);
             }
 
             if (original.ContributorGuid != updated.ContributorGuid)
@@ -323,10 +323,10 @@ namespace Smarts.Api.AppLogic
             }
         }
 
-        public Payload<List<Asset>> Search(string q)
+        public Payload<List<Resource>> Search(string q)
         {
             // create payload
-            var payload = new Payload<List<Asset>>();
+            var payload = new Payload<List<Resource>>();
 
             // todo: check security
 
@@ -341,7 +341,7 @@ namespace Smarts.Api.AppLogic
             if (rules.IsValid)
             {
                 // search db
-                using (var queries = new AssetQueries())
+                using (var queries = new ResourceQueries())
                 {
                     payload.Data = queries.Search(q);
                 }

@@ -136,9 +136,9 @@ namespace Smarts.Api.Models
         #region Calulcated Properties
 
         /// <summary>
-        /// The total number of assets added by this user.
+        /// The total number of educational resources added by this user.
         /// </summary>
-        public int AssetsAddedCount
+        public int ResourcesAddedCount
         {
             get
             {

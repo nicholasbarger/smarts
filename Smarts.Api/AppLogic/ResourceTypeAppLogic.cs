@@ -8,25 +8,25 @@ using System.Web;
 
 namespace Smarts.Api.AppLogic
 {
-    public class AssetTypeAppLogic
+    public class ResourceTypeAppLogic
     {
-        AssetTypeBusinessLogic business;
+        ResourceTypeBusinessLogic business;
 
-        public AssetTypeAppLogic()
+        public ResourceTypeAppLogic()
         {
             // create reference to business logic
-            business = new AssetTypeBusinessLogic();
+            business = new ResourceTypeBusinessLogic();
         }
 
-        public Payload<List<AssetType>> Get()
+        public Payload<List<ResourceType>> Get()
         {
             // create payload
-            var payload = new Payload<List<AssetType>>();
+            var payload = new Payload<List<ResourceType>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new AssetTypeQueries())
+            using (var queries = new ResourceTypeQueries())
             {
                 payload.Data = queries.GetQuery().ToList();
             }

@@ -47,9 +47,9 @@ namespace Smarts.Api.Db
             return activity;
         }
 
-        public List<Activity> GetByAsset(int assetId)
+        public List<Activity> GetByResource(int assetId)
         {
-            return GetQuery().Where(a => a.AssetId == assetId).ToList();
+            return GetQuery().Where(a => a.ResourceId == assetId).ToList();
         }
 
         public IQueryable<Activity> GetQuery()
@@ -91,7 +91,7 @@ namespace Smarts.Api.Db
             var original = Get(obj.Id);
 
             // Map if the value has changed
-            original.AssetId = utility.Map(original.AssetId, obj.AssetId);
+            original.ResourceId = utility.Map(original.ResourceId, obj.ResourceId);
             original.EventId = utility.Map(original.EventId, obj.EventId);
             original.UserGuid = utility.Map(original.UserGuid, obj.UserGuid);
             original.Value = utility.Map(original.Value, obj.Value);

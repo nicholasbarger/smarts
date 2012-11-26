@@ -35,7 +35,7 @@ namespace Smarts.Api.Db
         public List<Comment> GetByAsset(int assetId)
         {
             return GetQuery()
-                .Where(a => a.AssetId == assetId)
+                .Where(a => a.ResourceId == assetId)
                 .ToList();
         }
 
@@ -80,7 +80,7 @@ namespace Smarts.Api.Db
             var original = Get(obj.Id);
 
             // Map if the value has changed
-            original.AssetId = utility.Map(original.AssetId, obj.AssetId);
+            original.ResourceId = utility.Map(original.ResourceId, obj.ResourceId);
             original.ContributorGuid = utility.Map(original.ContributorGuid, obj.ContributorGuid);
             original.Text = utility.Map(original.Text, obj.Text);
 

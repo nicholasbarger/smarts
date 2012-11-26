@@ -13,13 +13,13 @@ namespace Smarts.Api.Tests.DbTests
         public void TestGettingAnAssetByIdFromDb()
         {
             // Prep
-            Asset actual = null;
-            Asset expected = PrepSpecificSingleAsset();
+            Resource actual = null;
+            Resource expected = PrepSpecificSingleAsset();
             int id = 1001;
 
             // Call
             var db = new SmartsDbContext();
-            using (var queries = new Smarts.Api.Db.AssetQueries(db))
+            using (var queries = new Smarts.Api.Db.ResourceQueries(db))
             {
                 actual = queries.Get(id);
             }
@@ -33,13 +33,13 @@ namespace Smarts.Api.Tests.DbTests
         public void TestGettingAnAssetByQueryFromDb()
         {
             // Prep
-            Asset actual = null;
-            Asset expected = PrepSpecificSingleAsset();
+            Resource actual = null;
+            Resource expected = PrepSpecificSingleAsset();
             int id = 1001;
 
             // Call
             var db = new SmartsDbContext();
-            using (var queries = new Smarts.Api.Db.AssetQueries(db))
+            using (var queries = new Smarts.Api.Db.ResourceQueries(db))
             {
                 actual = queries.GetQuery().Where(a => a.Id == id).FirstOrDefault();
             }
@@ -55,9 +55,9 @@ namespace Smarts.Api.Tests.DbTests
             // Prep
             Guid newGuid = Guid.NewGuid();
 
-            Asset actual = new Asset()
+            Resource actual = new Resource()
             {
-                AssetTypeId = 1,
+                ResourceTypeId = 1,
                 ContributorGuid = new Guid("38A52BE4-9352-453E-AF97-5C3B448652F0"),
                 Cost = 0.00M,
                 Created = DateTime.Parse("2012-07-15 20:05:17.640"),
@@ -72,9 +72,9 @@ namespace Smarts.Api.Tests.DbTests
                 Uri = "http://" + newGuid.ToString()
             }; 
 
-            Asset expected = new Asset()
+            Resource expected = new Resource()
             {
-                AssetTypeId = 1,
+                ResourceTypeId = 1,
                 ContributorGuid = new Guid("38A52BE4-9352-453E-AF97-5C3B448652F0"),
                 Cost = 0.00M,
                 Created = DateTime.Parse("2012-07-15 20:05:17.640"),
@@ -91,7 +91,7 @@ namespace Smarts.Api.Tests.DbTests
 
             // Call
             var db = new SmartsDbContext();
-            using (var queries = new Smarts.Api.Db.AssetQueries(db))
+            using (var queries = new Smarts.Api.Db.ResourceQueries(db))
             {
                 queries.Save(ref actual);
             }
@@ -108,12 +108,12 @@ namespace Smarts.Api.Tests.DbTests
             Assert.AreEqual(expected, actual);
         }
 
-        private Asset PrepSpecificSingleAsset()
+        private Resource PrepSpecificSingleAsset()
         {
             int id = 1001;
-            var expected = new Asset()
+            var expected = new Resource()
             {
-                AssetTypeId = 1,
+                ResourceTypeId = 1,
                 ContributorGuid = new Guid("38A52BE4-9352-453E-AF97-5C3B448652F0"),
                 Cost = 0.00M,
                 Created = DateTime.Parse("2012-07-15 20:05:17.640"),

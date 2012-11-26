@@ -151,55 +151,55 @@
   </data>
   <data name="ERR00105" xml:space="preserve">
     <value>The asset type must be specified.</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00106" xml:space="preserve">
     <value>The contributor must be specified.</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00107" xml:space="preserve">
     <value>Difficulty rating must be between 1 and 5 if specified.</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00108" xml:space="preserve">
     <value>Importance rating must be between 1 and 5 if specified.</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00109" xml:space="preserve">
     <value>Passing score must be between 1 and 100 if specified.</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00110" xml:space="preserve">
-    <value>Asset title must be specified and can not exceed 100 characters.</value>
-    <comment>Asset validation.</comment>
+    <value>Educational resource title must be specified and can not exceed 100 characters.</value>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00111" xml:space="preserve">
-    <value>Asset uri is required.</value>
-    <comment>Asset validation.</comment>
+    <value>Educational resource uri is required.</value>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00112" xml:space="preserve">
     <value>The specified uri is too long, please use a url shortening tool such as http://www.bit.ly</value>
-    <comment>Asset validation.</comment>
+    <comment>Resource validation.</comment>
   </data>
   <data name="ERR00200" xml:space="preserve">
-    <value>A value must be specified for a subject, it's used like a hashtag.</value>
-    <comment>Subject validation.</comment>
+    <value>A value must be specified for a topic, it's used like a hashtag.</value>
+    <comment>Topic validation.</comment>
   </data>
   <data name="ERR00201" xml:space="preserve">
     <value>The description must be less than 4000 characters long.</value>
-    <comment>Subject validation.</comment>
+    <comment>Topic validation.</comment>
   </data>
   <data name="ERR00202" xml:space="preserve">
     <value>The title must be less than 100 characters long.</value>
-    <comment>Subject validation.</comment>
+    <comment>Topic validation.</comment>
   </data>
   <data name="ERR00301" xml:space="preserve">
     <value>The description must be less than 4000 characters long.</value>
-    <comment>Curriculum validation.</comment>
+    <comment>Plan validation.</comment>
   </data>
   <data name="ERR00302" xml:space="preserve">
     <value>The title must be less than 100 characters long.</value>
-    <comment>Curriculum validation.</comment>
+    <comment>Plan validation.</comment>
   </data>
   <data name="ERR00400" xml:space="preserve">
     <value>Either a username or email address must be specified to login.</value>

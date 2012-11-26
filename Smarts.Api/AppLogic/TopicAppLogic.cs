@@ -8,25 +8,25 @@ using System.Web;
 
 namespace Smarts.Api.AppLogic
 {
-    public class SubjectAppLogic
+    public class TopicAppLogic
     {
-        SubjectBusinessLogic business;
+        TopicBusinessLogic business;
 
-        public SubjectAppLogic()
+        public TopicAppLogic()
         {
             // create reference to business logic
-            business = new SubjectBusinessLogic();
+            business = new TopicBusinessLogic();
         }
 
-        public Payload<List<Subject>> Get()
+        public Payload<List<Topic>> Get()
         {
             // create payload
-            var payload = new Payload<List<Subject>>();
+            var payload = new Payload<List<Topic>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new SubjectQueries())
+            using (var queries = new TopicQueries())
             {
                 payload.Data = queries.GetQuery().ToList();
             }
@@ -35,10 +35,10 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<Subject> Get(string hashtag)
+        public Payload<Topic> Get(string hashtag)
         {
             // create payload
-            var payload = new Payload<Subject>();
+            var payload = new Payload<Topic>();
 
             // todo: check security
 
@@ -46,7 +46,7 @@ namespace Smarts.Api.AppLogic
             // todo: add appending of # if necessary
 
             // get from db
-            using (var queries = new SubjectQueries())
+            using (var queries = new TopicQueries())
             {
                 payload.Data = queries.Get(hashtag);
             }
@@ -61,15 +61,15 @@ namespace Smarts.Api.AppLogic
             return payload;
         }
 
-        public Payload<List<Subject>> Search(string q)
+        public Payload<List<Topic>> Search(string q)
         {
             // create payload
-            var payload = new Payload<List<Subject>>();
+            var payload = new Payload<List<Topic>>();
 
             // todo: check security
 
             // get from db
-            using (var queries = new SubjectQueries())
+            using (var queries = new TopicQueries())
             {
                 payload.Data = queries.Search(q);
             }

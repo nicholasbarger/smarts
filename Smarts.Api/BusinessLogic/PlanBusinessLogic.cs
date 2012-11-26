@@ -6,13 +6,13 @@ using System.Web;
 
 namespace Smarts.Api.BusinessLogic
 {
-    public class CurriculumBusinessLogic
+    public class PlanBusinessLogic
     {
         /// <summary>
         /// Set the default values when creating a new subject tag.
         /// </summary>
         /// <param name="subject"></param>
-        public void SetDefaults(ref Curriculum curriculum)
+        public void SetDefaults(ref Plan curriculum)
         {
             curriculum.Created = DateTime.Now;
         }

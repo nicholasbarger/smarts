@@ -13,15 +13,15 @@ using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
-    public class SubjectController : ApiController
+    public class TopicController : ApiController
     {
-        private SubjectAppLogic logic;
+        private TopicAppLogic logic;
         private Guid contributor;
 
-        public SubjectController()
+        public TopicController()
         {   
             // initialize logic
-            logic = new SubjectAppLogic();
+            logic = new TopicAppLogic();
 
             // assign contributor
             var utility = new ControllerUtilities();
@@ -38,12 +38,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<Subject>>();
+            var payload = new HttpResponsePayload<List<Topic>>();
 
             try
             {
                 // get full list
-                payload = new HttpResponsePayload<List<Subject>>(logic.Get());
+                payload = new HttpResponsePayload<List<Topic>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -65,12 +65,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get(string hashTag)
         {
-            var payload = new HttpResponsePayload<Subject>();
+            var payload = new HttpResponsePayload<Topic>();
 
             try
             {
                 // get specific
-                payload = new HttpResponsePayload<Subject>(logic.Get(hashTag));
+                payload = new HttpResponsePayload<Topic>(logic.Get(hashTag));
             }
             catch (Exception ex)
             {
@@ -91,12 +91,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Search(string q)
         {
-            var payload = new HttpResponsePayload<List<Subject>>();
+            var payload = new HttpResponsePayload<List<Topic>>();
 
             try
             {
                 // search
-                payload = new HttpResponsePayload<List<Subject>>(logic.Search(q));
+                payload = new HttpResponsePayload<List<Topic>>(logic.Search(q));
             }
             catch (Exception ex)
             {
@@ -112,9 +112,9 @@ namespace Smarts.Api.Controllers
 
         // POST api/subject
         [HttpPost]
-        public HttpResponseMessage Post(Subject obj)
+        public HttpResponseMessage Post(Topic obj)
         {
-            var payload = new HttpResponsePayload<Subject>();
+            var payload = new HttpResponsePayload<Topic>();
 
             try
             {
@@ -132,9 +132,9 @@ namespace Smarts.Api.Controllers
 
         // PUT api/subject/c#
         [HttpPut]
-        public HttpResponseMessage Put(string hashTag, Subject obj)
+        public HttpResponseMessage Put(string hashTag, Topic obj)
         {
-            var payload = new HttpResponsePayload<Subject>();
+            var payload = new HttpResponsePayload<Topic>();
 
             try
             {

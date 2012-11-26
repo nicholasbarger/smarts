@@ -10,23 +10,23 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class AssetTypeQueries : IDbReadOnly<AssetType>, IDisposable
+    internal class ResourceTypeQueries : IDbReadOnly<ResourceType>, IDisposable
     {
         private SmartsDbContext context;
 
-        public AssetTypeQueries()
+        public ResourceTypeQueries()
         {
             this.context = new SmartsDbContext();
         }
 
-        public AssetTypeQueries(SmartsDbContext context)
+        public ResourceTypeQueries(SmartsDbContext context)
         {
             this.context = context;
         }
 
-        public AssetType Get(int id)
+        public ResourceType Get(int id)
         {
-            AssetType assetType = null;
+            ResourceType assetType = null;
             if (id > 0)
             {
                 assetType = context.AssetTypes.SingleOrDefault(a => a.Id == id);
@@ -35,7 +35,7 @@ namespace Smarts.Api.Db
             return assetType;
         }
 
-        public IQueryable<AssetType> GetQuery()
+        public IQueryable<ResourceType> GetQuery()
         {
             return context.AssetTypes;
         }

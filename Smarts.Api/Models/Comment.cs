@@ -18,9 +18,9 @@ namespace Smarts.Api.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// The asset the comment is associated with (optional).
+        /// The educational resource the comment is associated with (optional).
         /// </summary>
-        public int? AssetId { get; set; }
+        public int? ResourceId { get; set; }
 
         /// <summary>
         /// The contributor that specified the comment.

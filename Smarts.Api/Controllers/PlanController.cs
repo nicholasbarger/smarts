@@ -12,15 +12,15 @@ using Smarts.Api.Utilities;
 
 namespace Smarts.Api.Controllers
 {
-    public class CurriculumController : ApiController
+    public class PlanController : ApiController
     {
-        private CurriculumAppLogic logic;
+        private PlanAppLogic logic;
         private Guid contributor;
 
-        public CurriculumController()
+        public PlanController()
         {   
             // initialize logic
-            logic = new CurriculumAppLogic();
+            logic = new PlanAppLogic();
 
             // assign contributor
             var utility = new ControllerUtilities();
@@ -37,12 +37,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<Curriculum>>();
+            var payload = new HttpResponsePayload<List<Plan>>();
 
             try
             {
                 // Get full list
-                payload = new HttpResponsePayload<List<Curriculum>>(logic.Get());
+                payload = new HttpResponsePayload<List<Plan>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -63,12 +63,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var payload = new HttpResponsePayload<Curriculum>();
+            var payload = new HttpResponsePayload<Plan>();
 
             try
             {
                 // Get specific
-                payload = new HttpResponsePayload<Curriculum>(logic.Get(id));
+                payload = new HttpResponsePayload<Plan>(logic.Get(id));
             }
             catch (Exception ex)
             {
@@ -97,9 +97,9 @@ namespace Smarts.Api.Controllers
 
         // POST api/curriculum
         [HttpPost]
-        public HttpResponseMessage Post(Curriculum obj)
+        public HttpResponseMessage Post(Plan obj)
         {
-            var payload = new HttpResponsePayload<Curriculum>();
+            var payload = new HttpResponsePayload<Plan>();
 
             try
             {
@@ -117,9 +117,9 @@ namespace Smarts.Api.Controllers
 
         // PUT api/curriculum/5
         [HttpPut]
-        public HttpResponseMessage Put(int id, Curriculum obj)
+        public HttpResponseMessage Put(int id, Plan obj)
         {
-            var payload = new HttpResponsePayload<Curriculum>();
+            var payload = new HttpResponsePayload<Plan>();
 
             try
             {

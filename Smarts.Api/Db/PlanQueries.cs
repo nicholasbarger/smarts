@@ -10,16 +10,16 @@ namespace Smarts.Api.Db
     /// Database queries and interaction goes here.
     /// All get queries should be marked as IQueryable to allow for filtering at the requestor level.
     /// </summary>
-    internal class CurriculumQueries : IDisposable
+    internal class PlanQueries : IDisposable
     {
         private SmartsDbContext context;
 
-        public CurriculumQueries()
+        public PlanQueries()
         {
             this.context = new SmartsDbContext();
         }
 
-        public CurriculumQueries(SmartsDbContext context)
+        public PlanQueries(SmartsDbContext context)
         {
             this.context = context;
         }
@@ -46,9 +46,9 @@ namespace Smarts.Api.Db
             return result;
         }
 
-        public Curriculum Get(int id)
+        public Plan Get(int id)
         {
-            Curriculum curriculum = null;
+            Plan curriculum = null;
             if (id > 0)
             {
                 curriculum = context.Curriculums.SingleOrDefault(a => a.Id == id);
@@ -57,12 +57,12 @@ namespace Smarts.Api.Db
             return curriculum;
         }
 
-        public IQueryable<Curriculum> GetQuery()
+        public IQueryable<Plan> GetQuery()
         {
             return context.Curriculums;
         }
 
-        public bool Save(ref Curriculum obj)
+        public bool Save(ref Plan obj)
         {
             bool result = false;
             if (obj != null)

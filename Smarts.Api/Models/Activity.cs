@@ -22,10 +22,10 @@ namespace Smarts.Api.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// An optional reference to an asset.
+        /// An optional reference to an educational resource.
         /// </summary>
-        [ForeignKey("Asset")]
-        public int? AssetId { get; set; }
+        [ForeignKey("Resource")]
+        public int? ResourceId { get; set; }
 
         /// <summary>
         /// The date/time the activity was created.
@@ -59,9 +59,9 @@ namespace Smarts.Api.Models
         public virtual ActivityEvent Event { get; set; }
 
         /// <summary>
-        /// The asset.
+        /// The educational resource.
         /// </summary>
-        public virtual Asset Asset { get; set; }
+        public virtual Resource Resource { get; set; }
 
         /// <summary>
         /// The web user.

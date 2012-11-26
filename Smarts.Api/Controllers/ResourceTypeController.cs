@@ -13,15 +13,15 @@ using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
-    public class AssetTypeController : ApiController
+    public class ResourceTypeController : ApiController
     {
-        private AssetTypeAppLogic logic;
+        private ResourceTypeAppLogic logic;
         private Guid contributor;
 
-        public AssetTypeController()
+        public ResourceTypeController()
         {   
             // initialize logic
-            logic = new AssetTypeAppLogic();
+            logic = new ResourceTypeAppLogic();
 
             // assign contributor
             var utility = new ControllerUtilities();
@@ -38,12 +38,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<AssetType>>();
+            var payload = new HttpResponsePayload<List<ResourceType>>();
 
             try
             {
                 // Get full list
-                payload = new HttpResponsePayload<List<AssetType>>(logic.Get());
+                payload = new HttpResponsePayload<List<ResourceType>>(logic.Get());
             }
             catch (Exception ex)
             {

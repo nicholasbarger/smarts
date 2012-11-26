@@ -7,22 +7,22 @@ using System.Web;
 
 namespace Smarts.Api.Models
 {
-    [Table("MapAssetToSubject")]
-    public class AssetToSubjectAssociation
+    [Table("MapResourceToTopic")]
+    public class ResourceToTopicAssociation
     {
-        [Key, Column(Order = 0), ForeignKey("Asset")]
-        public int AssetId { get; set; }
+        [Key, Column(Order = 0), ForeignKey("Resource")]
+        public int ResourceId { get; set; }
 
-        [Key, Column(Order = 1), ForeignKey("Subject")]
-        public string Hashtag { get; set; }
+        [Key, Column(Order = 1), ForeignKey("Topic")]
+        public string Tag { get; set; }
 
         [ForeignKey("Contributor")]
         public Guid ContributorGuid { get; set; }
 
         public DateTime Created { get; set; }
 
-        public virtual Asset Asset { get; set; }
-        public virtual Subject Subject { get; set; }
+        public virtual Resource Resource { get; set; }
+        public virtual Topic Topic { get; set; }
         public virtual WebUser Contributor { get; set; }
     }
 }

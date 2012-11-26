@@ -8,9 +8,9 @@ using System.Web;
 namespace Smarts.Api.Models
 {
     /// <summary>
-    /// A structure of assets provided and organized by the community.
+    /// A structure of resources provided and organized by the community.
     /// </summary>
-    public class Curriculum
+    public class Plan
     {
         #region Properties
 

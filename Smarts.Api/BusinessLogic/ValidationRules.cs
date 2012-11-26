@@ -86,7 +86,7 @@ namespace Smarts.Api.BusinessLogic
         /// Asset validation
         /// </summary>
         /// <param name="obj"></param>
-        public void Validate(Asset obj)
+        public void Validate(Resource obj)
         {
             if (obj == null)
             {
@@ -94,7 +94,7 @@ namespace Smarts.Api.BusinessLogic
                 return;
             }
 
-            if (obj.AssetTypeId <= 0)
+            if (obj.ResourceTypeId <= 0)
             {
                 this.Errors.Add("00105", Resources.Errors.ERR00105);
             }
@@ -104,12 +104,12 @@ namespace Smarts.Api.BusinessLogic
                 this.Errors.Add("00106", Resources.Errors.ERR00106);
             }
 
-            if (obj.Difficulty.HasValue && obj.Difficulty != AssetDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
+            if (obj.Difficulty.HasValue && obj.Difficulty != ResourceDifficulty.Unspecified && ((int)obj.Difficulty < 1 || (int)obj.Difficulty > 5))
             {
                 this.Errors.Add("00107", Resources.Errors.ERR00107);
             }
 
-            if (obj.Importance.HasValue && obj.Importance != AssetImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
+            if (obj.Importance.HasValue && obj.Importance != ResourceImportance.Unspecified && ((int)obj.Importance < 1 || (int)obj.Importance > 5))
             {
                 this.Errors.Add("00108", Resources.Errors.ERR00108);
             }
@@ -147,7 +147,7 @@ namespace Smarts.Api.BusinessLogic
         /// Curriculum validation
         /// </summary>
         /// <param name="obj"></param>
-        public void Validate(Curriculum obj)
+        public void Validate(Plan obj)
         {
             if (obj == null)
             {
@@ -175,7 +175,7 @@ namespace Smarts.Api.BusinessLogic
         /// Subject validation
         /// </summary>
         /// <param name="obj"></param>
-        public void Validate(Subject obj)
+        public void Validate(Topic obj)
         {
             if (obj == null)
             {
@@ -183,7 +183,7 @@ namespace Smarts.Api.BusinessLogic
                 return;
             }
 
-            if (string.IsNullOrEmpty(obj.Hashtag))
+            if (string.IsNullOrEmpty(obj.Tag))
             {
                 this.Errors.Add("00200", Resources.Errors.ERR00200);
             }

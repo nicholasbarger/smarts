@@ -14,15 +14,15 @@ using Smarts.Api.AppLogic;
 
 namespace Smarts.Api.Controllers
 {
-    public class AssetController : ApiController
+    public class ResourceController : ApiController
     {
-        private AssetAppLogic logic;
+        private ResourceAppLogic logic;
         private Guid contributor;
 
-        public AssetController()
+        public ResourceController()
         {   
             // initialize logic
-            logic = new AssetAppLogic();
+            logic = new ResourceAppLogic();
 
             // assign contributor
             var utility = new ControllerUtilities();
@@ -39,12 +39,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Resource>>();
 
             try
             {
                 // Get full list
-                payload = new HttpResponsePayload<List<Asset>>(logic.Get());
+                payload = new HttpResponsePayload<List<Resource>>(logic.Get());
             }
             catch (Exception ex)
             {
@@ -65,12 +65,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Resource>();
 
             try
             {
                 // get specific
-                payload = new HttpResponsePayload<Asset>(logic.Get(id));
+                payload = new HttpResponsePayload<Resource>(logic.Get(id));
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage GetBySubject(string hashtag)
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Resource>>();
 
             // Prep from controller to add back the '#', which was removed for WebApi
             hashtag = '#' + hashtag;
@@ -93,7 +93,7 @@ namespace Smarts.Api.Controllers
             try
             {
                 // get specific
-                payload = new HttpResponsePayload<List<Asset>>(logic.GetBySubject(hashtag));
+                payload = new HttpResponsePayload<List<Resource>>(logic.GetBySubject(hashtag));
             }
             catch (Exception ex)
             {
@@ -138,12 +138,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage GetSubjects(int id)
         {
-            var payload = new HttpResponsePayload<List<Subject>>();
+            var payload = new HttpResponsePayload<List<Topic>>();
 
             try
             {
                 // get subjects
-                payload = new HttpResponsePayload<List<Subject>>(logic.GetSubjects(id));
+                payload = new HttpResponsePayload<List<Topic>>(logic.GetSubjects(id));
             }
             catch (Exception ex)
             {
@@ -164,12 +164,12 @@ namespace Smarts.Api.Controllers
         [HttpGet]
         public HttpResponseMessage Search(string q)
         {
-            var payload = new HttpResponsePayload<List<Asset>>();
+            var payload = new HttpResponsePayload<List<Resource>>();
 
             try
             {
                 // search
-                payload = new HttpResponsePayload<List<Asset>>(logic.Search(q));
+                payload = new HttpResponsePayload<List<Resource>>(logic.Search(q));
             }
             catch (Exception ex)
             {
@@ -214,7 +214,7 @@ namespace Smarts.Api.Controllers
 
         // POST api/asset/complete/5
         [HttpPost]
-        public HttpResponseMessage Complete(Asset obj)
+        public HttpResponseMessage Complete(Resource obj)
         {
             var payload = new HttpResponsePayload<Comment>();
 
@@ -240,9 +240,9 @@ namespace Smarts.Api.Controllers
 
         // POST api/asset
         [HttpPost]
-        public HttpResponseMessage Post(Asset obj)
+        public HttpResponseMessage Post(Resource obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Resource>();
 
             try
             {
@@ -252,9 +252,9 @@ namespace Smarts.Api.Controllers
                     obj.ContributorGuid = contributor;
 
                     // Prep children - Subject associations 
-                    if (obj.SubjectAssociations != null)
+                    if (obj.TopicAssociations != null)
                     {
-                        foreach (var association in obj.SubjectAssociations)
+                        foreach (var association in obj.TopicAssociations)
                         {
                             // Assign contributor to the subject associations
                             association.ContributorGuid = contributor;
@@ -263,7 +263,7 @@ namespace Smarts.Api.Controllers
                 }
 
                 // Save through logic
-                payload = new HttpResponsePayload<Asset>(logic.Save(obj));
+                payload = new HttpResponsePayload<Resource>(logic.Save(obj));
             }
             catch (Exception ex)
             {
@@ -277,14 +277,14 @@ namespace Smarts.Api.Controllers
 
         // PUT api/asset/5
         [HttpPut]
-        public HttpResponseMessage Put(Asset obj)
+        public HttpResponseMessage Put(Resource obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Resource>();
 
             try
             {
                 // Save through logic
-                payload = new HttpResponsePayload<Asset>(logic.Save(obj));
+                payload = new HttpResponsePayload<Resource>(logic.Save(obj));
             }
             catch (Exception ex)
             {
@@ -298,14 +298,14 @@ namespace Smarts.Api.Controllers
 
         // DELETE api/asset/5
         [HttpDelete]
-        public HttpResponseMessage Delete(Asset obj)
+        public HttpResponseMessage Delete(Resource obj)
         {
-            var payload = new HttpResponsePayload<Asset>();
+            var payload = new HttpResponsePayload<Resource>();
 
             try
             {
                 // Delete through logic
-                payload = new HttpResponsePayload<Asset>(logic.Delete(obj));
+                payload = new HttpResponsePayload<Resource>(logic.Delete(obj));
             }
             catch (Exception ex)
             {

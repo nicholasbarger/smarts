@@ -69,7 +69,7 @@ namespace Smarts.Api.Controllers
             try
             {
                 // Get full list
-                payload = new HttpResponsePayload<List<Activity>>(logic.GetByAsset(id));
+                payload = new HttpResponsePayload<List<Activity>>(logic.GetByResource(id));
             }
             catch (Exception ex)
             {
